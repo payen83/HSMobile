@@ -1,16 +1,220 @@
-// http://ionicframework.com/docs/theming/
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+} // IF the browser DOES support the CSS Grid Layout specification
+// then the following rules are applied instead
+.wrapper {
+  display: grid; // Define a 10 pixel gap between each grid track
+  grid-gap: 5px; // Define a rule, that will be repeated for each grid column, where
+  // the grid track is set to a minimum width of 300 pixels and a maximum
+  // width of the available space within the grid container (via the fr or
+  // fraction unit)
+  // The auto-fill value allows as many grid tracks to be fitted into the
+  // width of the grid container as possible
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); // Specify the height of the row - minimum value of 50 pixels and a maximum
+  // value set to auto
+  grid-auto-rows: minmax(50px, auto);
+}
 
+.wrapper-sidebar {
+  display: grid; //grid-gap: 5px;
+  //grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  //grid-auto-rows: minmax(50px, auto);
+}
 
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+.wrapper-text {
+  text-align: center;
+}
+
+// Define the style rules for each panel within the grid
+// container
+.sales {
+  //padding-top: 1em;
+  justify-content: center;
+  align-items: center;
+  p{
+      margin-top: 1em!important
+  }
+}
+
+.my-modal {
+  // height: 50%!important;
+  // transform: translateY(100%);
+  @media (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+    }
+  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-overlay;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  contain: strict;
+  .modal-wrapper {
+    &,
+    .ion-page,
+    .ion-page .content,
+    .ion-page .content .scroll-content {
+      contain: content;
+      position: relative;
+      top: auto;
+      left: auto;
+      padding: 1px;
+    }
+    z-index: $z-index-overlay-wrapper;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    min-width: $alert-min-width;
+    max-height: $alert-max-height;
+    opacity: 0;
+    height: auto;
+    max-width: $alert-md-max-width;
+    border-radius: $alert-md-border-radius;
+    background-color: $alert-md-background-color;
+    box-shadow: $alert-md-box-shadow;
+    border-radius: 20px;
+    padding:5px;
+    .ion-page .content {
+      background-color: color($colors, light);
+    }
+  }
+}
+
+.box {
+  border-radius: 3px;
+  padding: 2em;
+  margin-left: 5px;
+  margin-right: 5px; // Add a flex rule for browsers not supporting the
+  // CSS Grid Layout spec
+  flex: 1 1 300px;
+  h2 {
+    font-weight: bold;
+    font-size: 4em;
+    color: white;
+  }
+  h3 {
+    font-weight: bold;
+    font-size: 2.0em;
+    color: white;
+  }
+  sup {
+    font-size: 0.5em;
+  }
+  p {
+    color: white;
+    font-weight: bold;
+  }
+}
+
+// We need to ensure that browsers that fall back to the
+// Flexbox rules add a bottom margin of 10 pixels to all
+// direct child elements within the grid container (to
+// emulate the grid gap)
+.wrapper>* {
+  margin-bottom: 10px;
+}
+
+// Use a feature query to determine if the browser supports
+// a specific CSS rule - in this case the display: grid property
+// If the rule is supported then we remove the flexbox fallback
+// rule of adding 10 pixels to the bottom margin of each child
+// decendent of the grid container (to emulate the grid gap)
+@supports (display: grid) {
+  .wrapper>* {
+    margin: 0;
+  }
+}
+
+// Add the necessary classes for styling the
+// background colours of each panel in the
+// project UI
+.red {
+  background-color: rgba(220, 83, 81, 1);
+}
+
+.green {
+  background-color: rgba(187, 225, 123, 1);
+}
+
+.blue {
+  background-color: rgba(131, 150, 225, 1);
+}
+
+.purple {
+  background-color: rgba(155, 121, 170, 1);
+}
+
+.yellow {
+  background-color: rgba(235, 229, 39, 1);
+}
+
+.violet {
+  background-color: rgba(213, 118, 211, 1);
+}
+
+.orange {
+  background-color: rgba(213, 151, 46, 1);
+}
+
+.turquoise {
+  // background-color: rgba(105, 203, 217, 1);
+  background-color: #00a8ab;
+}
+
+// Define the header/footer tag values
+header,
+footer {
+  padding: 2em;
+  margin-left: 5px;
+  margin-right: 5px; // Add a flex rule for browsers not supporting the
+  // CSS Grid Layout spec
+  flex: 0 1 100%; // Define the start and end values for the grid column
+  grid-column: 1 / -1; 
+  //text-align: center;
+  background-color: rgba(175, 186, 202, 1);
+  color: #fff;
+}
+
+.btnside {
+  background-color: transparent;
+}
+
+.bg {
+  background-color: color($colors, light);
+}
+
+h6 {
+  margin: 1px;
+  line-height: 1em;
+}
+
+.label {
+  margin-top: 0.5em;
+}
+
+.header2 {
+  padding: 1em !important;
+}
+
+.button-menu {
+  font-size: 1.3em;
+  font-weight: lighter;
+}
+
+.p {
+  line-height: 0em;
+}
+
+.img-sidebar {
+  border-radius: 50%;
+  max-width: 100px;
+  border: 1px solid white; //-webkit-border-radius: 500px;
+  //-moz-border-radius: 500px;
+}
+

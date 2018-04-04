@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Cart</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="updateCart()">Update</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <!-- <ion-item-divider no-lines>
+        </ion-item-divider> -->
+    <ion-item no-padding>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h2>EssensiaPlus</h2>
+      <h4>RM500</h4>
+      <div item-content>
+        <button small ion-button icon-only>
+          <ion-icon name="remove"></ion-icon>
+        </button>
+        <!-- <span class="item-content">1</span> -->
+        <button large color="dark" clear ion-button icon-only>1</button>
+        <button small ion-button icon-only>
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </div>
+    </ion-item>
+    <ion-item no-padding>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h2>Night Cream</h2>
+      <h4>RM300</h4>
+      <div item-content>
+        <button small ion-button icon-only>
+          <ion-icon name="remove"></ion-icon>
+        </button>
+        <!-- <span class="item-content">1</span> -->
+        <button large color="dark" clear ion-button icon-only>1</button>
+        <button small ion-button icon-only>
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </div>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-note item-end>
+        <strong>Total: RM800</strong>
+      </ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-footer>
+    <ion-toolbar color="secondary">
+      <button small color="light" ion-button clear block (click)="confirmationPage()">Checkout</button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

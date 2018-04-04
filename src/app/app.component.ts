@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { HomePage } from '../pages/agent/home/home';
+//import { ListPage } from '../pages/list/list';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,17 +14,30 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, icon?: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Home', component: HomePage, icon: 'home' },
+      { title: 'Orders', component: 'OrdersPage', icon: "clipboard" },
+      { title: 'Transactions', component: 'TransactionsPage', icon: "cash" },
+      { title: 'Products', component: 'ProductsPage', icon: "apps" },
+      { title: 'Status', component: 'StatusPage', icon: "analytics" }
     ];
 
+  }
+
+  profilePage(){
+    this.menuCtrl.close();
+    this.nav.setRoot('ProfilePage');
+  }
+
+  logout(){
+    this.menuCtrl.close();
+    this.nav.setRoot('LoginPage');
   }
 
   initializeApp() {

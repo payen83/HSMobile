@@ -1,0 +1,9 @@
+page-status {
+    .light{
+        background-color: color($colors, light);
+    }
+
+    ion-card {
+        border-radius: 10px !important;
+    }
+}

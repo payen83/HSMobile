@@ -1,14 +1,26 @@
 <ion-menu [content]="content">
-  <ion-header>
+  <!-- <ion-header>
     <ion-toolbar>
       <ion-title>Menu</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+  <ion-content class="bg">
+    <div class="wrapper">
+      <header tappable class="header2" (click)="profilePage()">
+        <img src="assets/imgs/user.png" class="img-sidebar" />
+        <h6>Farhan Ramli</h6>
+        <p class="p">user@gmail.com</p>
+      </header>
+    </div>
+    <ion-list class="btnside">
+      <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{p.icon}}" class="label"></ion-icon>
         {{p.title}}
+      </button>
+      <button class="button-menu btnside" large menuClose icon-left ion-item (click)="logout()">
+          <ion-icon name="power" class="label"></ion-icon>
+          Logout
       </button>
     </ion-list>
   </ion-content>

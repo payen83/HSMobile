@@ -1,0 +1,24 @@
+page-completed {
+  .checkmark {
+    font-size: 6em;
+  }
+  .card-ios,
+  .card-md {
+    margin-top: 0em;
+    width: calc(100% - 24px);
+    font-size: 1.4rem;
+    background: transparent;
+    -webkit-box-shadow: none;
+  }
+  .background {
+    //background-image: url('../assets/imgs/bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .vertical-align-content>* {
+    display: flex !important;
+    align-content: center !important;
+    align-items: center !important;
+  }
+}
+

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openRequest()">
+        Open
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="wrapper wrapper-text" padding>
+    <div class="box turquoise">
+      <h2>10</h2>
+      <p>Pending task</p>
+    </div>
+    <div class="box turquoise">
+      <h2>0</h2>
+      <p>Completed jobs this month</p>
+    </div>
+
+    <div class="sales box turquoise">
+      <div class="sales">
+        <h3><sup>RM</sup>4000</h3>
+        <p>Sales this month</p>
+      </div>
+    </div>
+
+    <div class="box turquoise">
+      <h2>5</h2>
+      <p>Units stock available</p>
+    </div>
+  </div>
+
+  <ion-list>
+    <ion-item-divider color="light"><strong>All Stocks</strong></ion-item-divider>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-avatar>
+      <h2>AssensiaPlus</h2>
+      <p>5 unit available</p>
+    </ion-item>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-avatar>
+      <h2>Whitening Cream</h2>
+      <p>3 unit available</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+

@@ -1,0 +1,30 @@
+page-details {
+    h2{
+        font-weight: bold!important;
+    }
+    .action-icon{
+        margin-top: -0.5em;
+    }
+
+    ion-note{
+        color: black!important;
+    }
+
+    #map{
+        width: 100%;
+        height: 100%;     
+        margin-bottom: 0 !important;
+
+
+    }
+
+    .scoll-content{
+        overflow: hidden;
+    }
+
+    ion-thumbnail {
+        margin: 0 1rem 0 0 !important;
+    }
+
+    
+}

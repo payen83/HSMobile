@@ -1,0 +1,37 @@
+page-login {
+  .card-ios,
+  .card-md {
+    margin-top: -5em;
+    width: calc(100% - 24px);
+    font-size: 1.4rem;
+    background: transparent;
+    -webkit-box-shadow: none;
+  }
+  .background {
+    //background-image: url('../assets/imgs/bg.png');
+    background-color: color($colors, secondary);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .vertical-align-content>* {
+    display: flex !important;
+    align-content: center !important;
+    align-items: center !important;
+  }
+  .item-ios,
+  .item-md {
+    background-color: transparent;
+    color: white;
+  }
+  .text-input::-moz-placeholder {
+    color: white;
+  }
+  .text-input:-ms-input-placeholder {
+    color: white;
+  }
+  .text-input::-webkit-input-placeholder {
+    text-indent: 0;
+    color: white;
+  }
+}
+

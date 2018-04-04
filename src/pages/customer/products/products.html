@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Products</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <!-- <ion-item-divider no-lines>
+    </ion-item-divider> -->
+    <ion-item no-padding>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h2>EssensiaPlus</h2>
+      <h4>RM500</h4>
+      <div item-content>
+        <button ion-button (click)="cartPage()">Add to cart</button>
+      </div>
+    </ion-item>
+    <ion-item no-padding>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h2>Night Cream</h2>
+      <h4>RM300</h4>
+      <div item-content>
+        <button ion-button>Add to cart</button>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

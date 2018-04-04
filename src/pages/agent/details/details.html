@@ -1,0 +1,67 @@
+<!--
+  Generated template for the DetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content (ionScrollStart)="onScroll($event)">
+  <ion-list>
+    <ion-item-divider color="light">
+      <strong>Customer</strong>
+      <button ion-button icon-left round color="danger" item-end (click)="buttonClick()">
+        <ion-icon name="checkmark-circle"></ion-icon> Mark as complete</button>
+    </ion-item-divider>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/imgs/user.png">
+      </ion-avatar>
+
+      <h2>Farhan Ramli</h2>
+      <div>
+        <button ion-button icon-left round outline color="danger" item-start (click)="nav()">
+          <ion-icon name="phone-portrait"></ion-icon>Call</button>
+        <button ion-button icon-left round outline color="danger" item-start (click)="nav()">
+          <ion-icon name="chatbubbles"></ion-icon>Chat</button>
+      </div>
+      <!-- <div class="action-icon" tappable (click)="nav()"><h3><ion-icon name="phone-portrait"></ion-icon> Call</h3></div> -->
+      <!-- <div class="action-icon" tappable (click)="nav()"><h3><ion-icon name="chatbubbles"></ion-icon> Message</h3></div> -->
+    </ion-item>
+    <ion-item-divider color="light">
+      <strong>Products</strong>
+    </ion-item-divider>
+    <ion-item no-padding>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h2>EssensiaPlus x 1</h2>
+      <h4>RM500</h4>
+    </ion-item>
+    <ion-item no-padding>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h2>Night Cream x 1</h2>
+      <h4>RM200</h4>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-note item-end>
+        <strong>Total: RM500</strong>
+      </ion-note>
+    </ion-item>
+  </ion-list>
+  <ion-item-divider color="light">
+    <strong>Location</strong>
+  </ion-item-divider>
+  <div id="map" #map></div>
+
+  <ion-fab right bottom>
+      <button ion-fab color="danger" (click)="scrollTop()"><ion-icon name="arrow-dropup"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>
