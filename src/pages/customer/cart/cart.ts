@@ -14,6 +14,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'cart.html',
 })
 export class CartPage {
+  protected num1: number = 1;
+  protected num2: number = 1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -22,11 +24,35 @@ export class CartPage {
     console.log('ionViewDidLoad CartPage');
   }
 
-  updateCart(){
+  updateCart() {
 
   }
 
-  confirmationPage(){
+  addQuantity(prod: number) {
+
+    if (prod == 1) {
+      this.num1 += 1;
+    } else {
+      this.num2 += 1;
+    }
+
+
+  }
+
+  subtractQuantity(prod: number) {
+    if (prod == 1) {
+      if (this.num1 != 0) {
+        this.num1 -= 1;
+      }
+    } else {
+      if (this.num2 != 0) {
+        this.num2 -= 1;
+      }
+    }
+
+  }
+
+  confirmationPage() {
     this.navCtrl.push('ConfirmationPage')
   }
 

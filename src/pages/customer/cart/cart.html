@@ -22,12 +22,12 @@
       <h2>EssensiaPlus</h2>
       <h4>RM500</h4>
       <div item-content>
-        <button small ion-button icon-only>
+        <button small ion-button icon-only (click)="subtractQuantity(1)">
           <ion-icon name="remove"></ion-icon>
         </button>
         <!-- <span class="item-content">1</span> -->
-        <button large color="dark" clear ion-button icon-only>1</button>
-        <button small ion-button icon-only>
+        <button large color="dark" clear ion-button icon-only>{{num1}}</button>
+        <button small ion-button icon-only (click)="addQuantity(1)">
           <ion-icon name="add"></ion-icon>
         </button>
       </div>
@@ -39,12 +39,12 @@
       <h2>Night Cream</h2>
       <h4>RM300</h4>
       <div item-content>
-        <button small ion-button icon-only>
+        <button small ion-button icon-only (click)="subtractQuantity(2)">
           <ion-icon name="remove"></ion-icon>
         </button>
         <!-- <span class="item-content">1</span> -->
-        <button large color="dark" clear ion-button icon-only>1</button>
-        <button small ion-button icon-only>
+        <button large color="dark" clear ion-button icon-only>{{num2}}</button>
+        <button small ion-button icon-only (click)="addQuantity(2)">
           <ion-icon name="add"></ion-icon>
         </button>
       </div>

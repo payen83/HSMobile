@@ -10,7 +10,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content (ionScrollStart)="onScroll($event)">
+<ion-content>
   <ion-list>
     <ion-item-divider color="light">
       <strong>Customer</strong>
@@ -54,12 +54,15 @@
         <strong>Total: RM500</strong>
       </ion-note>
     </ion-item>
+    <!-- <ion-item-divider color="light">
+        <strong>Location</strong>
+      </ion-item-divider>
+      <div id="map" #map></div> -->
   </ion-list>
   <ion-item-divider color="light">
     <strong>Location</strong>
   </ion-item-divider>
   <div id="map" #map></div>
-
   <ion-fab right bottom>
       <button ion-fab color="danger" (click)="scrollTop()"><ion-icon name="arrow-dropup"></ion-icon></button>
   </ion-fab>

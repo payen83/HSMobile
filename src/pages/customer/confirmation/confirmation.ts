@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
 /**
  * Generated class for the ConfirmationPage page.
@@ -15,7 +15,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConfirmationPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
@@ -24,6 +24,11 @@ export class ConfirmationPage {
 
   makePayment(){
     this.navCtrl.setRoot('CompletedPage', {}, {animate: true});
+  }
+
+  setLocation(){
+    let modal = this.modalCtrl.create('MapPage');
+    modal.present();
   }
 
 }

@@ -19,6 +19,7 @@ import { CartPageModule } from '../pages/customer/cart/cart.module';
 import { ConfirmationPageModule } from '../pages/customer/confirmation/confirmation.module';
 import { CompletedPageModule } from '../pages/customer/completed/completed.module';
 import { StatusPageModule } from '../pages/customer/status/status.module';
+import { MapPageModule } from '../pages/general/map/map.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { StatusPageModule } from '../pages/customer/status/status.module';
     ConfirmationPageModule,
     CompletedPageModule,
     StatusPageModule,
+    MapPageModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],

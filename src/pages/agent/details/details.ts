@@ -18,13 +18,6 @@ export class DetailsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
-
-  onScroll(event){
-    //alert('scroll');
-   this.showScroll = true;
-   //console.log(this.showScroll)
-  }
-
   scrollTop(){
     //console.log('scrolltop');
     this.content.scrollToTop();
