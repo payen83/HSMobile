@@ -22,6 +22,10 @@ export class RequestPage {
     console.log('ionViewDidLoad RequestPage');
   }
 
+  acceptRequest(){
+    this.viewCtrl.dismiss({accept: true});
+  }
+
   closeRequest(){
     this.viewCtrl.dismiss();
   }

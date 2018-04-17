@@ -36,10 +36,10 @@
   <div padding class="btn">
     <ion-row>
       <ion-col>
-        <button block color="secondary" ion-button>Accept</button>
+        <button block color="secondary" ion-button (click)="acceptRequest()">Accept</button>
       </ion-col>
       <ion-col>
-        <button block color="danger" ion-button>Reject</button>
+        <button block color="danger" ion-button (click)="closeRequest()">Reject</button>
       </ion-col>
     </ion-row>
   </div>

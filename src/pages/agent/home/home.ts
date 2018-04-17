@@ -19,6 +19,20 @@ export class HomePage {
   }
     let modal = this.modalCtrl.create(RequestPage, {}, modalCss);
     modal.present();
+    modal.onDidDismiss(data => {
+      if(data.accept){
+        this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
+      }
+    });
+  }
+
+  doRefresh(refresher) {
+    this.openRequest();
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 500);
   }
 
 }

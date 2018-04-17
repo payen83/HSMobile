@@ -23,7 +23,7 @@ export class CompletedPage {
   }
 
   pageHome(){
-    this.navCtrl.setRoot('ProductsPage', {}, {animate: true});
+    this.navCtrl.setRoot('StatusPage', {}, {animate: true});
   }
 
 }
