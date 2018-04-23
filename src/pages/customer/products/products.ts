@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { Products } from '../../../providers/providers';
 /**
  * Generated class for the ProductsPage page.
  *
@@ -14,12 +14,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'products.html',
 })
 export class ProductsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  items: Array<any>
+  constructor(public products: Products, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductsPage');
+   this.products.query().then(result=>{
+      let response: any = result;
+      this.items = response.products;
+      console.log(this.items);
+    });
+    
   }
 
   cartPage(){

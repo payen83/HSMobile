@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/agent/home/home';
-import { ListPage } from '../pages/list/list';
 import { RequestPageModule } from '../pages/agent/request/request.module';
 import { OrdersPageModule } from '../pages/agent/orders/orders.module';
 import { DetailsPageModule } from '../pages/agent/details/details.module';
@@ -20,12 +19,14 @@ import { ConfirmationPageModule } from '../pages/customer/confirmation/confirmat
 import { CompletedPageModule } from '../pages/customer/completed/completed.module';
 import { StatusPageModule } from '../pages/customer/status/status.module';
 import { MapPageModule } from '../pages/general/map/map.module';
+import { Api, Products, User } from '../providers/providers';
+import { HttpClientModule } from '@angular/common/http';
+import { TncPageModule } from '../pages/general/tnc/tnc.module';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -41,17 +42,21 @@ import { MapPageModule } from '../pages/general/map/map.module';
     CompletedPageModule,
     StatusPageModule,
     MapPageModule,
+    HttpClientModule,
+    TncPageModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage
+    HomePage
   ],
   providers: [
     StatusBar,
-    SplashScreen,
+    SplashScreen, 
+    Api, 
+    Products, 
+    User,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
