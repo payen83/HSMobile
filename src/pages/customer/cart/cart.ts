@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { CommonProvider } from '../../../providers/common/common';
+
 
 /**
  * Generated class for the CartPage page.
@@ -14,46 +17,84 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'cart.html',
 })
 export class CartPage {
-  protected num1: number = 1;
-  protected num2: number = 1;
+  //protected num1: number = 1;
+  //protected num2: number = 1;
+  protected itemInCart: Array<any> = [];
+  protected totalPrice: Number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public common: CommonProvider, private storage: Storage, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CartPage');
+    //console.log('ionViewDidLoad CartPage');
+    this.storage.get('CART').then(items=>{
+      if(items){
+        this.itemInCart = JSON.parse(items);
+        //console.log(JSON.parse(items));
+      } else {
+        console.log('no data');
+      }
+    });
   }
 
   updateCart() {
-
-  }
-
-  addQuantity(prod: number) {
-
-    if (prod == 1) {
-      this.num1 += 1;
-    } else {
-      this.num2 += 1;
-    }
-
-
-  }
-
-  subtractQuantity(prod: number) {
-    if (prod == 1) {
-      if (this.num1 != 0) {
-        this.num1 -= 1;
-      }
-    } else {
-      if (this.num2 != 0) {
-        this.num2 -= 1;
+    let newCart: Array<any> = [];
+    for(let index in this.itemInCart){
+      //console.log(this.itemInCart[index].qty);
+      if(this.itemInCart[index].qty != 0){
+        //this.removeCart(index); 
+        newCart.push(this.itemInCart[index]);
       }
     }
+    this.itemInCart = newCart;
+    this.saveCart();
+  }
 
+  getQuantity(index){
+    //let selectedIndex = this.itemInCart.findIndex(item => item.id == id);
+    return this.itemInCart[index].qty;
+  }
+
+  addQuantity(index: number) {
+    this.itemInCart[index].qty +=  1;
+  }
+
+  subtractQuantity(index: number) {
+    if (this.itemInCart[index].qty != 0) {
+      this.itemInCart[index].qty -= 1;
+    }
   }
 
   confirmationPage() {
-    this.navCtrl.push('ConfirmationPage')
+    this.updateCart();
+    if(!this.common.isEmpty(this.itemInCart)){
+      //this.saveCart();
+      this.navCtrl.push('ConfirmationPage', {itemInCart: this.itemInCart, totalPrice: this.totalPrice});
+    } else {
+      this.common.showAlert('', 'Please add at least 1 product');
+    }
   }
+
+  removeCart(index){
+    this.itemInCart.splice(index, 1);
+  }
+
+  saveCart(){
+    this.storage.set('CART', JSON.stringify(this.itemInCart));
+  }
+
+  emptyCart(){
+    return this.common.isEmpty(this.itemInCart);
+  }
+
+  getTotal(){
+    let total: number = 0;
+    for(let item of this.itemInCart){
+      total += item.price * item.qty;
+    }
+    this.totalPrice = total;
+    return total;
+  }
+
 
 }

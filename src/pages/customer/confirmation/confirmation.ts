@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the ConfirmationPage page.
@@ -14,8 +15,19 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
   templateUrl: 'confirmation.html',
 })
 export class ConfirmationPage {
+  protected itemInCart: Array<any> = [];
+  protected totalPrice: Number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+  constructor(private storage: Storage, public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+    // this.storage.get('CART').then(items=>{
+    //   if(items){
+    //     this.itemInCart = JSON.parse(items);
+    //   } else {
+    //     console.log('no data');
+    //   }
+    // });
+    this.itemInCart = this.navParams.get('itemInCart');
+    this.totalPrice = this.navParams.get('totalPrice');
   }
 
   ionViewDidLoad() {
@@ -31,4 +43,5 @@ export class ConfirmationPage {
     modal.present();
   }
 
+  
 }

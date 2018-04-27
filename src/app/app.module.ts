@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/agent/home/home';
@@ -22,6 +23,7 @@ import { MapPageModule } from '../pages/general/map/map.module';
 import { Api, Products, User } from '../providers/providers';
 import { HttpClientModule } from '@angular/common/http';
 import { TncPageModule } from '../pages/general/tnc/tnc.module';
+import { CommonProvider } from '../providers/common/common';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { TncPageModule } from '../pages/general/tnc/tnc.module';
     MapPageModule,
     HttpClientModule,
     TncPageModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -57,7 +60,8 @@ import { TncPageModule } from '../pages/general/tnc/tnc.module';
     Api, 
     Products, 
     User,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CommonProvider
   ]
 })
 export class AppModule {}

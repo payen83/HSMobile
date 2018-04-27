@@ -15,24 +15,23 @@
   <ion-list>
     <!-- <ion-item-divider no-lines>
         </ion-item-divider> -->
-    <ion-item no-padding>
+    <ion-item no-padding *ngFor="let item of itemInCart; let i = index">
       <ion-thumbnail item-start>
-        <img src="assets/imgs/logo.png">
+        <img [src]="item.image_url">
       </ion-thumbnail>
-      <h2>EssensiaPlus</h2>
-      <h4>RM500</h4>
+      <h2>{{item.name}}</h2>
+      <h4>{{item.currency}}{{item.price}}</h4>
       <div item-content>
-        <button small ion-button icon-only (click)="subtractQuantity(1)">
+        <button small ion-button icon-only (click)="subtractQuantity(i)">
           <ion-icon name="remove"></ion-icon>
         </button>
-        <!-- <span class="item-content">1</span> -->
-        <button large color="dark" clear ion-button icon-only>{{num1}}</button>
-        <button small ion-button icon-only (click)="addQuantity(1)">
+        <button large color="dark" clear ion-button icon-only>{{getQuantity(i)}}</button>
+        <button small ion-button icon-only (click)="addQuantity(i)">
           <ion-icon name="add"></ion-icon>
         </button>
       </div>
     </ion-item>
-    <ion-item no-padding>
+    <!-- <ion-item no-padding>
       <ion-thumbnail item-start>
         <img src="assets/imgs/logo.png">
       </ion-thumbnail>
@@ -42,19 +41,20 @@
         <button small ion-button icon-only (click)="subtractQuantity(2)">
           <ion-icon name="remove"></ion-icon>
         </button>
-        <!-- <span class="item-content">1</span> -->
         <button large color="dark" clear ion-button icon-only>{{num2}}</button>
         <button small ion-button icon-only (click)="addQuantity(2)">
           <ion-icon name="add"></ion-icon>
         </button>
       </div>
-    </ion-item>
-    <ion-item no-lines>
+    </ion-item> -->
+    <ion-item no-lines *ngIf="!emptyCart()">
       <ion-note item-end>
-        <strong>Total: RM800</strong>
+        <strong>Total: USD{{getTotal()}}</strong>
       </ion-note>
     </ion-item>
   </ion-list>
+
+  <div align="center" padding *ngIf="emptyCart()"><h5>Your cart is empty</h5></div>
 
   <ion-footer>
     <ion-toolbar color="secondary">

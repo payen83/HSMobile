@@ -7,7 +7,16 @@
 
 <ion-content>
   <ion-list>
-    <ion-item no-padding>
+      <ion-item no-padding *ngFor="let item of itemInCart">
+          <ion-thumbnail item-start>
+            <img [src]="item.image_url">
+          </ion-thumbnail>
+          <h3>{{item.name}} x {{item.qty}}</h3>
+          <div item-content item-end>
+            {{item.currency}}{{item.price}}
+          </div>
+        </ion-item>
+    <!-- <ion-item no-padding>
       <ion-thumbnail item-start>
         <img src="assets/imgs/logo.png">
       </ion-thumbnail>
@@ -21,31 +30,42 @@
         <img src="assets/imgs/logo.png">
       </ion-thumbnail>
       <h3>Night Cream x 1</h3>
-      <!-- <h4>1 Unit</h4> -->
       <div item-content item-end>
         RM300
       </div>
-    </ion-item>
+    </ion-item> -->
     <ion-item no-lines>
         <ion-note item-end>
-          <strong>Total: RM2,000</strong>
+          <strong>Total: USD{{totalPrice}}</strong>
         </ion-note>
       </ion-item>
   </ion-list>
   <ion-list no-lines>
-      <ion-item-divider color="light">
-          <h2>Delivery Information</h2>
-      </ion-item-divider>
+    <ion-item-divider color="light">
+      <h2>Delivery Information</h2>
+    </ion-item-divider>
     <ion-item text-wrap tappable (click)="setLocation()">
       <p>39-1 Jalan Equine 9A, Equine Park, 43300 Seri Kembangan, Selangor Darul Ehsan</p>
-      <ion-note item-end><button color="dark" ion-button small icon-only clear><ion-icon name="create"></ion-icon></button> </ion-note>
+      <ion-note item-end>
+        <button color="dark" ion-button small icon-only clear>
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-note>
     </ion-item>
     <ion-item-divider color="light">
-        <h2>Payment Method</h2> 
+      <h2>Special Note</h2>
+    </ion-item-divider>
+    <ion-item text-wrap>
+      <ion-textarea rows="3" type="text" placeholder="e.g exact location, building or house number etc."></ion-textarea>
+    </ion-item>
+    <ion-item-divider color="light">
+      <h2>Payment Method</h2>
     </ion-item-divider>
     <ion-item>
-        <ion-label><img src="assets/imgs/paypal.png" width="90"/></ion-label>
-        <ion-checkbox color="primary" checked="true"></ion-checkbox>
+      <ion-label>
+        <img src="assets/imgs/paypal.png" width="90" />
+      </ion-label>
+      <ion-checkbox color="primary" checked="true"></ion-checkbox>
     </ion-item>
   </ion-list>
   <ion-footer>

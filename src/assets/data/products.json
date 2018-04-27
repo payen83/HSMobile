@@ -1,6 +1,7 @@
 {
     "products": [
         {
+            "id": 1,
             "name": "EssensiaPlus",
             "price": 500,
             "currency": "USD",
@@ -12,6 +13,7 @@
             }
         },
         {
+            "id": 2,
             "name": "Night Cream",
             "price": 300,
             "currency": "USD",

@@ -1,10 +1,5 @@
-<ion-menu [content]="content">
-  <!-- <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
 
+<ion-menu id="loggedInMenu" [content]="content">
   <ion-content class="bg">
     <div class="wrapper">
       <header tappable class="header2" (click)="profilePage()">
@@ -14,17 +9,40 @@
       </header>
     </div>
     <ion-list class="btnside">
-      <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon name="{{p.icon}}" class="label"></ion-icon>
-        {{p.title}}
-      </button>
+      <div *ngIf="isAgent">
+        <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pages" (click)="openPage(p)">
+          <ion-icon name="{{p.icon}}" class="label"></ion-icon>
+          {{p.title}}
+        </button>
+      </div>
+      <div *ngIf="!isAgent">
+        <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pagesCustomer" (click)="openPage(p)">
+          <ion-icon name="{{p.icon}}" class="label"></ion-icon>
+          {{p.title}}
+        </button>
+      </div>
       <button class="button-menu btnside" large menuClose icon-left ion-item (click)="logout()">
-          <ion-icon name="power" class="label"></ion-icon>
-          Logout
+        <ion-icon name="power" class="label"></ion-icon>
+        Logout
       </button>
     </ion-list>
   </ion-content>
+  
+</ion-menu>
 
+<ion-menu id="loggedOutMenu" [content]="content">
+  <ion-content class="bg">
+    <ion-list class="btnside">
+      <!-- <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{p.icon}}" class="label"></ion-icon>
+        {{p.title}}
+      </button> -->
+      <button class="button-menu btnside" large menuClose icon-left ion-item (click)="logout()">
+        <ion-icon name="power" class="label"></ion-icon>
+        Login
+      </button>
+    </ion-list>
+  </ion-content>
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

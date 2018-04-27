@@ -49,6 +49,15 @@ export class User {
     return seq;
   }
 
+  hasLoggedIn(): Promise<boolean>{
+    return new Promise(resolve=>{
+      setTimeout(() => {
+        resolve(true);
+      }, 500);
+      
+    })
+  }
+
   /**
    * Send a POST request to our signup endpoint with the data
    * the user entered on the form.

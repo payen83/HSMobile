@@ -3,18 +3,22 @@ import { Nav, Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/agent/home/home';
+import { LoginPage } from '../pages/general/login/login';
+import { User } from '../providers/user/user';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
+ 
   rootPage: any = HomePage;
-
+  hasLoggedIn: boolean = false;
   pages: Array<{title: string, icon?: string, component: any}>;
+  pagesCustomer: Array<{title: string, icon?: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
+  isAgent: boolean;
+  constructor(public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -23,9 +27,36 @@ export class MyApp {
       { title: 'Orders', component: 'OrdersPage', icon: "clipboard" },
       { title: 'Transactions', component: 'TransactionsPage', icon: "cash" },
       { title: 'Products', component: 'ProductsPage', icon: "apps" },
-      { title: 'Status', component: 'StatusPage', icon: "analytics" }
+      // { title: 'Status', component: 'StatusPage', icon: "analytics" }
     ];
 
+    this.pagesCustomer = [
+      { title: 'Home', component: HomePage, icon: 'home' },
+      // { title: 'Orders', component: 'OrdersPage', icon: "clipboard" },
+      // { title: 'Transactions', component: 'TransactionsPage', icon: "cash" },
+      { title: 'Products', component: 'ProductsPage', icon: "apps" },
+      { title: 'Status', component: 'StatusPage', icon: "analytics" }
+    ];
+    
+    // if (!this.hasLoggedIn){
+    //   //this.setProfile();
+    //   this.rootPage = LoginPage; 
+    //   this.enableMenu();
+    //   //this.rootPage = Home;
+    //   //localStorage.setItem('hasLoggedIn', JSON.stringify(true));
+    //   return;
+    // }
+    this.user.hasLoggedIn().then((loggedIn) => {
+      
+        if (!loggedIn){
+          this.rootPage = LoginPage;
+        }
+        this.enableMenu(loggedIn === true);
+        
+    })
+
+    //this.enableMenu();
+    this.isAgent = true;
   }
 
   profilePage(){
@@ -35,7 +66,8 @@ export class MyApp {
 
   logout(){
     this.menuCtrl.close();
-    this.nav.setRoot('LoginPage');
+    this.enableMenu(false);
+    this.nav.setRoot('LoginPage', {}, {animate: true});
   }
 
   initializeApp() {
@@ -45,6 +77,13 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+ 
+  enableMenu(loggedIn: boolean) {
+   // console.log('Hi')
+   // console.log(loggedIn);
+    this.menuCtrl.enable(loggedIn, 'loggedInMenu');
+    this.menuCtrl.enable(!loggedIn, 'loggedOutMenu');
   }
 
   openPage(page) {

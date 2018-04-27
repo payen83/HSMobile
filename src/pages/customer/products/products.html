@@ -19,7 +19,7 @@
       <h2>{{ product.name }}</h2>
       <h4>{{ product.currency }}{{ product.price }}</h4>
       <div item-content>
-        <button ion-button (click)="cartPage()">Add to cart</button>
+        <button ion-button (click)="addToCart(product)">Add to cart</button>
       </div>
     </ion-item>
     <!-- <ion-item no-padding>

@@ -27,7 +27,7 @@ export class RequestPage {
   }
 
   closeRequest(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss({accept: false});
   }
 
 
