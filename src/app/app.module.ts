@@ -24,6 +24,7 @@ import { Api, Products, User } from '../providers/providers';
 import { HttpClientModule } from '@angular/common/http';
 import { TncPageModule } from '../pages/general/tnc/tnc.module';
 import { CommonProvider } from '../providers/common/common';
+import { StatusDetailPageModule } from '../pages/customer/status-detail/status-detail.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CommonProvider } from '../providers/common/common';
     MapPageModule,
     HttpClientModule,
     TncPageModule,
+    StatusDetailPageModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],

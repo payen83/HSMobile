@@ -28,6 +28,7 @@ export class MapPage {
   autocomplete: any;
   markers: Array<any> = [];
   service = new google.maps.places.AutocompleteService();
+  selectedLocation: any;
 
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private zone: NgZone) {
     this.autocompleteItems = [];
@@ -53,7 +54,7 @@ export class MapPage {
     this.service.getPlacePredictions({
       input: this.autocomplete.query,
       componentRestrictions: {
-        country: 'my'
+        //country: 'my'
       }
     }, (predictions, status) => {
       me.autocompleteItems = [];
@@ -85,7 +86,8 @@ export class MapPage {
       //console.log('results: + '+JSON.stringify(latlng))
       this.removeMarkers();
       this.addMarker(latlng.lat, latlng.lng, item);
-      this.map.panTo({ lat: latlng.lat, lng: latlng.lat });
+      this.map.panTo({ lat: latlng.lat, lng: latlng.lng });
+      this.selectedLocation = {address: item, coords: latlng};
       this.displayMap();
     })
     .catch(err=>{
@@ -166,6 +168,7 @@ export class MapPage {
         this.getAddress(marker.position.lat(), marker.position.lng()).then((results)=>{
           // infoWindow.setContent(JSON.stringify(this.markerlatlong))
           let content = '<div style="max-width: 200px;">' + results + '</div>';
+          this.selectedLocation = {address: results, coords: {lat: marker.position.lat(), lng: marker.position.lng() }};
           infoWindow.setContent(content);
         }).catch(err=>{
           infoWindow.setContent('Error: '+JSON.stringify(err));
@@ -199,7 +202,7 @@ export class MapPage {
   }
 
   saveMap(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.selectedLocation);
   }
 
 

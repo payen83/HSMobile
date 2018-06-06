@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+//import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the ConfirmationPage page.
@@ -17,15 +17,10 @@ import { Storage } from '@ionic/storage';
 export class ConfirmationPage {
   protected itemInCart: Array<any> = [];
   protected totalPrice: Number;
+  protected address: string;
 
-  constructor(private storage: Storage, public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
-    // this.storage.get('CART').then(items=>{
-    //   if(items){
-    //     this.itemInCart = JSON.parse(items);
-    //   } else {
-    //     console.log('no data');
-    //   }
-    // });
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+    this.address = '39-1 Jalan Equine 9A, Equine Park, 43300 Seri Kembangan, Selangor Darul Ehsan';
     this.itemInCart = this.navParams.get('itemInCart');
     this.totalPrice = this.navParams.get('totalPrice');
   }
@@ -41,6 +36,10 @@ export class ConfirmationPage {
   setLocation(){
     let modal = this.modalCtrl.create('MapPage');
     modal.present();
+    modal.onDidDismiss(result=>{
+      //console.log(result);
+      this.address = result.address;
+    })
   }
 
   

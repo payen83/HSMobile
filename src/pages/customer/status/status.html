@@ -27,7 +27,7 @@
   <div [ngSwitch]="status">
     <div *ngSwitchCase="'active'">
       <ion-card>
-        <button ion-item>
+        <button ion-item (click)="statusDetail()">
           <ion-avatar item-start>
             <img src="assets/imgs/user.png">
           </ion-avatar>

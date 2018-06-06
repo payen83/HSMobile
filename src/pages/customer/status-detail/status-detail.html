@@ -1,0 +1,94 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Details</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      <ion-item-divider color="light">
+        <strong>Agent</strong>
+        <button ion-button icon-left round color="danger" item-end (click)="buttonClick()">
+          <ion-icon name="close"></ion-icon> Cancel order</button>
+      </ion-item-divider>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="assets/imgs/user.png">
+        </ion-avatar>
+  
+        <h2>Farhan Ramli</h2>
+        <div>
+          <button ion-button icon-left round outline color="danger" item-start (click)="nav()">
+            <ion-icon name="phone-portrait"></ion-icon>Call</button>
+          <button ion-button icon-left round outline color="danger" item-start (click)="nav()">
+            <ion-icon name="chatbubbles"></ion-icon>Chat</button>
+        </div>   
+      </ion-item>
+      <ion-item-divider color="light">
+        <strong>Products</strong>
+      </ion-item-divider>
+      <ion-item no-padding>
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/logo.png">
+        </ion-thumbnail>
+        <h2>EssensiaPlus x 1</h2>
+        <h4>RM500</h4>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/logo.png">
+        </ion-thumbnail>
+        <h2>Night Cream x 1</h2>
+        <h4>RM200</h4>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-note item-end>
+          <strong>Total: RM500</strong>
+        </ion-note>
+      </ion-item>
+    </ion-list>
+    <ion-item-divider color="light">
+      <strong>Timeline</strong>
+    </ion-item-divider>
+    <ul class="timeline">
+      <li>
+        <div class="timeline-thumb bg-color-blue timeline-icon">
+        </div>
+        <div class="timeline-item">
+          <h5>Order completed</h5>
+          <span class="color-gray"><ion-icon name="timer"></ion-icon> 40 minutes ago</span>
+          <div class="timeline-stats">
+            <!-- <i class="ion-heart"></i> 2,450 -->
+            <!-- <span class="pos-absolute-right"> -->
+              <!-- <i class="ion-ios-clock"></i> 2 mins ago -->
+            <!-- </span> -->
+          </div>
+        </div>
+      </li>
+      <li>
+          <div class="timeline-thumb bg-color-blue timeline-icon">
+            <i class="ion-heart"></i>
+          </div>
+          <div class="timeline-item">
+            <h5>Agent on-delivery</h5>
+            <span class="color-gray"><ion-icon name="timer"></ion-icon> 40 minutes ago</span>
+            <div class="timeline-stats">
+              
+            </div>
+          </div>
+        </li>
+        <li>
+            <div class="timeline-thumb bg-color-blue timeline-icon">
+              <i class="ion-heart"></i>
+            </div>
+            <div class="timeline-item">
+              <h5>Order started</h5>
+              <span class="color-gray"><ion-icon name="timer"></ion-icon> 40 minutes ago</span>
+              <div class="timeline-stats">
+               
+              </div>
+            </div>
+          </li>
+    </ul>
+  
+  </ion-content>

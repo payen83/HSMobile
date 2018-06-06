@@ -1,0 +1,31 @@
+{
+    "requests": [
+        {
+            "id": 1,
+            "location": "39-1 Jalan Equine 9A, Equine Park, Seri Kembangan",
+            "products": [
+                {
+                    "id": 1,
+                    "name": "EssensiaPlus",
+                    "qty": 1
+                },
+                {
+                    "id": 2,
+                    "name": "Night Cream",
+                    "qty": 1
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "location": "D14-4 Sentul Murni Kondo, Jalan Dato Senu 3, 53200 Kuala Lumpur",
+            "products": [
+                {
+                    "id": 1,
+                    "name": "EssensiaPlus",
+                    "qty": 2
+                }
+            ]
+        }
+    ]
+}

@@ -5,16 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Profile</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content>
   <div class="wrapper">
@@ -29,30 +26,49 @@
     <ion-item-divider color="light">
       <strong>Personal Details</strong>
     </ion-item-divider>
+
     <ion-item>
-      <ion-label>Name</ion-label>
-      <div class="item-content" item-content>Farhan Ramli</div>
+      <ion-label fixed>Name</ion-label>
+      <div class="item-content" item-content>
+        <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+      </div>
     </ion-item>
+
     <ion-item>
-      <ion-label>IC Number</ion-label>
-      <div item-content class="item-content">16 February 1983</div>
+      <ion-label fixed>IC No.</ion-label>
+      <div item-content class="item-content">
+        <ion-input type="text" [(ngModel)]="user.icNo"></ion-input>
+      </div>
     </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Phone No.</ion-label>
+      <div item-content class="item-content">
+        <ion-input type="text" [(ngModel)]="user.phoneNo"></ion-input>
+      </div>
+    </ion-item>
+
     <ion-item text-wrap>
-        <ion-label fixed>Address</ion-label>
-        <div item-content class="item-content">Multiline text that should wrap when it is too long
-            to fit on one line in the item.</div>
-      </ion-item>
+      <ion-label fixed>Address</ion-label>
+      <div item-content class="item-content">
+        <ion-textarea rows="4" type="text" [(ngModel)]="user.address"></ion-textarea>
+      </div>
+    </ion-item>
     
     <ion-item-divider color="light">
       <strong>Bank Details</strong>
     </ion-item-divider>
     <ion-item>
-      <ion-label>Bank Name</ion-label>
-      <div item-content class="item-content">Maybank Berhad</div>
+      <ion-label fixed>Bank Name</ion-label>
+      <div item-content class="item-content">
+        <ion-input type="text" [(ngModel)]="user.bankName"></ion-input>
+      </div>
     </ion-item>
-    <ion-item>
-      <ion-label>Account Number</ion-label>
-      <div item-content class="item-content">5141567829993</div>
+    <ion-item fixed>
+      <ion-label>Account No.</ion-label>
+      <div item-content class="item-content">
+        <ion-input type="text" [(ngModel)]="user.bankAcc"></ion-input>
+      </div>
     </ion-item>
 
     <ion-item-divider color="light">
@@ -62,10 +78,10 @@
       <ion-label>Email</ion-label>
       <div item-content class="item-content">user@gmail.com</div>
     </ion-item>
-    <ion-item>
+    <ion-item tappable (click)="changePassword()">
       <ion-label>Password</ion-label>
       <div item-content class="item-content">
-        Change password
+        <em>Tap to change</em>
       </div>
     </ion-item>
   </ion-list>
@@ -73,6 +89,6 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar color="secondary">
-    <button small color="light" ion-button clear block>Save</button>
+    <button small color="light" ion-button clear block (click)="submitProfile()">Save</button>
   </ion-toolbar>
 </ion-footer>

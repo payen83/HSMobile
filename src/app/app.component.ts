@@ -12,12 +12,12 @@ import { User } from '../providers/user/user';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
  
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
   hasLoggedIn: boolean = false;
   pages: Array<{title: string, icon?: string, component: any}>;
   pagesCustomer: Array<{title: string, icon?: string, component: any}>;
 
-  isAgent: boolean;
+  //isAgent: boolean;
   constructor(public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
     this.initializeApp();
 
@@ -31,7 +31,7 @@ export class MyApp {
     ];
 
     this.pagesCustomer = [
-      { title: 'Home', component: HomePage, icon: 'home' },
+      // { title: 'Home', component: HomePage, icon: 'home' },
       // { title: 'Orders', component: 'OrdersPage', icon: "clipboard" },
       // { title: 'Transactions', component: 'TransactionsPage', icon: "cash" },
       { title: 'Products', component: 'ProductsPage', icon: "apps" },
@@ -56,7 +56,7 @@ export class MyApp {
     })
 
     //this.enableMenu();
-    this.isAgent = true;
+    //this.isAgent = true;
   }
 
   profilePage(){
@@ -64,9 +64,13 @@ export class MyApp {
     this.nav.setRoot('ProfilePage');
   }
 
+  isAgent():boolean{
+    return this.user.userType() == 'a';
+  }
+
   logout(){
     this.menuCtrl.close();
-    this.enableMenu(false);
+    //this.enableMenu(false);
     this.nav.setRoot('LoginPage', {}, {animate: true});
   }
 

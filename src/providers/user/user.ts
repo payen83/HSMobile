@@ -1,7 +1,6 @@
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/share';
 import { Injectable } from '@angular/core';
-
 import { Api } from '../api/api';
 
 /**
@@ -26,8 +25,11 @@ import { Api } from '../api/api';
 @Injectable()
 export class User {
   _user: any;
+  _type: string;
 
-  constructor(public api: Api) { }
+  constructor(public api: Api) { 
+    this._type = 'c';
+  }
 
   /**
    * Send a POST request to our login endpoint with the data
@@ -56,6 +58,14 @@ export class User {
       }, 500);
       
     })
+  }
+
+  userType(){
+    return this._type;
+  }
+
+  setUserType(type){
+    this._type = type;
   }
 
   /**
@@ -90,4 +100,9 @@ export class User {
   _loggedIn(resp) {
     this._user = resp.user;
   }
+
+  getProfile(){
+
+  }
+  
 }

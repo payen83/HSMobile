@@ -9,13 +9,13 @@
       </header>
     </div>
     <ion-list class="btnside">
-      <div *ngIf="isAgent">
+      <div *ngIf="isAgent()">
         <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pages" (click)="openPage(p)">
           <ion-icon name="{{p.icon}}" class="label"></ion-icon>
           {{p.title}}
         </button>
       </div>
-      <div *ngIf="!isAgent">
+      <div *ngIf="!isAgent()">
         <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pagesCustomer" (click)="openPage(p)">
           <ion-icon name="{{p.icon}}" class="label"></ion-icon>
           {{p.title}}
@@ -27,7 +27,6 @@
       </button>
     </ion-list>
   </ion-content>
-  
 </ion-menu>
 
 <ion-menu id="loggedOutMenu" [content]="content">

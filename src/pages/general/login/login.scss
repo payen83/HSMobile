@@ -9,7 +9,8 @@ page-login {
   }
   .background {
     //background-image: url('../assets/imgs/bg.png');
-    background-color: color($colors, secondary);
+    //background-color: color($colors, dark);
+    background-image: linear-gradient(45deg, #A9A9A9, #DCDCDC);
     background-size: cover;
     background-repeat: no-repeat;
   }
@@ -32,6 +33,10 @@ page-login {
   .text-input::-webkit-input-placeholder {
     text-indent: 0;
     color: white;
+  }
+  img{
+    width: 200px;
+    height: 200px;
   }
 }
 

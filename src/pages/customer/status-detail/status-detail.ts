@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the StatusPage page.
+ * Generated class for the StatusDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,21 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-status',
-  templateUrl: 'status.html',
+  selector: 'page-status-detail',
+  templateUrl: 'status-detail.html',
 })
-export class StatusPage {
-  status: any;
+export class StatusDetailPage {
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StatusPage');
-    this.status = 'active';
-  }
-
-  statusDetail(){
-    this.navCtrl.push('StatusDetailPage');
+    console.log('ionViewDidLoad StatusDetailPage');
   }
 
 }

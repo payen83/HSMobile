@@ -20,17 +20,13 @@
 
 <ion-content>
   <ion-list no-lines>
-    <ion-item>
-      <ion-icon name="apps" item-start></ion-icon>
-      EssensiaPlus x 1
-    </ion-item>
-    <ion-item>
-        <ion-icon name="apps" item-start></ion-icon>
-        Night Cream x 1
+      <ion-item *ngFor="let item of request.products">
+          <ion-icon name="apps" item-start></ion-icon>
+          {{item.name}} x {{item.qty}}
       </ion-item>
     <ion-item text-wrap>
       <ion-icon name="pin" item-start></ion-icon>
-      39-1 Jalan Equine 9A, Equine Park, Seri Kembangan
+      {{request.location}}
     </ion-item>
   </ion-list>
   <div padding class="btn">
