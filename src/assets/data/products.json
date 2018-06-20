@@ -6,7 +6,7 @@
             "price": 500,
             "currency": "USD",
             "description": "Health product",
-            "image_url": "../../assets/imgs/essentiaplus.png",
+            "image_url": "./assets/imgs/essentiaplus.png",
             "package": {
                 "quantity_per_package": 3,
                 "discount": 0.3
@@ -18,7 +18,7 @@
             "price": 300,
             "currency": "USD",
             "description": "Sleep cream product",
-            "image_url": "../../assets/imgs/nightcream.jpg",
+            "image_url": "./assets/imgs/nightcream.jpg",
             "package": {
                 "quantity_per_package": 5,
                 "discount": 0.2

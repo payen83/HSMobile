@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { HomePage } from '../../agent/home/home';
 import { User } from '../../../providers/user/user';
 import { CommonProvider } from '../../../providers/common/common';
@@ -18,7 +18,7 @@ import { CommonProvider } from '../../../providers/common/common';
 })
 export class LoginPage {
   user: any = {email: '', password: ''};
-  constructor(public common: CommonProvider, public alertCtrl: AlertController, public userP: User, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public modalCtrl: ModalController, public common: CommonProvider, public alertCtrl: AlertController, public userP: User, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -66,6 +66,22 @@ export class LoginPage {
 
     prompt.present();
   
+  }
+
+  openRegister(){
+    let modalCss = {
+      showBackdrop: true,
+      enableBackdropDismiss: false,
+      cssClass: "my-modal"
+    }
+    let modal = this.modalCtrl.create('RegisterPage', null, modalCss);
+    modal.present();
+    modal.onDidDismiss(data => {
+      if(data.registerItem){
+        //this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
+        this.common.showAlert('Your registration is successful','Please login to continue');
+      } 
+    });
   }
 
   register(){

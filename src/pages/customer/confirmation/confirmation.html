@@ -61,12 +61,20 @@
     <ion-item-divider color="light">
       <h2>Payment Method</h2>
     </ion-item-divider>
-    <ion-item>
-      <ion-label>
-        <img src="assets/imgs/paypal.png" width="90" />
-      </ion-label>
-      <ion-checkbox color="primary" checked="true"></ion-checkbox>
-    </ion-item>
+    <div radio-group [(ngModel)]="autoManufacturers">
+      <ion-item>
+        <ion-label>
+          <img src="./assets/imgs/paypal.png" width="90" />
+        </ion-label>
+        <ion-radio color="primary" checked="true"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label color="dark">
+          <strong>Credit balance (780)</strong>
+        </ion-label>
+        <ion-radio color="primary"></ion-radio>
+      </ion-item>
+    </div>
   </ion-list>
   <ion-footer>
       <ion-toolbar color="secondary">

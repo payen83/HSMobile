@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TncPageModule } from '../pages/general/tnc/tnc.module';
 import { CommonProvider } from '../providers/common/common';
 import { StatusDetailPageModule } from '../pages/customer/status-detail/status-detail.module';
+import { RegisterPageModule } from '../pages/general/register/register.module';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { StatusDetailPageModule } from '../pages/customer/status-detail/status-d
     HttpClientModule,
     TncPageModule,
     StatusDetailPageModule,
+    RegisterPageModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
