@@ -21,9 +21,10 @@ export class ProductsPage {
   }
 
   ionViewDidLoad() {
-    this.products.query().then(result => {
+    this.products.getProductCustomer().then(result => {
       let response: any = result;
       this.items = response.products;
+      console.log(this.items)
     });
 
     this.storage.get('CART').then(items => {
@@ -34,6 +35,10 @@ export class ProductsPage {
         console.log('no data')
       }
     });
+  }
+
+  getPath(url: string){
+    return 'http://healthshoppe.elyzian.xyz/public/upload/images/'+url;
   }
 
   cartPage() {

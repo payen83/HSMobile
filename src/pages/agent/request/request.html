@@ -20,13 +20,13 @@
 
 <ion-content>
   <ion-list no-lines>
-      <ion-item *ngFor="let item of request.products">
+      <ion-item *ngFor="let item of request.orders">
           <ion-icon name="apps" item-start></ion-icon>
-          {{item.name}} x {{item.qty}}
+          {{item.Name}} x {{item.ProductQuantity}}
       </ion-item>
     <ion-item text-wrap>
       <ion-icon name="pin" item-start></ion-icon>
-      {{request.location}}
+      {{request.c_address}}
     </ion-item>
   </ion-list>
   <div padding class="btn">

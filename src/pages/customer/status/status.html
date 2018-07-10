@@ -26,15 +26,15 @@
 <ion-content class="light">
   <div [ngSwitch]="status">
     <div *ngSwitchCase="'active'">
-      <ion-card>
+      <ion-card *ngFor="let job of activeJobs">
         <button ion-item (click)="statusDetail()">
           <ion-avatar item-start>
             <img src="assets/imgs/user.png">
           </ion-avatar>
-          <h2>Farhan Razi</h2>
-          <h4>Order #2134</h4>
-          <p>
-            <ion-icon color="yellow" name="star"></ion-icon> 4.7</p>
+          <h2>{{job.c_name}}</h2>
+          <h4>Order #{{job.JobID}}</h4>
+          <p><ion-icon color="yellow" name="star"></ion-icon> 4.7</p>
+          <ion-note item-end><h5>{{job.current_status}}</h5></ion-note>
         </button>
         <ion-row>
           <ion-col>
@@ -52,7 +52,7 @@
         </ion-row>
       </ion-card>
 
-      <ion-card>
+      <!-- <ion-card>
         <button ion-item>
           <ion-avatar item-start>
             <img src="assets/imgs/user.png">
@@ -76,16 +76,16 @@
             </button>
           </ion-col>
         </ion-row>
-      </ion-card>
+      </ion-card> -->
     </div>
     <div *ngSwitchCase="'completed'">
-      <ion-card>
+      <ion-card *ngFor="let job of completedJobs">
         <button ion-item>
           <ion-avatar item-start>
             <img src="assets/imgs/user.png">
           </ion-avatar>
-          <h2>Farhan Razi</h2>
-          <h4>Order #2134</h4>
+          <h2>{{job.c_name}}</h2>
+          <h4>Order #{{job.JobID}}</h4>
           <p><ion-icon name="star"></ion-icon> 4.7</p>
           <ion-note item-end><button ion-button small clear>Leave feedback</button></ion-note>
         </button>

@@ -21,7 +21,10 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-input type="text" [(ngModel)]="user.email" placeholder="Email"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.name" placeholder="Name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="email" [(ngModel)]="user.email" placeholder="Email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-input type="password" [(ngModel)]="user.password" placeholder="Password"></ion-input>
@@ -31,9 +34,9 @@
     </ion-item>
     <ion-item>
       <ion-label>Register as</ion-label>
-      <ion-select [(ngModel)]="user.type" interface="popover">
-        <ion-option value="customer">Customer</ion-option>
-        <ion-option value="agent">Agent</ion-option>
+      <ion-select [(ngModel)]="user.role" interface="popover">
+        <ion-option value="Customer">Customer</ion-option>
+        <ion-option value="Agent">Agent</ion-option>
       </ion-select>
     </ion-item>
     <div padding>

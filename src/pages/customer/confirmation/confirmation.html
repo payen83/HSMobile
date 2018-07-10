@@ -9,11 +9,11 @@
   <ion-list>
       <ion-item no-padding *ngFor="let item of itemInCart">
           <ion-thumbnail item-start>
-            <img [src]="item.image_url">
+            <img [src]="getPath(item.ImageURL)">
           </ion-thumbnail>
-          <h3>{{item.name}} x {{item.qty}}</h3>
+          <h3>{{item.Name}} x {{item.qty}}</h3>
           <div item-content item-end>
-            {{item.currency}}{{item.price}}
+            USD{{item.Price}}
           </div>
         </ion-item>
     <!-- <ion-item no-padding>
@@ -56,7 +56,7 @@
       <h2>Special Note</h2>
     </ion-item-divider>
     <ion-item text-wrap>
-      <ion-textarea rows="3" type="text" placeholder="e.g exact location, building or house number etc."></ion-textarea>
+      <ion-textarea rows="3" type="text" placeholder="e.g exact location, building or house number etc." [(ngModel)]="note"></ion-textarea>
     </ion-item>
     <ion-item-divider color="light">
       <h2>Payment Method</h2>

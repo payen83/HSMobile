@@ -29,9 +29,12 @@ export class MapPage {
   markers: Array<any> = [];
   service = new google.maps.places.AutocompleteService();
   selectedLocation: any;
-
+  lat: number;
+  lng: number;
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private zone: NgZone) {
     this.autocompleteItems = [];
+    this.lat = this.navParams.get('lat');
+    this.lng = this.navParams.get('lng');
     this.autocomplete = {
       query: ''
     };
@@ -115,8 +118,8 @@ export class MapPage {
   }
 
   initMap() {
-    let latitude = 3.1980954;
-    let longitude = 101.6978543;
+    let latitude = this.lat; //3.1980954;
+    let longitude = this.lng; //101.6978543;
 
     let latlng = new google.maps.LatLng(latitude, longitude);
 
@@ -165,6 +168,8 @@ export class MapPage {
     });  
 
     google.maps.event.addListener(marker, 'dragend', (res) => {
+        // this.lat = marker.position.lat();
+        // this.lng = marker.position.lng();
         this.getAddress(marker.position.lat(), marker.position.lng()).then((results)=>{
           // infoWindow.setContent(JSON.stringify(this.markerlatlong))
           let content = '<div style="max-width: 200px;">' + results + '</div>';
@@ -189,6 +194,7 @@ export class MapPage {
       geocoder.geocode({ 'location': latlng }, (results, status) => {
         if (status === 'OK') {
           if (results[0]) {
+            //console.log(results[0]);
             resolve(results[0].formatted_address);
           } else {
             reject ('No results found');
@@ -202,6 +208,7 @@ export class MapPage {
   }
 
   saveMap(){
+    //this.selectedLocation = {address: ,lat: this.lat, lng: this.lng}
     this.viewCtrl.dismiss(this.selectedLocation);
   }
 

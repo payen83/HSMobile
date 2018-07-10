@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { RequestPage } from '../request/request';
-import { Api } from '../../../providers/api/api';
+import { Api, User } from '../../../providers/providers';
 import { CommonProvider } from '../../../providers/common/common';
 
 @Component({
@@ -11,9 +11,13 @@ import { CommonProvider } from '../../../providers/common/common';
 export class HomePage {
   requestList: Array<any>;
   reqTemp: any;
+  stocks: Array<any>;
 
-  constructor(public common: CommonProvider, public api: Api, public navCtrl: NavController, public modalCtrl: ModalController) {
+  constructor(public user: User, public common: CommonProvider, public api: Api, public navCtrl: NavController, public modalCtrl: ModalController) {
     this.requestList=[];
+    this.stocks=[];
+    //http://healthshoppe.elyzian.xyz/api/products/product-inventory/24
+
     this.reqTemp = {requests:[
       {
         "id": 1,
@@ -44,11 +48,16 @@ export class HomePage {
       }
     ]}
   }
-
+ 
   ionViewDidLoad(){
+    //this.loadRequest();
+    this.getProductInventory();
+  }
+
+  loadRequest(){
     this.getLatestRequest().then(result=>{
       let fetchedRequest: any = result;
-      this.requestList = fetchedRequest.requests;
+      this.requestList = fetchedRequest;
       if(!this.common.isEmpty(this.requestList)){
         this.openRequest(this.requestList.shift());
       }
@@ -81,12 +90,36 @@ export class HomePage {
     }, 500);
   }
 
+  getProductInventory(){
+    this.common.getData('USER').then(response => {
+      if (response){
+        console.log(response);
+        let result: any = response;
+        //this.user = result;
+        this.user.agentInventory(result.id).then(i_response=>{
+          let res: any = i_response;
+          if (!this.common.isEmpty(res.inventories)){
+            this.stocks = res.inventories;
+            console.log(this.stocks);
+          }
+        });
+      }
+    }, err => {
+        console.log('err: ' + JSON.stringify(err))
+    })
+  }
+
+  getPath(url: string){
+    return this.common.getAPI_URL() + url;
+  }
+
   getLatestRequest(){
     return new Promise(resolve=>{
-      //this.api.get('request.json', null).subscribe(res=>{
-        // resolve(res);
-        resolve(this.reqTemp);
-      //})
+      this.api.get('job/pending-job').subscribe(res=>{
+        resolve(res);
+      }, err => {
+        this.common.showAlert('Error',JSON.stringify(err))
+      })
     });
   }
 

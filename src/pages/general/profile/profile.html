@@ -16,9 +16,9 @@
 <ion-content>
   <div class="wrapper">
     <header class="wrapper-text">
-      <img src="assets/imgs/user.png" class="img" />
-      <h3>Farhan Ramli</h3>
-      <p>user@gmail.com</p>
+      <img [src]="showProfileImage()" class="img" />
+      <h3>{{currentUser.name}}</h3>
+      <p>{{currentUser.email}}</p>
     </header>
   </div>
   <ion-list>
@@ -37,46 +37,49 @@
     <ion-item>
       <ion-label fixed>IC No.</ion-label>
       <div item-content class="item-content">
-        <ion-input type="text" [(ngModel)]="user.icNo"></ion-input>
+        <ion-input type="text" [(ngModel)]="user.icnumber"></ion-input>
       </div>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>Phone No.</ion-label>
       <div item-content class="item-content">
-        <ion-input type="text" [(ngModel)]="user.phoneNo"></ion-input>
+        <ion-input type="text" [(ngModel)]="user.u_phone"></ion-input>
       </div>
     </ion-item>
 
     <ion-item text-wrap>
       <ion-label fixed>Address</ion-label>
       <div item-content class="item-content">
-        <ion-textarea rows="4" type="text" [(ngModel)]="user.address"></ion-textarea>
+        <ion-textarea rows="4" type="text" [(ngModel)]="user.u_address"></ion-textarea>
       </div>
     </ion-item>
     
-    <ion-item-divider color="light">
-      <strong>Bank Details</strong>
-    </ion-item-divider>
-    <ion-item>
-      <ion-label fixed>Bank Name</ion-label>
-      <div item-content class="item-content">
-        <ion-input type="text" [(ngModel)]="user.bankName"></ion-input>
-      </div>
-    </ion-item>
-    <ion-item fixed>
-      <ion-label>Account No.</ion-label>
-      <div item-content class="item-content">
-        <ion-input type="text" [(ngModel)]="user.bankAcc"></ion-input>
-      </div>
-    </ion-item>
+    <div *ngIf="isAgent()">
+      <ion-item-divider color="light">
+        <strong>Bank Details</strong>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label fixed>Bank Name</ion-label>
+        <div item-content class="item-content">
+          <ion-input type="text" [(ngModel)]="user.u_bankname"></ion-input>
+        </div>
+      </ion-item>
+      <ion-item fixed>
+        <ion-label>Account No.</ion-label>
+        <div item-content class="item-content">
+          <ion-input type="text" [(ngModel)]="user.u_accnumber"></ion-input>
+        </div>
+      </ion-item>
+    </div>
+    
 
     <ion-item-divider color="light">
       <strong>Account Details</strong>
     </ion-item-divider>
     <ion-item>
       <ion-label>Email</ion-label>
-      <div item-content class="item-content">user@gmail.com</div>
+      <div item-content class="item-content">{{user.email}}</div>
     </ion-item>
     <ion-item tappable (click)="changePassword()">
       <ion-label>Password</ion-label>

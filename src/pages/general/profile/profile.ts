@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { CommonProvider } from '../../../providers/common/common';
+import { User } from '../../../providers/providers';
 
 @IonicPage()
 @Component({
@@ -8,24 +9,62 @@ import { CommonProvider } from '../../../providers/common/common';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  user: {name?: string, icNo?: string, address?: string, bankName?: string, bankAcc?: string, email: string, phoneNo?: string};
+  user: {lat?: number, lng?: number, url_image?: null, role?: string, id?: number, name?: string, icnumber?: string, u_address?: string, u_bankname?: string, u_accnumber?: string, email: string, u_phone?: string};
   savedBankAcc: string;
+  currentUser: any;
 
-  constructor(public common: CommonProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public userProvider: User, public common: CommonProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
     this.user = {
-      name: "Farhan Ramli", 
-      icNo: "830217-89-003",
-      address: "39-1 Jalan Dato Senu 26, Taman Dato Senu, 51000 Kuala Lumpur",
-      bankName: "Maybank",
-      bankAcc: "165520939293",
-      email: "user@gmail.com",
-      phoneNo: "+60120043324"
-    };
-    this.savedBankAcc = this.user.bankAcc;
+      name: null,
+      icnumber:null,
+      u_address: null,
+      u_phone: null,
+      u_bankname: null,
+      u_accnumber: null,
+      email: null,
+      url_image: null,
+      role: 'Customer',
+      lat: null,
+      lng: null
+    }
+
+    this.currentUser = {name: null, email: null};
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+    this.getProfile();
+  }
+
+ showProfileImage(){
+  if(this.user.url_image){
+    return this.common.getProfileImage_URL() + this.user.url_image;
+  }
+  return '../../../assets/imgs/user.png';
+ }
+
+  getProfile(){
+    this.common.getData('USER').then(response => {
+      if (response){
+        console.log(response);
+        let result: any = response;
+        this.user = result;
+        this.setProfile(this.user);
+        this.savedBankAcc = this.user.u_accnumber;
+      }
+
+      if(!this.user.u_address){
+        this.common.getLocation().then(location => {
+          let coords: any = location
+          this.user.lat = coords.latitude;
+          this.user.lng = coords.longitude;
+        });
+      }
+
+    }, err => {
+        console.log('err: ' + JSON.stringify(err))
+    });
   }
 
   changePassword(){
@@ -91,9 +130,7 @@ export class ProfilePage {
         {
           text: 'Submit',
           handler: data => {
-            
-              this.getPassword(data.pwd);
-            
+            this.getPassword(data.pwd);
           }
         }
       ]
@@ -103,13 +140,57 @@ export class ProfilePage {
   
   }
 
-  getPassword(pass){
-
+  isAgent(){
+    return this.user.role == 'Agent';
   }
 
+  getPassword(pass){
+    let user = {email: this.user.email, password: pass};
+    this.userProvider.login(user).then(res=>{
+      //console.log(res);
+      if (res.status){
+        this.savedBankAcc = this.user.u_accnumber;
+        this.submitProfile();
+        //return true;
+      } else {
+        this.common.showAlert('','Invalid username or password')
+        return false
+      }
+   }, err => {
+     this.common.showAlert('Login failed', JSON.stringify(err.error.error))
+     return false;
+   })
+  }
+
+  setProfile(data: any){
+    this.currentUser.name = data.name;
+    this.currentUser.email = data.email
+  }
+  
+
   submitProfile(){
-    if(this.user.bankAcc !== this.savedBankAcc){
-      this.checkPassword()
+    if(!this.user.u_address){
+      this.common.showAlert('', 'Please enter your current address');
+    } else {
+
+    }
+    if(this.user.u_accnumber !== this.savedBankAcc){
+     this.checkPassword()
+    } 
+    else {
+      let loader = this.common.showLoader();
+      this.userProvider.saveProfile(this.user).then(response=>{
+        loader.dismiss();
+        this.setProfile(this.user);
+        let result: any = response;
+        if(result.status){
+          this.common.saveData('USER', this.user);
+          this.common.showAlert('Profile', 'Your profile has been updated.');
+        }
+      }, err => {
+        loader.dismiss();
+        this.common.showAlert('Error', JSON.stringify(err));
+      })
     }
   }
 

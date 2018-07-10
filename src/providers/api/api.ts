@@ -7,8 +7,9 @@ import 'rxjs/add/operator/toPromise';
  */
 @Injectable()
 export class Api {
-  //url: string = 'https://swapi.co/api';
-  url: string = '../../assets/data';
+  url: string = 'http://healthshoppe.elyzian.xyz/api';
+
+  //url: string = '../../assets/data';
 
   constructor(public http: HttpClient) {
   }

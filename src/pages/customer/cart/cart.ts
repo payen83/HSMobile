@@ -37,6 +37,10 @@ export class CartPage {
     });
   }
 
+  getPath(url: string){
+    return 'http://healthshoppe.elyzian.xyz/public/upload/images/'+url;
+  }
+
   updateCart() {
     let newCart: Array<any> = [];
     for(let index in this.itemInCart){
@@ -90,7 +94,7 @@ export class CartPage {
   getTotal(){
     let total: number = 0;
     for(let item of this.itemInCart){
-      total += item.price * item.qty;
+      total += item.Price * item.qty;
     }
     this.totalPrice = total;
     return total;

@@ -17,10 +17,10 @@
         </ion-item-divider> -->
     <ion-item no-padding *ngFor="let item of itemInCart; let i = index">
       <ion-thumbnail item-start>
-        <img [src]="item.image_url">
+        <img [src]="getPath(item.ImageURL)">
       </ion-thumbnail>
-      <h2>{{item.name}}</h2>
-      <h4>{{item.currency}}{{item.price}}</h4>
+      <h2>{{item.Name}}</h2>
+      <h4>USD{{item.Price}}</h4>
       <div item-content>
         <button small ion-button icon-only (click)="subtractQuantity(i)">
           <ion-icon name="remove"></ion-icon>

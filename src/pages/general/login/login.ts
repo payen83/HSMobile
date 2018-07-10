@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, LoadingController } from 'ionic-angular';
 import { HomePage } from '../../agent/home/home';
 import { User } from '../../../providers/user/user';
 import { CommonProvider } from '../../../providers/common/common';
@@ -18,7 +18,7 @@ import { CommonProvider } from '../../../providers/common/common';
 })
 export class LoginPage {
   user: any = {email: '', password: ''};
-  constructor(public modalCtrl: ModalController, public common: CommonProvider, public alertCtrl: AlertController, public userP: User, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public userProvider: User, public modalCtrl: ModalController, public common: CommonProvider, public alertCtrl: AlertController, public userP: User, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -26,12 +26,32 @@ export class LoginPage {
   }
 
   login(type){
-    this.userP.setUserType(type);
-    if(type == 'a'){
+    
+    if(type == 'Agent'){
+      this.userP.setUserType('a');
       this.navCtrl.setRoot(HomePage, {}, {animate: true});
     } else{
+      this.userP.setUserType('c');
       this.navCtrl.setRoot('ProductsPage', {}, {animate: true});
     }
+  }
+
+  doLogin(){
+   let loader = this.common.showLoader();
+   this.userProvider.login(this.user).then(res=>{
+      console.log(res);
+      loader.dismiss();
+      if (res.status){
+        //this.common.setUserData(res.users[0]);
+        this.common.saveData('USER', res.users[0]);
+        this.login(res.users[0].role);
+      } else {
+        this.common.showAlert('','Invalid username or password')
+      }
+   }, err => {
+     loader.dismiss();
+     this.common.showAlert('Login failed', JSON.stringify(err.error.error))
+   })
   }
 
   pageSignup(){

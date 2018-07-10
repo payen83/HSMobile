@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/agent/home/home';
 import { LoginPage } from '../pages/general/login/login';
 import { User } from '../providers/user/user';
+import { CommonProvider } from '../providers/providers';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +19,7 @@ export class MyApp {
   pagesCustomer: Array<{title: string, icon?: string, component: any}>;
 
   //isAgent: boolean;
-  constructor(public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
+  constructor(public common: CommonProvider, public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -47,7 +48,7 @@ export class MyApp {
     //   return;
     // }
     this.user.hasLoggedIn().then((loggedIn) => {
-      
+  
         if (!loggedIn){
           this.rootPage = LoginPage;
         }
@@ -57,6 +58,13 @@ export class MyApp {
 
     //this.enableMenu();
     //this.isAgent = true;
+  }
+
+  imageProfile(){
+    if(this.showUser().url_image){
+      return this.common.getProfileImage_URL() + this.showUser().url_image;
+    }
+    return 'assets/imgs/user.png';
   }
 
   profilePage(){
@@ -69,9 +77,16 @@ export class MyApp {
   }
 
   logout(){
-    this.menuCtrl.close();
+    this.common.destroyData('USER').then(res=>{
+      this.menuCtrl.close();
     //this.enableMenu(false);
-    this.nav.setRoot('LoginPage', {}, {animate: true});
+      this.user.logout();
+      this.nav.setRoot('LoginPage', {}, {animate: true});
+    })
+  }
+
+  showUser(){
+    return this.common.getUserData();
   }
 
   initializeApp() {

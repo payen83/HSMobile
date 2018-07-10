@@ -14,10 +14,10 @@
     </ion-item-divider> -->
     <ion-item no-padding *ngFor="let product of items">
       <ion-thumbnail item-start>
-        <img [src]="product.image_url">
+        <img [src]="getPath(product.ImageURL)">
       </ion-thumbnail>
-      <h2>{{ product.name }}</h2>
-      <h4>{{ product.currency }}{{ product.price }}</h4>
+      <h2>{{ product.Name }}</h2>
+      <h4>USD {{ product.Price }}</h4>
       <div item-content>
         <button ion-button (click)="addToCart(product)">Add to cart</button>
       </div>

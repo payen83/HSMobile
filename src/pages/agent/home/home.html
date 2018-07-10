@@ -41,20 +41,20 @@
 
   <ion-list>
     <ion-item-divider color="light"><strong>All Stocks</strong></ion-item-divider>
-    <ion-item>
+    <ion-item *ngFor="let stock of stocks">
       <ion-avatar item-start>
-        <img src="assets/imgs/logo.png">
+        <img [src]="getPath(stock.ImageURL)">
       </ion-avatar>
-      <h2>AssensiaPlus</h2>
-      <p>5 unit available</p>
+      <h2>{{stock.Name}}</h2>
+      <p>{{stock.quantity}} unit available</p>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-avatar item-start>
         <img src="assets/imgs/logo.png">
       </ion-avatar>
       <h2>Whitening Cream</h2>
       <p>3 unit available</p>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 
 </ion-content>
