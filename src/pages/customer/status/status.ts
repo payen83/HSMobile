@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Jobs } from '../../../providers/providers';
+import { Jobs, CommonProvider } from '../../../providers/providers';
 
 /**
  * Generated class for the StatusPage page.
@@ -18,7 +18,7 @@ export class StatusPage {
   status: any;
   activeJobs: Array<any>;
   completedJobs: Array<any>
-  constructor(public navCtrl: NavController, public navParams: NavParams, private job: Jobs) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private job: Jobs, protected common: CommonProvider ) {
     this.completedJobs = [];
     this.activeJobs = [];
   }
@@ -32,8 +32,33 @@ export class StatusPage {
     })
   }
 
-  statusDetail(){
-    this.navCtrl.push('StatusDetailPage');
+  statusDetail(job: any){
+    this.navCtrl.push('StatusDetailPage', {item: job});
+  }
+
+  getProfileImage(url: any){
+    if(url){
+      return this.common.getProfileImage_URL()+url;
+    } else {
+      return null;
+    }
+  }
+
+  getAgentName(job: any){
+    if(!this.common.isEmpty(job.agent)){
+      return job.agent[0].name;
+    } else {
+      return null
+    }
+  }
+
+  getAgentImage(job){
+    if(!this.common.isEmpty(job.agent)){
+      return job.agent[0].url_image;
+    } else {
+      return null
+    }
+    
   }
 
   filterList(jobs: Array<any>){

@@ -66,10 +66,6 @@ export class CommonProvider {
     return loader;
   }
 
-  getUserImage(){
-    
-  }
-
   getUserData(){
     return this.userData;
   }
@@ -92,7 +88,7 @@ export class CommonProvider {
       this.storage.get(property).then(items => {
         if (items) {
           let data: any = JSON.parse(items);
-          console.log(data);
+          //console.log(data);
           resolve(data);
         } else {
           console.log('no data')

@@ -14,50 +14,44 @@
   <ion-list>
     <ion-item-divider color="light">
       <strong>Customer</strong>
-      <button ion-button icon-left round color="secondary" item-end (click)="buttonClick()">
-        <ion-icon name="checkmark-circle"></ion-icon> Mark as complete</button>
+      <div *ngIf="isActive()">
+        <button ion-button icon-left round color="danger" item-end (click)="cancel()">
+          <ion-icon name="close-circle"></ion-icon> Cancel</button>
+        <button ion-button icon-left round color="secondary" item-end (click)="markComplete()">
+          <ion-icon name="checkmark-circle"></ion-icon> Mark as complete</button>
+      </div>
+      <div *ngIf="!isActive()" item-end>
+        <h4 ion-text>Pending Verification</h4>
+      </div>
     </ion-item-divider>
     <ion-item>
       <ion-avatar item-start>
-        <img src="assets/imgs/user.png">
+        <img [src]="getImage(job.url_image)||'assets/imgs/user.png'">
       </ion-avatar>
 
-      <h2>Farhan Ramli</h2>
+      <h2>{{job.c_name}}</h2>
       <div>
         <button ion-button icon-left round outline color="danger" item-start (click)="nav()">
           <ion-icon name="phone-portrait"></ion-icon>Call</button>
         <button ion-button icon-left round outline color="danger" item-start (click)="nav()">
           <ion-icon name="chatbubbles"></ion-icon>Chat</button>
       </div>
-      <!-- <div class="action-icon" tappable (click)="nav()"><h3><ion-icon name="phone-portrait"></ion-icon> Call</h3></div> -->
-      <!-- <div class="action-icon" tappable (click)="nav()"><h3><ion-icon name="chatbubbles"></ion-icon> Message</h3></div> -->
     </ion-item>
     <ion-item-divider color="light">
       <strong>Products</strong>
     </ion-item-divider>
-    <ion-item no-padding>
+    <ion-item no-padding *ngFor="let order of job.orders">
       <ion-thumbnail item-start>
-        <img src="assets/imgs/logo.png">
+        <img [src]="getProductImage(order.ImageURL)||'assets/imgs/user.png'">
       </ion-thumbnail>
-      <h2>EssensiaPlus x 1</h2>
-      <h4>RM500</h4>
-    </ion-item>
-    <ion-item no-padding>
-      <ion-thumbnail item-start>
-        <img src="assets/imgs/logo.png">
-      </ion-thumbnail>
-      <h2>Night Cream x 1</h2>
-      <h4>RM200</h4>
+      <h2>{{order.Name}} x {{order.ProductQuantity}}</h2>
+      <h4>${{order.price}}</h4>
     </ion-item>
     <ion-item no-lines>
       <ion-note item-end>
-        <strong>Total: RM500</strong>
+        <strong>Total: ${{job.total_price}}</strong>
       </ion-note>
     </ion-item>
-    <!-- <ion-item-divider color="light">
-        <strong>Location</strong>
-      </ion-item-divider>
-      <div id="map" #map></div> -->
   </ion-list>
   <ion-item-divider color="light">
     <strong>Location</strong>

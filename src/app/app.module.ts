@@ -10,7 +10,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/agent/home/home';
 
-import { Api, Products, User, Jobs, CommonProvider } from '../providers/providers';
+import { Api, Products, User, Jobs, CommonProvider, Wallet } from '../providers/providers';
 
 import { RequestPageModule } from '../pages/agent/request/request.module';
 import { OrdersPageModule } from '../pages/agent/orders/orders.module';
@@ -68,7 +68,8 @@ import { RegisterPageModule } from '../pages/general/register/register.module';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonProvider,
     Jobs,
-    Geolocation
+    Geolocation,
+    Wallet
   ]
 })
 export class AppModule {}

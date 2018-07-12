@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { RequestPage } from '../request/request';
-import { Api, User } from '../../../providers/providers';
+import { Api, User, Jobs } from '../../../providers/providers';
 import { CommonProvider } from '../../../providers/common/common';
 
 @Component({
@@ -13,7 +13,7 @@ export class HomePage {
   reqTemp: any;
   stocks: Array<any>;
 
-  constructor(public user: User, public common: CommonProvider, public api: Api, public navCtrl: NavController, public modalCtrl: ModalController) {
+  constructor(protected jobs: Jobs, public user: User, public common: CommonProvider, public api: Api, public navCtrl: NavController, public modalCtrl: ModalController) {
     this.requestList=[];
     this.stocks=[];
     //http://healthshoppe.elyzian.xyz/api/products/product-inventory/24
@@ -50,7 +50,7 @@ export class HomePage {
   }
  
   ionViewDidLoad(){
-    //this.loadRequest();
+    this.loadRequest();
     this.getProductInventory();
   }
 
@@ -74,7 +74,16 @@ export class HomePage {
     modal.present();
     modal.onDidDismiss(data => {
       if(data.accept){
-        this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
+        this.jobs.acceptJob(requestItem.JobID).then(res => {
+          this.common.showAlert('', 'Congrats! Go send the item ASAP!');
+          this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
+        }, err => {
+          if (err.message){
+            this.common.showAlert('', err.message)
+          } else {
+            this.common.showAlert('Error', JSON.stringify(err))
+          }
+        }); 
       } else {
         if(!this.common.isEmpty(this.requestList)){
           this.openRequest(this.requestList.shift());

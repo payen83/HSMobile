@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, AlertController } from 'ionic-angular';
+import { CommonProvider, Jobs } from '../../../providers/providers';
 
 declare var google: any;
 
@@ -15,8 +16,10 @@ export class DetailsPage {
 
   map: any;
   showScroll: boolean = false;
+  job: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public alertCtrl: AlertController, public jobs: Jobs, public navCtrl: NavController, public navParams: NavParams, public common: CommonProvider) {
+    this.job = this.navParams.get('item');
   }
   scrollTop(){
     //console.log('scrolltop');
@@ -25,8 +28,8 @@ export class DetailsPage {
   }
 
   initMap() {
-    let latitude = 3.1980954;
-    let longitude = 101.6978543;
+    let latitude = this.job.latitude || 3.1980954;
+    let longitude = this.job.longitude || 101.6978543;
 
     let latlng = new google.maps.LatLng(latitude, longitude);
 
@@ -41,8 +44,55 @@ export class DetailsPage {
     this.addMarker();
   }
 
+  getImage(url: string){
+    if(url == null){
+      return null;
+    } else {
+      return this.common.getProfileImage_URL() +url;
+    }
+  }
+
+  getProductImage(url: string) {
+    if (url == null) {
+      return null;
+    } else {
+      return this.common.getAPI_URL() + url;
+    }
+  }
+
   nav() {
     alert('test')
+  }
+
+  markComplete(){
+    const confirm = this.alertCtrl.create({
+      title: 'Complete Delivery',
+      message: 'Are you sure you want to mark this job as delivered?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.jobs.markAsComplete(this.job.JobID).then(res => {
+              console.log(res)
+              this.common.showAlert('Job Delivered','Your job has been marked as delivered and will be verified by customer.');
+            }, err => {
+              this.common.showAlert('Error', JSON.stringify(err));
+            })
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  isActive(){
+    return this.job.current_status === 'Active'
   }
 
   addMarker() {
@@ -52,7 +102,7 @@ export class DetailsPage {
       position: this.map.getCenter()
     })
 
-    let content = '<div style="max-width: 200px;">Your current location now my elements are ready for dom manipulation</div><br><button id="btnLocation" style="background-color: #4CAF50; border-radius: 2px; border: none; color: white; padding: 10px 40px; min-width: 200px; text-align: center; text-decoration: none; display: inline-block;">Navigate</button>';
+    let content = '<div style="max-width: 200px;">'+this.job.c_address+'</div><br><button id="btnLocation" style="background-color: #4CAF50; border-radius: 2px; border: none; color: white; padding: 10px 40px; min-width: 200px; text-align: center; text-decoration: none; display: inline-block;">Navigate</button>';
 
     let infoWindow = new google.maps.InfoWindow({
       content: content
