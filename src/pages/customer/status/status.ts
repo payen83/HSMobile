@@ -19,11 +19,12 @@ export class StatusPage {
   activeJobs: Array<any>;
   completedJobs: Array<any>
   constructor(public navCtrl: NavController, public navParams: NavParams, private job: Jobs, protected common: CommonProvider ) {
-    this.completedJobs = [];
-    this.activeJobs = [];
+    this.initialize()
   }
 
-  ionViewDidLoad() {
+  
+
+  ionViewDidEnter() {
     console.log('ionViewDidLoad StatusPage');
     this.status = 'active';
     this.job.getOrders().then(result => {
@@ -32,8 +33,15 @@ export class StatusPage {
     })
   }
 
+  initialize(){
+    this.completedJobs = [];
+    this.activeJobs = [];
+  }
+
   statusDetail(job: any){
-    this.navCtrl.push('StatusDetailPage', {item: job});
+    if(!this.common.isEmpty(job.agent)){
+      this.navCtrl.push('StatusDetailPage', {item: job});
+    }
   }
 
   getProfileImage(url: any){
@@ -62,6 +70,7 @@ export class StatusPage {
   }
 
   filterList(jobs: Array<any>){
+    this.initialize()
     for (let job of jobs){
       if (job.current_status == 'Completed'){
         this.completedJobs.push(job);
@@ -69,6 +78,8 @@ export class StatusPage {
         this.activeJobs.push(job);
       }
     }
+    this.activeJobs.reverse();
+    this.completedJobs.reverse()
   }
 
 }

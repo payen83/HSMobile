@@ -27,9 +27,7 @@ export class ProfilePage {
       lat: null,
       lng: null
     }
-
     this.currentUser = {name: null, email: null};
-    
   }
 
   ionViewDidLoad() {
@@ -101,9 +99,7 @@ export class ProfilePage {
         }
       ]
     });
-
     prompt.present();
-  
   }
 
   updatePassword(new_password: string){
@@ -172,25 +168,24 @@ export class ProfilePage {
     if(!this.user.u_address){
       this.common.showAlert('', 'Please enter your current address');
     } else {
-
-    }
-    if(this.user.u_accnumber !== this.savedBankAcc){
-     this.checkPassword()
-    } 
-    else {
-      let loader = this.common.showLoader();
-      this.userProvider.saveProfile(this.user).then(response=>{
-        loader.dismiss();
-        this.setProfile(this.user);
-        let result: any = response;
-        if(result.status){
-          this.common.saveData('USER', this.user);
-          this.common.showAlert('Profile', 'Your profile has been updated.');
-        }
-      }, err => {
-        loader.dismiss();
-        this.common.showAlert('Error', JSON.stringify(err));
-      })
+      if(this.user.u_accnumber !== this.savedBankAcc){
+        this.checkPassword()
+       } 
+       else {
+         let loader = this.common.showLoader();
+         this.userProvider.saveProfile(this.user).then(response=>{
+           loader.dismiss();
+           this.setProfile(this.user);
+           let result: any = response;
+           if(result.status){
+             this.common.saveData('USER', this.user);
+             this.common.showAlert('Profile', 'Your profile has been updated.');
+           }
+         }, err => {
+           loader.dismiss();
+           this.common.showAlert('Error', JSON.stringify(err));
+         })
+       }
     }
   }
 

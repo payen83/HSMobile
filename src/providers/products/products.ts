@@ -44,9 +44,10 @@ export class Products {
       //return response;
   }
 
-  getProductCustomer(params?: any) {
+  getProducts(params?: any) {
+
     return new Promise(resolve=>{
-      this.api.get('products/product-customer', params).subscribe(res=>{
+      this.api.get('products/product-'+params, params).subscribe(res=>{
         resolve(res);
         //resolve(this.products);
       })

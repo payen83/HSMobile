@@ -44,19 +44,32 @@ export class CommonProvider {
   }
 
   saveData(property: string, data: any){
-    //this.profileImage = this.imagePath + data.
-    this.userData = data;
-    console.log(this.userData);
-    this.storage.set(property, JSON.stringify(data));
-    //this.storage.clear();
-    return;
+    return new Promise((resolve)=>{
+      this.setUserData(data);
+      console.log(this.userData);
+      this.storage.set(property, JSON.stringify(data)).then(res => {
+        resolve(res);
+      });
+    })
   }
 
-  destroyData(property: string){
+  setUserData(user: any){
+    this.userData = user;
+  }
+
+  destroyData(property?: string){
+    
     return new Promise((resolve, reject) => {
-      this.storage.remove(property).then(res=>{
-        resolve();
-      })
+      if(property){
+        this.storage.remove(property).then(res=>{
+          resolve();
+        })
+      } else {
+        this.storage.clear().then(res=>{
+          resolve();
+        })
+      }
+
     })
   }
 
@@ -88,7 +101,6 @@ export class CommonProvider {
       this.storage.get(property).then(items => {
         if (items) {
           let data: any = JSON.parse(items);
-          //console.log(data);
           resolve(data);
         } else {
           console.log('no data')
@@ -96,6 +108,11 @@ export class CommonProvider {
         }
       });
     })
+  }
+
+  convertAmount(amount: any){
+    let newNum = parseFloat(amount);
+    return newNum.toFixed();
   }
 
 }

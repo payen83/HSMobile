@@ -33,8 +33,8 @@ export class MapPage {
   lng: number;
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private zone: NgZone) {
     this.autocompleteItems = [];
-    this.lat = this.navParams.get('lat');
-    this.lng = this.navParams.get('lng');
+    this.lat = parseFloat(this.navParams.get('lat'));
+    this.lng = parseFloat(this.navParams.get('lng'));
     this.autocomplete = {
       query: ''
     };
@@ -120,6 +120,8 @@ export class MapPage {
   initMap() {
     let latitude = this.lat; //3.1980954;
     let longitude = this.lng; //101.6978543;
+
+    console.log(latitude + ', ' + longitude)
 
     let latlng = new google.maps.LatLng(latitude, longitude);
 

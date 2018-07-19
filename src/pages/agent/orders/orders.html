@@ -48,15 +48,14 @@
       </button> -->
     </ion-list>
     <ion-list *ngSwitchCase="'completed'">
-      <button ion-item *ngFor="let job of completedJobs" (click)="pageDetails()">
+      <button ion-item *ngFor="let job of completedJobs" (click)="pageDetails(job)">
         <ion-avatar item-start>
           <img src="assets/imgs/user.png">
         </ion-avatar>
-        <h2>Farhan Ramli</h2>
-        <h4>Order #2312</h4>
-        <p>
-          <ion-icon name="pin" icon-left></ion-icon> 39-1 Jalan Equine 9A, Equine Park, Seri Kembangan</p>
-        <ion-note item-end>RM500</ion-note>
+        <h2>{{job.c_name}}</h2>
+        <h4>Order #{{job.JobID}}</h4>
+        <p><ion-icon name="pin" icon-left></ion-icon> {{job.c_address}}</p>
+        <ion-note item-end>${{job.total_price}}</ion-note>
       </button>
     </ion-list>
   </div>

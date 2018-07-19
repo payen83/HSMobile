@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController } from 'ionic-angular';
+import { Nav, Platform, MenuController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/agent/home/home';
-import { LoginPage } from '../pages/general/login/login';
+//import { LoginPage } from '../pages/general/login/login';
 import { User } from '../providers/user/user';
 import { CommonProvider } from '../providers/providers';
 
@@ -13,13 +13,13 @@ import { CommonProvider } from '../providers/providers';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
  
-  rootPage: any = LoginPage;
+  rootPage: any = 'ProductsPage';
   hasLoggedIn: boolean = false;
   pages: Array<{title: string, icon?: string, component: any}>;
   pagesCustomer: Array<{title: string, icon?: string, component: any}>;
 
   //isAgent: boolean;
-  constructor(public common: CommonProvider, public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
+  constructor(public events: Events, public common: CommonProvider, public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -28,36 +28,30 @@ export class MyApp {
       { title: 'Orders', component: 'OrdersPage', icon: "clipboard" },
       { title: 'Transactions', component: 'TransactionsPage', icon: "cash" },
       { title: 'Products', component: 'ProductsPage', icon: "apps" },
-      // { title: 'Status', component: 'StatusPage', icon: "analytics" }
     ];
 
     this.pagesCustomer = [
-      // { title: 'Home', component: HomePage, icon: 'home' },
-      // { title: 'Orders', component: 'OrdersPage', icon: "clipboard" },
-      // { title: 'Transactions', component: 'TransactionsPage', icon: "cash" },
       { title: 'Products', component: 'ProductsPage', icon: "apps" },
       { title: 'Status', component: 'StatusPage', icon: "analytics" }
     ];
-    
-    // if (!this.hasLoggedIn){
-    //   //this.setProfile();
-    //   this.rootPage = LoginPage; 
-    //   this.enableMenu();
-    //   //this.rootPage = Home;
-    //   //localStorage.setItem('hasLoggedIn', JSON.stringify(true));
-    //   return;
-    // }
-    this.user.hasLoggedIn().then((loggedIn) => {
-  
-        if (!loggedIn){
-          this.rootPage = LoginPage;
-        }
-        this.enableMenu(loggedIn === true);
-        
-    })
 
-    //this.enableMenu();
-    //this.isAgent = true;
+    this.listenToLoginEvents();
+
+    this.user.hasLoggedIn().then((loggedIn) => {
+      this.events.publish('user:login', loggedIn);
+      if(loggedIn){
+        if(loggedIn.role == 'Customer'){
+          this.user.setUserType('c');
+          this.rootPage = 'ProductsPage';
+        } else {
+          this.user.setUserType('a');
+          this.rootPage = HomePage;
+        }
+      }
+    }, err => {
+      this.events.publish('user:logout');
+      this.rootPage = 'ProductsPage';
+    })
   }
 
   imageProfile(){
@@ -76,10 +70,19 @@ export class MyApp {
     return this.user.userType() == 'a';
   }
 
+  isCustomer(): boolean {
+    return this.user.userType() == 'c';
+  }
+
+  isGuest(): boolean {
+    return this.user.userType() == 'g';
+  }
+
   logout(){
-    this.common.destroyData('USER').then(res=>{
+    this.common.destroyData().then(res=>{
       this.menuCtrl.close();
-    //this.enableMenu(false);
+      this.user.setUserType('g');
+    this.enableMenu(false);
       this.user.logout();
       this.nav.setRoot('LoginPage', {}, {animate: true});
     })
@@ -99,8 +102,6 @@ export class MyApp {
   }
  
   enableMenu(loggedIn: boolean) {
-   // console.log('Hi')
-   // console.log(loggedIn);
     this.menuCtrl.enable(loggedIn, 'loggedInMenu');
     this.menuCtrl.enable(!loggedIn, 'loggedOutMenu');
   }
@@ -109,5 +110,25 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  listenToLoginEvents() {
+
+    this.events.subscribe('user:login', (user) => {
+      //localStorage.setItem('hasLoggedIn', JSON.stringify(true));
+      //this.setProfile();
+      this.common.setUserData(user)
+      this.enableMenu(true);
+
+      //this.isLoggedIn = true;
+    });
+
+    this.events.subscribe('user:signup', () => {
+      //this.enableMenu(true);
+    });
+
+    this.events.subscribe('user:logout', () => {
+      this.enableMenu(false);
+    });
   }
 }

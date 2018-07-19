@@ -11,7 +11,7 @@
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Transactions</ion-title>
-        <ion-buttons end>
+        <ion-buttons end *ngIf="enableWithdrawButton()">
           <button clear ion-button (click)="withdraw()">Withdraw</button>
         </ion-buttons>
       </ion-navbar>
@@ -29,6 +29,7 @@
         </ion-avatar>
         <h1>${{walletInfo.amount}}</h1>
         <p><strong>Available for withdrawal: ${{availWithdraw(walletInfo.amount)}}</strong></p>
+        <p><strong>Pending approval: ${{walletInfo.pending_approval}}</strong></p>
       </ion-item>
     </ion-list>
   </ion-card>

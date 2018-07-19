@@ -18,7 +18,11 @@
         <div align="center">
             <img src="assets/imgs/logo_new.png">
         </div>
+        <div padding>
+
+        </div>
         <ion-list no-lines>
+          <ion-item></ion-item>
           <ion-item>
             <ion-input type="text" placeholder="Email" [(ngModel)]="user.email"></ion-input>
           </ion-item>
@@ -28,6 +32,7 @@
           </ion-item>
         </ion-list>
         <button ion-button round color="secondary" block (click)="doLogin()">Login</button>
+        <div padding></div>
         <!-- <button ion-button block (click)="login('c')">Login as Customer</button>
         <button ion-button block color="danger" (click)="login('a')">Login as Agent</button> -->
         <button ion-button block clear color="light" (click)="openRegister()">No account? Register here</button>

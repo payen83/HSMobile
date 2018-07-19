@@ -18,24 +18,27 @@ export class TransactionsPage {
   transactions: Array<any>;
   walletInfo: any;
   constructor(protected common: CommonProvider, public navCtrl: NavController, public navParams: NavParams, public alert: AlertController, protected wallet: Wallet) {
-    this.walletInfo = {amount: 0, u_bankame: null, u_accnumber: null};
+    this.walletInfo = {amount: 0, u_bankame: null, u_accnumber: null, pending_approval: null};
     this.transactions = [
 
     ]
   }
 
   availWithdraw(amount){
-    if(amount>5000){
-      return 5000;
+    if(this.walletInfo.pending_approval || parseInt(this.walletInfo.pending_approval)>0){
+      if(amount>5000){
+        return 5000;
+      } else {
+        return amount;
+      }
     } else {
-      return amount;
-    }
+      return 0;
+    } 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TransactionsPage');
     this.getWalletBalance();
-    
   }
 
   convertAmount(amount: any){
@@ -60,6 +63,14 @@ export class TransactionsPage {
     return status == 'Withdraw';
   }
 
+  enableWithdrawButton(){
+    if (this.availWithdraw(this.walletInfo.amount) > 0){
+      return true;
+    } else {
+      return false
+    }
+  }
+
   getWalletTransaction(){
     this.wallet.getTransaction().then(res => {
       let result: any = res;
@@ -76,7 +87,7 @@ export class TransactionsPage {
     let withdrawAmount: number = this.availWithdraw(this.walletInfo.amount);
     let confirm = this.alert.create({
       title: 'Withdrawal',
-      message: 'Are you sure you want to request for withdrawal of'+this.walletInfo.amount+'?',
+      message: 'Are you sure you want to request for withdrawal of $'+ withdrawAmount + '?',
       buttons: [
         {
           text: 'Cancel',

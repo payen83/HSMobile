@@ -28,10 +28,12 @@ export class DetailsPage {
   }
 
   initMap() {
-    let latitude = this.job.latitude || 3.1980954;
-    let longitude = this.job.longitude || 101.6978543;
+    let latitude = this.job.latitude || 101.6978543;
+    let longitude = this.job.longitude || 3.1980954;
 
-    let latlng = new google.maps.LatLng(latitude, longitude);
+    console.log(latitude +', '+longitude)
+
+    let latlng = new google.maps.LatLng(parseFloat(longitude), parseFloat(latitude));
 
     let mapOptions = {
       center: latlng,
@@ -40,7 +42,7 @@ export class DetailsPage {
       disableDefaultUI: true
     }
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.map.panTo({ lat: latitude, lng: longitude });
+    this.map.panTo({ lat: parseFloat(longitude), lng: parseFloat(latitude) });
     this.addMarker();
   }
 
@@ -81,6 +83,7 @@ export class DetailsPage {
             this.jobs.markAsComplete(this.job.JobID).then(res => {
               console.log(res)
               this.common.showAlert('Job Delivered','Your job has been marked as delivered and will be verified by customer.');
+              this.navCtrl.pop();
             }, err => {
               this.common.showAlert('Error', JSON.stringify(err));
             })
@@ -93,6 +96,10 @@ export class DetailsPage {
 
   isActive(){
     return this.job.current_status === 'Active'
+  }
+
+  isPending(){
+    return this.job.current_status === 'Pending Completion';
   }
 
   addMarker() {

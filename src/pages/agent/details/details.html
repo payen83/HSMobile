@@ -14,13 +14,11 @@
   <ion-list>
     <ion-item-divider color="light">
       <strong>Customer</strong>
-      <div *ngIf="isActive()">
-        <button ion-button icon-left round color="danger" item-end (click)="cancel()">
+        <button *ngIf="isActive()" ion-button icon-left round color="danger" item-end (click)="cancel()">
           <ion-icon name="close-circle"></ion-icon> Cancel</button>
-        <button ion-button icon-left round color="secondary" item-end (click)="markComplete()">
+        <button *ngIf="isActive()" ion-button icon-left round color="secondary" item-end (click)="markComplete()">
           <ion-icon name="checkmark-circle"></ion-icon> Mark as complete</button>
-      </div>
-      <div *ngIf="!isActive()" item-end>
+      <div *ngIf="isPending()" item-end>
         <h4 ion-text>Pending Verification</h4>
       </div>
     </ion-item-divider>

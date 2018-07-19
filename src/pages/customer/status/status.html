@@ -29,16 +29,18 @@
       <ion-card *ngFor="let job of activeJobs">
         <button ion-item (click)="statusDetail(job)">
           <!-- <div *ngFor="let agent of job.agent"> -->
-            <ion-avatar item-start>
-              <img [src]="getProfileImage(getAgentImage(job))||'assets/imgs/user.png'">
-              <!-- <img [src]="'assets/imgs/user.png'"> -->
-            </ion-avatar>
-            <h2>{{getAgentName(job)}}</h2>
-          
+          <ion-avatar item-start>
+            <img [src]="getProfileImage(getAgentImage(job))||'assets/imgs/user.png'">
+            <!-- <img [src]="'assets/imgs/user.png'"> -->
+          </ion-avatar>
+          <h2>{{getAgentName(job)}}</h2>
+
           <h4>Order #{{job.JobID}}</h4>
-          <p><ion-icon color="yellow" name="star"></ion-icon> 4.7</p>
-          <ion-note item-end><h5>{{job.current_status}}</h5></ion-note>
-         <!-- </div> -->
+          <!-- <p> <ion-icon color="yellow" name="star"></ion-icon> 4.7</p> -->
+          <ion-note item-end>
+            <h5>{{job.current_status}}</h5>
+          </ion-note>
+          <!-- </div> -->
         </button>
         <ion-row>
           <ion-col>
@@ -90,8 +92,11 @@
           </ion-avatar>
           <h2>{{job.agent[0].name}}</h2>
           <h4>Order #{{job.JobID}}</h4>
-          <p><ion-icon name="star"></ion-icon> 4.7</p>
-          <ion-note item-end><button ion-button small clear>Leave feedback</button></ion-note>
+          <p>
+            <ion-icon name="star"></ion-icon> 4.7</p>
+          <ion-note item-end>
+            <button ion-button small clear>Leave feedback</button>
+          </ion-note>
         </button>
         <!-- <ion-row>
           <ion-col>

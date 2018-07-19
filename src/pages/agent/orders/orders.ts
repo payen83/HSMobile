@@ -20,17 +20,21 @@ export class OrdersPage {
   activeJobs: Array<any>;
   completedJobs: Array<any>
   constructor(protected job: Jobs, public navCtrl: NavController, public navParams: NavParams, protected common: CommonProvider) {
-    this.completedJobs = [];
-    this.activeJobs = [];
     this.status = 'active';
+    this.initialize();
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     console.log('ionViewDidLoad OrdersPage');
     this.job.getOrdersAgent().then(result => {
       let joblist: any = result;
       this.filterList(joblist);
     });
+  }
+
+  initialize(){
+    this.completedJobs = [];
+    this.activeJobs = [];
   }
 
   pageDetails(item: any){
@@ -46,6 +50,7 @@ export class OrdersPage {
   }
 
   filterList(jobs: Array<any>){
+    this.initialize();
     for (let job of jobs){
       if (job.current_status == 'Completed'){
         this.completedJobs.push(job);
@@ -53,6 +58,8 @@ export class OrdersPage {
         this.activeJobs.push(job);
       }
     }
+    this.activeJobs.reverse();
+    this.completedJobs.reverse()
   }
 
 }

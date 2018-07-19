@@ -18,6 +18,7 @@
       </ion-thumbnail>
       <h2>{{ product.Name }}</h2>
       <h4>USD {{ product.Price }}</h4>
+      <em class="em" ion-text *ngIf="isAgent()">({{ product.QuantityPerPackage }} unit per package)</em>
       <div item-content>
         <button ion-button (click)="addToCart(product)">Add to cart</button>
       </div>

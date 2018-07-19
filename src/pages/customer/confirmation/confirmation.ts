@@ -33,9 +33,9 @@ export class ConfirmationPage {
 
   ionViewDidLoad() {
     //console.log('ionViewDidLoad ConfirmationPage');
-    this.common.getData('USER').then(user=>{
+    this.common.getData('USER').then(user => {
       this.user = user;
-      if(this.user.u_address){
+      if (this.user.u_address) {
         this.address = this.user.u_address;
       }
     }, err => {
@@ -43,72 +43,81 @@ export class ConfirmationPage {
     })
   }
 
-  makePayment(){
+  makePayment() {
     let discount: number = 0;
-    if (this.user.role == 'Agent'){
+    if (this.user.role == 'Agent') {
 
     };
     let products: Array<any> = [];
-    for (let product of this.itemInCart){
+    for (let product of this.itemInCart) {
       products.push(
         {
           ProductID: parseInt(product.id),
           ProductQuantity: product.qty,
-          Discount: discount
+          Discount: parseFloat(product.Discount) || 0
         }
       )
-    } 
+    }
 
     this.orders = {
       total_price: this.totalPrice,
       role: 'customer',
       payment_method: 'PayPal',
-      amount: this.totalPrice,
       transaction_id: 'PAY-1AB23456CD789012EF34GHIJ',
       currency: 'USD',
-      payment_date: '2018-07-09',
-      data: products, 
+      payment_date: this.formatDate(),
+      data: products,
       location_address: this.address,
       lng: (this.user.lat || 101.6553845),
       lat: (this.user.lng || 3.1639173),
       special_notes: this.note
     };
 
-    //.console.log(JSON.stringify(this.orders));
+    console.log(JSON.stringify(this.orders));
 
     this.job.purchaseOrder(this.orders, this.user).then(result => {
       let response: any = result;
       console.log(response);
       this.common.destroyData('CART').then(res => {
-        this.navCtrl.setRoot('CompletedPage', {}, {animate: true});
+        this.navCtrl.setRoot('CompletedPage', {}, { animate: true });
       })
     }, err => {
       this.common.showAlert('Error', JSON.stringify(err));
     })
-    
+
   }
 
+  formatDate() {
+    let d = new Date(),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
 
-  getPath(url: string){
+    return [year, month, day].join('-');
+  }
+
+  getPath(url: string) {
     return this.common.imagePath + url;
   }
-  
-  setLocation(){
-    let modal = this.modalCtrl.create('MapPage', {lat: (this.user.lng || 3.1639173), lng: (this.user.lat || 101.6553845)});
+
+  setLocation() {
+    let modal = this.modalCtrl.create('MapPage', { lat: (this.user.lng || 3.1639173), lng: (this.user.lat || 101.6553845) });
     modal.present();
     modal.onDidDismiss(result => {
       //console.log(result);
-      if(result){
+      if (result) {
         this.address = result.address;
         this.user.lat = result.coords.lat;
         this.user.lng = result.coords.lng;
       } else {
         return;
       }
-      
+
     })
   }
 
-  
+
 }

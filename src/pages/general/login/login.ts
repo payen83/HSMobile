@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, Events } from 'ionic-angular';
 import { HomePage } from '../../agent/home/home';
 import { User } from '../../../providers/user/user';
 import { CommonProvider } from '../../../providers/common/common';
@@ -18,22 +18,36 @@ import { CommonProvider } from '../../../providers/common/common';
 })
 export class LoginPage {
   user: any = {email: '', password: ''};
-  constructor(public userProvider: User, public modalCtrl: ModalController, public common: CommonProvider, public alertCtrl: AlertController, public userP: User, public navCtrl: NavController, public navParams: NavParams) {
+  userData: any;
+  constructor(public events: Events, public userProvider: User, public modalCtrl: ModalController, public common: CommonProvider, public alertCtrl: AlertController, public userP: User, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    // console.log('ionViewDidLoad LoginPage');
+    //let loader = this.common.showLoader();
+    //this.userProvider.hasLoggedIn().then(res => {
+     // loader.dismiss();
+     // this.common.setUserData(res);
+     // this.login();
+    //}, err => {
+      //loader.dismiss();
+     // return;
+    //})
   }
 
-  login(type){
-    
-    if(type == 'Agent'){
+  login(){
+    this.common.getData('USER').then(user => {
+    let userData: any = user;
+    if(userData.role == 'Agent'){
       this.userP.setUserType('a');
-      this.navCtrl.setRoot(HomePage, {}, {animate: true});
+      this.navCtrl.setRoot(HomePage, {user: userData}, {animate: true});
+      this.events.publish('user:login', userData);
     } else{
       this.userP.setUserType('c');
+      this.events.publish('user:login', userData);
       this.navCtrl.setRoot('ProductsPage', {}, {animate: true});
     }
+    })
   }
 
   doLogin(){
@@ -43,19 +57,16 @@ export class LoginPage {
       loader.dismiss();
       if (res.status){
         //this.common.setUserData(res.users[0]);
-        this.common.saveData('USER', res.users[0]);
-        this.login(res.users[0].role);
+        this.common.saveData('USER', res.users[0]).then(res => {
+          this.login();
+        });
       } else {
         this.common.showAlert('','Invalid username or password')
       }
    }, err => {
      loader.dismiss();
-     this.common.showAlert('Login failed', JSON.stringify(err.error.error))
+     this.common.showAlert('Login failed', JSON.stringify(err))
    })
-  }
-
-  pageSignup(){
-
   }
 
   forgotPassword(){

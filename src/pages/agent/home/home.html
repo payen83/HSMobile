@@ -18,23 +18,23 @@
     </ion-refresher>
   <div class="wrapper wrapper-text" padding>
     <div class="box turquoise">
-      <h2>10</h2>
+      <h2>{{dashboardData.activetask || '0'}}</h2>
       <p>Pending task</p>
     </div>
     <div class="box turquoise">
-      <h2>0</h2>
+      <h2>{{dashboardData.completed_job || '0'}}</h2>
       <p>Completed jobs this month</p>
     </div>
 
     <div class="sales box turquoise">
       <div class="sales">
-        <h3><sup>USD</sup>4000</h3>
+        <h3><sup>USD</sup>{{total_sales || 0}}</h3>
         <p>Sales this month</p>
       </div>
     </div>
 
     <div class="box turquoise">
-      <h2>5</h2>
+      <h2>{{availableStock || 0}}</h2>
       <p>Units stock available</p>
     </div>
   </div>
@@ -45,7 +45,7 @@
       <ion-avatar item-start>
         <img [src]="getPath(stock.ImageURL)">
       </ion-avatar>
-      <h2>{{stock.Name}}</h2>
+      <h2>{{stock.product_name}}</h2>
       <p>{{stock.quantity}} unit available</p>
     </ion-item>
     <!-- <ion-item>

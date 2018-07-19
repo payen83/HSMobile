@@ -10,8 +10,13 @@
         <strong>Agent</strong>
         <button *ngIf="showCancelButton()" ion-button icon-left round color="danger" item-end (click)="cancelOrder()">
           <ion-icon name="close"></ion-icon> Cancel order</button>
+          <button *ngIf="showAcceptButton()" ion-button icon-left round color="danger" item-end (click)="rejectDelivery()">
+              <ion-icon name="thumbs-down"></ion-icon> Reject</button>
           <button *ngIf="showAcceptButton()" ion-button icon-left round color="secondary" item-end (click)="acceptDelivery()">
             <ion-icon name="thumbs-up"></ion-icon> Accept delivery</button>
+            <div *ngIf="showWaitingResponse()" item-end>
+                <h4 ion-text>Pending Agent's Response</h4>
+            </div>
       </ion-item-divider>
       <ion-item>
         <ion-avatar item-start>

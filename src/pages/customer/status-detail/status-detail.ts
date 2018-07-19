@@ -43,6 +43,52 @@ export class StatusDetailPage {
     return this.job.current_status == 'Active';
   }
 
+  showWaitingResponse(){
+    return this.job.current_status == 'Reject';
+  }
+
+  rejectDelivery(){
+    const prompt = this.alertCtrl.create({
+      title: 'Are you sure you want to reject this delivery?',
+      message: "Please state your reason..",
+      inputs: [
+        {
+          name: 'reason',
+          placeholder: 'Enter your message here'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+          }
+        },
+        {
+          text: 'Submit',
+          handler: data => {
+            //console.log('Reason..'+data.reason);
+            let loader: any = this.common.showLoader();
+            this.jobs.customerRejectDelivery(this.job.JobID, data.reason).then(res=>{  
+              loader.dismiss();            
+              console.log('response');
+              console.log(res);
+              this.common.showAlert('Delivery rejected', 'The issue has been notified by the agent');
+              this.navCtrl.pop();
+            }, err => {
+              loader.dismiss();
+              if(err.message){
+                this.common.showAlert('Error', err.message);
+              } else {
+                this.common.showAlert('Error', JSON.stringify(err));
+              }
+            })
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
   acceptDelivery(){
     const confirm = this.alertCtrl.create({
       title: 'Accept Delivery',
@@ -59,6 +105,7 @@ export class StatusDetailPage {
           handler: () => {
             this.jobs.customerAcceptDelivery(this.job.JobID).then(res=>{              
               this.common.showAlert('', 'You have accepted the delivery');
+              this.navCtrl.pop();
             }, err => {
               if(err.message){
                 this.common.showAlert('Error', err.message);

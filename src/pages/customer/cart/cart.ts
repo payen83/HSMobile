@@ -21,20 +21,27 @@ export class CartPage {
   //protected num2: number = 1;
   protected itemInCart: Array<any> = [];
   protected totalPrice: Number;
-
+  protected role: string;
   constructor(public common: CommonProvider, private storage: Storage, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     //console.log('ionViewDidLoad CartPage');
-    this.storage.get('CART').then(items=>{
-      if(items){
-        this.itemInCart = JSON.parse(items);
-        //console.log(JSON.parse(items));
-      } else {
-        console.log('no data');
-      }
-    });
+    this.common.getData('USER').then(res => {
+      
+      let user: any = res;
+      this.role = user.role;
+
+      this.storage.get('CART').then(items=>{
+        if(items){
+          this.itemInCart = JSON.parse(items);
+          //console.log(JSON.parse(items));
+        } else {
+          console.log('no data');
+        }
+      });
+    })
+    
   }
 
   getPath(url: string){
@@ -60,12 +67,21 @@ export class CartPage {
   }
 
   addQuantity(index: number) {
-    this.itemInCart[index].qty +=  1;
+    if(this.role == 'Agent'){
+      this.itemInCart[index].qty += parseInt(this.itemInCart[index].QuantityPerPackage);
+    } else {
+      this.itemInCart[index].qty +=  1;
+    }
+    
   }
 
   subtractQuantity(index: number) {
     if (this.itemInCart[index].qty != 0) {
-      this.itemInCart[index].qty -= 1;
+      if(this.role == 'Agent'){
+        this.itemInCart[index].qty -= this.itemInCart[index].QuantityPerPackage;
+      } else {
+        this.itemInCart[index].qty -= 1;
+      }
     }
   }
 

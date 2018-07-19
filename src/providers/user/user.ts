@@ -2,6 +2,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/share';
 import { Injectable } from '@angular/core';
 import { Api } from '../api/api';
+import { CommonProvider } from '../common/common';
 
 
 /**
@@ -28,8 +29,8 @@ export class User {
   _user: any;
   _type: string;
 
-  constructor(public api: Api) { 
-    this._type = 'c';
+  constructor(public api: Api, public common: CommonProvider) { 
+    this._type = 'g';
   }
 
   /**
@@ -57,12 +58,20 @@ export class User {
     //return seq;
   }
 
-  hasLoggedIn(): Promise<boolean>{
-    return new Promise(resolve=>{
-      setTimeout(() => {
-        resolve(true);
-      }, 500);
-      
+  hasLoggedIn(): Promise<any>{
+    return new Promise((resolve, reject)=>{
+      this.common.getData('USER').then(resp => {
+        let res: any = resp;
+        if(res){
+          setTimeout(() => {
+            resolve(res);
+          }, 500);
+        } else {
+          reject(false)
+        }
+      }, err => {
+        reject(false)
+      })
     })
   }
 
@@ -123,6 +132,24 @@ export class User {
         reject(err);
       });
     })
+  }
+
+  getDashboard(user: any){
+    return new Promise((resolve, reject) => {
+      // this.common.getData('USER').then(response => {
+        //let user: any = response;
+        this.api.get('dashboard/view/' + user.id).subscribe(res => {
+          let response: any = res;
+          if(response.status){
+            resolve(res);
+          } else {
+            reject(res)
+          }
+        })
+      // }, err => {
+      //   console.log('err: ' + JSON.stringify(err))
+      // });
+    });
   }
 
   saveProfile(user: any){
