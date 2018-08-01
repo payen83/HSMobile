@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Products } from '../../../providers/providers';
 import { Storage } from '@ionic/storage';
 import { CommonProvider } from '../../../providers/common/common';
@@ -19,7 +19,7 @@ export class ProductsPage {
   isGuest: boolean = true;
   user: any;
 
-  constructor(private alertCtrl: AlertController, private common: CommonProvider, private storage: Storage, public products: Products, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private modalCtrl: ModalController, private alertCtrl: AlertController, private common: CommonProvider, private storage: Storage, public products: Products, public navCtrl: NavController, public navParams: NavParams) {
     //this.storage.clear();
   }
   
@@ -46,9 +46,15 @@ export class ProductsPage {
         this.itemInCart = JSON.parse(items);
         console.log(this.itemInCart);
       } else {
-        console.log('no data')
+        console.log('no data in cart')
       }
     });
+  }
+
+  showDetails(product){
+    console.log('test')
+    let modal = this.modalCtrl.create('ProductDetailsPage', {item: product});
+    modal.present();
   }
 
   getProducts(){
@@ -139,7 +145,11 @@ export class ProductsPage {
   updateCart(item, index) {
     let qty: number;
     if(this.role == 'Agent'){
-      qty = Number(item.qty) + parseInt(item.QuantityPerPackage);
+      if(this.itemInCart[index].qty <= parseInt(item.QuantityPerPackage)){
+        qty = Number(item.qty) + parseInt(item.QuantityPerPackage);
+      } else {
+        qty = Number(item.qty) + 1;
+      }
     } else {
       qty = Number(item.qty) + 1;
     }

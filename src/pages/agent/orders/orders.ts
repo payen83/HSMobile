@@ -28,6 +28,7 @@ export class OrdersPage {
     console.log('ionViewDidLoad OrdersPage');
     this.job.getOrdersAgent().then(result => {
       let joblist: any = result;
+      console.log(joblist)
       this.filterList(joblist);
     });
   }

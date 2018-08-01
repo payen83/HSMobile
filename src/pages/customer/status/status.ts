@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Jobs, CommonProvider } from '../../../providers/providers';
 
-/**
- * Generated class for the StatusPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-status',
@@ -21,8 +14,6 @@ export class StatusPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private job: Jobs, protected common: CommonProvider ) {
     this.initialize()
   }
-
-  
 
   ionViewDidEnter() {
     console.log('ionViewDidLoad StatusPage');
@@ -60,13 +51,31 @@ export class StatusPage {
     }
   }
 
+  call(job: any){
+    if(!this.common.isEmpty(job.agent)){
+      console.log(job.agent[0].u_phone);
+      this.common.call((job.agent[0].u_phone).toString());
+      // this.callNumber.callNumber((job.agent[0].u_phone).toString(), true)
+      // .then(res => console.log('Launched dialer!', res))
+    } else {
+      return;
+    }
+  }
+
+  wa(job: any){
+    if(!this.common.isEmpty(job.agent)){
+      this.common.openWhatsapp(job.agent[0].u_phone);
+    } else {
+      return;
+    }
+  }
+
   getAgentImage(job){
     if(!this.common.isEmpty(job.agent)){
       return job.agent[0].url_image;
     } else {
       return null
     }
-    
   }
 
   filterList(jobs: Array<any>){
@@ -80,6 +89,7 @@ export class StatusPage {
     }
     this.activeJobs.reverse();
     this.completedJobs.reverse()
+    console.log(this.activeJobs);
   }
 
 }

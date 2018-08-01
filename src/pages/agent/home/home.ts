@@ -108,16 +108,20 @@ export class HomePage {
       modal.present();
       modal.onDidDismiss(data => {
         if(data.accept){
-          this.jobs.acceptJob(requestItem.JobID).then(res => {
-            this.common.showAlert('', 'Congrats! Go send the item ASAP!');
-            this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
-          }, err => {
-            if (err.message){
-              this.common.showAlert('', err.message)
-            } else {
-              this.common.showAlert('Error', JSON.stringify(err))
-            }
-          }); 
+          if(this.userData.u_phone){
+            this.jobs.acceptJob(requestItem.JobID).then(res => {
+              this.common.showAlert('', 'Congratulations! Go send the item ASAP!');
+              this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
+            }, err => {
+              if (err.message){
+                this.common.showAlert('', err.message)
+              } else {
+                this.common.showAlert('Error', JSON.stringify(err))
+              }
+            });
+          } else {
+            this.common.showAlert('', 'Before you accept any order request, please enter your phone number in profile');
+          }
         } else {
           if(!this.common.isEmpty(this.requestList)){
             this.openRequest(this.requestList.shift());

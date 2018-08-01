@@ -20,6 +20,7 @@ export class DetailsPage {
 
   constructor(public alertCtrl: AlertController, public jobs: Jobs, public navCtrl: NavController, public navParams: NavParams, public common: CommonProvider) {
     this.job = this.navParams.get('item');
+    console.log(this.job)
   }
   scrollTop(){
     //console.log('scrolltop');
@@ -64,6 +65,24 @@ export class DetailsPage {
 
   nav() {
     alert('test')
+  }
+
+  call(){
+    if(this.job.u_phone){
+      this.common.call((this.job.u_phone).toString());
+      console.log(this.job.u_phone);
+    } else {
+      return;
+    }
+    //this.common.call(this.job);
+  }
+
+  wa(){
+    if(this.job.u_phone){
+      this.common.openWhatsapp(this.job.u_phone);
+    } else {
+      return;
+    }
   }
 
   markComplete(){

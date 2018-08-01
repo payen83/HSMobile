@@ -6,6 +6,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { HttpClientModule } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CallNumber } from '@ionic-native/call-number';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/agent/home/home';
@@ -27,6 +29,8 @@ import { MapPageModule } from '../pages/general/map/map.module';
 import { TncPageModule } from '../pages/general/tnc/tnc.module';
 import { StatusDetailPageModule } from '../pages/customer/status-detail/status-detail.module';
 import { RegisterPageModule } from '../pages/general/register/register.module';
+import { ProductDetailsPageModule } from '../pages/customer/product-details/product-details.module';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +55,7 @@ import { RegisterPageModule } from '../pages/general/register/register.module';
     TncPageModule,
     StatusDetailPageModule,
     RegisterPageModule,
+    ProductDetailsPageModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
@@ -69,7 +74,9 @@ import { RegisterPageModule } from '../pages/general/register/register.module';
     CommonProvider,
     Jobs,
     Geolocation,
-    Wallet
+    Wallet,
+    CallNumber,
+    InAppBrowser
   ]
 })
 export class AppModule {}

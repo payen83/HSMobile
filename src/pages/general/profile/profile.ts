@@ -165,8 +165,8 @@ export class ProfilePage {
   
 
   submitProfile(){
-    if(!this.user.u_address){
-      this.common.showAlert('', 'Please enter your current address');
+    if(!this.user.u_address || !this.user.u_phone){
+      this.common.showAlert('', 'Please enter your address and phone number');
     } else {
       if(this.user.u_accnumber !== this.savedBankAcc){
         this.checkPassword()

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AlertController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation';
+import { CallNumber } from '@ionic-native/call-number';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 /*
@@ -17,8 +19,8 @@ export class CommonProvider {
   profileImagePath: string = 'http://healthshoppe.elyzian.xyz/public/upload/userpic/';
   profileImage: string;
   userData: any;
-  constructor(public http: HttpClient, public alertCtrl: AlertController, private storage: Storage, private loadingCtrl: LoadingController, protected geolocation: Geolocation) {
-    console.log('Hello CommonProvider Provider');
+  constructor(public iab: InAppBrowser, public callNumber: CallNumber, public http: HttpClient, public alertCtrl: AlertController, private storage: Storage, private loadingCtrl: LoadingController, protected geolocation: Geolocation) {
+    //console.log('Hello CommonProvider Provider');
     this.userData = {name: 'Default User', email: 'user@gmail.com'};
   }
 
@@ -114,5 +116,32 @@ export class CommonProvider {
     let newNum = parseFloat(amount);
     return newNum.toFixed();
   }
+
+  call(phone: any){
+    this.callNumber.callNumber((phone).toString(), true)
+      .then(res => console.log('Launched dialer!', res))
+  }
+
+  openWhatsapp(phone: any){
+    let url: string = 'https://wa.me/'+this.setNumber(String(phone));
+    console.log(url);
+    this.iab.create(url);
+  }
+
+  setNumber(phoneNo){
+    phoneNo = phoneNo.replace(/-/g, '');
+   phoneNo = phoneNo.replace(/\+/g, '');
+    if (phoneNo.substr(0,1) == '0'){
+      phoneNo = '6' + phoneNo;
+    }
+    if(phoneNo.substr(0, 2) != '60'){
+      phoneNo = '60' + phoneNo;
+    }
+    if(phoneNo.substr(2, 1) == '0'){
+      phoneNo = phoneNo.splice(2,1);
+    }
+    return phoneNo;
+  }
+
 
 }

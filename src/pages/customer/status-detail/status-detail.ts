@@ -35,6 +35,30 @@ export class StatusDetailPage {
     })
   }
 
+  call(){
+    if(!this.common.isEmpty(this.job.agent)){
+      //this.common.call((this.job.agent[0].u_phone).toString());
+      console.log(this.job.agent[0].u_phone);
+    } else {
+      return;
+    }
+    // if(!this.common.isEmpty(job.agent)){
+    //   this.callNumber.callNumber((job.agent[0].u_phone).toString(), true)
+    //   .then(res => console.log('Launched dialer!', res))
+    // } else {
+    //   return;
+    // }
+    
+  }
+
+  wa(){
+    if(!this.common.isEmpty(this.job.agent)){
+      this.common.openWhatsapp(this.job.agent[0].u_phone);
+    } else {
+      return;
+    }
+  }
+
   showAcceptButton(): boolean{
     return this.job.current_status == 'Pending Completion';
   }

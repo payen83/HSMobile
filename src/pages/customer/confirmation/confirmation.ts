@@ -44,7 +44,6 @@ export class ConfirmationPage {
   }
 
   makePayment() {
-    let discount: number = 0;
     if (this.user.role == 'Agent') {
 
     };

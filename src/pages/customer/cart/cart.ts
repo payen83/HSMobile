@@ -68,7 +68,11 @@ export class CartPage {
 
   addQuantity(index: number) {
     if(this.role == 'Agent'){
-      this.itemInCart[index].qty += parseInt(this.itemInCart[index].QuantityPerPackage);
+      if(this.itemInCart[index].qty < this.itemInCart[index].QuantityPerPackage){
+        this.itemInCart[index].qty += parseInt(this.itemInCart[index].QuantityPerPackage);
+      } else {
+        this.itemInCart[index].qty += 1;
+      }
     } else {
       this.itemInCart[index].qty +=  1;
     }
@@ -78,7 +82,11 @@ export class CartPage {
   subtractQuantity(index: number) {
     if (this.itemInCart[index].qty != 0) {
       if(this.role == 'Agent'){
-        this.itemInCart[index].qty -= this.itemInCart[index].QuantityPerPackage;
+        if(this.itemInCart[index].qty <= parseInt(this.itemInCart[index].QuantityPerPackage)){
+          this.itemInCart[index].qty = 0;
+        } else {
+          this.itemInCart[index].qty -= 1;
+        }  
       } else {
         this.itemInCart[index].qty -= 1;
       }
