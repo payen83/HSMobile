@@ -9,14 +9,14 @@ import { User } from '../../../providers/providers';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  user: {lat?: number, lng?: number, url_image?: null, role?: string, id?: number, name?: string, icnumber?: string, u_address?: string, u_bankname?: string, u_accnumber?: string, email: string, u_phone?: string};
+  user: { lat?: number, lng?: number, url_image?: null, role?: string, id?: number, name?: string, icnumber?: string, u_address?: string, u_bankname?: string, u_accnumber?: string, email: string, u_phone?: string };
   savedBankAcc: string;
   currentUser: any;
 
   constructor(public userProvider: User, public common: CommonProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
     this.user = {
       name: null,
-      icnumber:null,
+      icnumber: null,
       u_address: null,
       u_phone: null,
       u_bankname: null,
@@ -27,7 +27,7 @@ export class ProfilePage {
       lat: null,
       lng: null
     }
-    this.currentUser = {name: null, email: null};
+    this.currentUser = { name: null, email: null };
   }
 
   ionViewDidLoad() {
@@ -35,16 +35,29 @@ export class ProfilePage {
     this.getProfile();
   }
 
- showProfileImage(){
-  if(this.user.url_image){
-    return this.common.getProfileImage_URL() + this.user.url_image;
+  getImage(){
+    this.common.selectImage().then(response => {
+      //console.log(response);
+      this.common.takePicture(response).then(image => {
+        //this. = image;
+        this.showProfileImage(image);
+      })
+    });
   }
-  return '../../../assets/imgs/user.png';
- }
 
-  getProfile(){
+  showProfileImage(image?: any) {
+    if(image){
+      return image;
+    }
+    if (this.user.url_image) {
+      return this.common.getProfileImage_URL() + this.user.url_image;
+    }
+    return '../../../assets/imgs/user.png';
+  }
+
+  getProfile() {
     this.common.getData('USER').then(response => {
-      if (response){
+      if (response) {
         console.log(response);
         let result: any = response;
         this.user = result;
@@ -52,7 +65,7 @@ export class ProfilePage {
         this.savedBankAcc = this.user.u_accnumber;
       }
 
-      if(!this.user.u_address){
+      if (!this.user.u_address) {
         this.common.getLocation().then(location => {
           let coords: any = location
           this.user.lat = coords.latitude;
@@ -61,11 +74,11 @@ export class ProfilePage {
       }
 
     }, err => {
-        console.log('err: ' + JSON.stringify(err))
+      console.log('err: ' + JSON.stringify(err))
     });
   }
 
-  changePassword(){
+  changePassword() {
     let prompt = this.alertCtrl.create({
       title: 'Password',
       message: "Enter your new password",
@@ -102,11 +115,11 @@ export class ProfilePage {
     prompt.present();
   }
 
-  updatePassword(new_password: string){
+  updatePassword(new_password: string) {
 
   }
 
-  checkPassword(){
+  checkPassword() {
     let prompt = this.alertCtrl.create({
       title: 'Confirmation',
       message: "Enter your password to continue",
@@ -133,59 +146,59 @@ export class ProfilePage {
     });
 
     prompt.present();
-  
+
   }
 
-  isAgent(){
+  isAgent() {
     return this.user.role == 'Agent';
   }
 
-  getPassword(pass){
-    let user = {email: this.user.email, password: pass};
-    this.userProvider.login(user).then(res=>{
+  getPassword(pass) {
+    let user = { email: this.user.email, password: pass };
+    this.userProvider.login(user).then(res => {
       //console.log(res);
-      if (res.status){
+      if (res.status) {
         this.savedBankAcc = this.user.u_accnumber;
         this.submitProfile();
         //return true;
       } else {
-        this.common.showAlert('','Invalid username or password')
+        this.common.showAlert('', 'Invalid username or password')
         return false
       }
-   }, err => {
-     this.common.showAlert('Login failed', JSON.stringify(err.error.error))
-     return false;
-   })
+    }, err => {
+      this.common.showAlert('Login failed', JSON.stringify(err.error.error))
+      return false;
+    })
   }
 
-  setProfile(data: any){
+  setProfile(data: any) {
     this.currentUser.name = data.name;
     this.currentUser.email = data.email
   }
-  
 
-  submitProfile(){
-    if(!this.user.u_address || !this.user.u_phone){
+
+  submitProfile() {
+    if (!this.user.u_address || !this.user.u_phone) {
       this.common.showAlert('', 'Please enter your address and phone number');
     } else {
-      if(this.user.u_accnumber !== this.savedBankAcc){
+      if (this.user.u_accnumber !== this.savedBankAcc) {
         this.checkPassword()
-       } 
-       else {
-         let loader = this.common.showLoader();
-         this.userProvider.saveProfile(this.user).then(response=>{
-           loader.dismiss();
-           this.setProfile(this.user);
-           let result: any = response;
-           if(result.status){
-             this.common.saveData('USER', this.user);
-             this.common.showAlert('Profile', 'Your profile has been updated.');
-           }
-         }, err => {
-           loader.dismiss();
-           this.common.showAlert('Error', JSON.stringify(err));
-         })
-       }
+      }
+      else {
+        let loader = this.common.showLoader();
+        this.userProvider.saveProfile(this.user).then(response => {
+          loader.dismiss();
+          this.setProfile(this.user);
+          let result: any = response;
+          if (result.status) {
+            this.common.saveData('USER', this.user);
+            this.common.showAlert('Profile', 'Your profile has been updated.');
+          }
+        }, err => {
+          loader.dismiss();
+          this.common.showAlert('Error', JSON.stringify(err));
+        })
+      }
     }
   }
 

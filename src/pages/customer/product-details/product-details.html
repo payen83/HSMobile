@@ -20,7 +20,7 @@
 
 <ion-content padding>
   <ion-card>
-    <img [src]="getPath()"/>
+    <img [src]="getPath() || 'assets/imgs/logo.png'"/>
     <ion-card-content>
       <ion-card-title>
         {{product.Name}}

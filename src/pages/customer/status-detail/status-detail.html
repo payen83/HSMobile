@@ -8,9 +8,9 @@
     <ion-list>
       <ion-item-divider color="light">
         <strong>Agent</strong>
-        <button *ngIf="showCancelButton()" ion-button icon-left round color="danger" item-end (click)="cancelOrder()">
+        <button *ngIf="showCancelButton()" ion-button icon-left round color="danger" item-end (click)="rejectCancelDelivery('cancel')">
           <ion-icon name="close"></ion-icon> Cancel order</button>
-          <button *ngIf="showAcceptButton()" ion-button icon-left round color="danger" item-end (click)="rejectDelivery()">
+          <button *ngIf="showAcceptButton()" ion-button icon-left round color="danger" item-end (click)="rejectCancelDelivery('reject')">
               <ion-icon name="thumbs-down"></ion-icon> Reject</button>
           <button *ngIf="showAcceptButton()" ion-button icon-left round color="secondary" item-end (click)="acceptDelivery()">
             <ion-icon name="thumbs-up"></ion-icon> Accept delivery</button>
@@ -39,20 +39,9 @@
           <img [src]="getProductImage(product)||'assets/imgs/logo.png'">
         </ion-thumbnail>
         <h2>{{product.Name}} x {{product.ProductQuantity}}</h2>
-        <h4>${{product.price}}</h4>
+        <h4>RM{{product.price}}</h4>
       </ion-item>
-      <!-- <ion-item no-padding>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/logo.png">
-        </ion-thumbnail>
-        <h2>Night Cream x 1</h2>
-        <h4>RM200</h4>
-      </ion-item>
-      <ion-item no-lines>
-        <ion-note item-end>
-          <strong>Total: RM500</strong>
-        </ion-note>
-      </ion-item> -->
+      
     </ion-list>
     <ion-item-divider color="light">
       <strong>Timeline</strong>

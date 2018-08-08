@@ -14,16 +14,13 @@ export class Jobs {
 
   getOrderTimeline(jobID: number) {
     return new Promise((resolve, reject) => {
-      //this.common.getData('USER').then(response => {
-        //let user: any = response;
-        this.api.get('job/view-order-timeline/' + jobID.toString()).subscribe(res => {
-          console.log(res);
-          resolve(res);
-        })
-      // }, err => {
-      //   console.log('err: ' + JSON.stringify(err));
-      //   reject(err);
-      // });
+      this.api.get('job/view-order-timeline/' + jobID.toString()).subscribe(res => {
+        console.log(res);
+        resolve(res);
+      }, err => {
+        console.log('err: ' + JSON.stringify(err));
+        reject(err);
+      });
     });
   }
 
@@ -79,6 +76,30 @@ export class Jobs {
     });
   }
 
+  customerCancelOrder(JobID: any, reason: string) {
+    return new Promise((resolve, reject) => {
+      this.common.getData('USER').then(response => {
+        //let user: any = response;
+        let body = new FormData();
+        body.append('message', reason.toString());
+
+        this.api.post('job/cancel-job/' + JobID, body).subscribe(res => {
+          let result: any = res;
+          if (result.status) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+        }, err => {
+          console.log('err: ' + JSON.stringify(err))
+          reject(err);
+        });
+      }, err => {
+        console.log('err: ' + JSON.stringify(err))
+      });
+    });
+  }
+
   customerRejectDelivery(JobID: any, reason: string) {
     return new Promise((resolve, reject) => {
       this.common.getData('USER').then(response => {
@@ -86,7 +107,7 @@ export class Jobs {
         let body = new FormData();
         body.append('user_id', user.id);
         body.append('message', reason.toString());
-        console.log(user.id, ' ', reason );
+        console.log(user.id, ' ', reason);
 
         this.api.post('job/reject-delivery/' + JobID, body).subscribe(res => {
           let result: any = res;

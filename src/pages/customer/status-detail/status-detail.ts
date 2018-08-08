@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Jobs, CommonProvider } from '../../../providers/providers';
 
-/**
- * Generated class for the StatusDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-status-detail',
@@ -37,17 +30,11 @@ export class StatusDetailPage {
 
   call(){
     if(!this.common.isEmpty(this.job.agent)){
-      //this.common.call((this.job.agent[0].u_phone).toString());
+      this.common.call((this.job.agent[0].u_phone).toString());
       console.log(this.job.agent[0].u_phone);
     } else {
       return;
     }
-    // if(!this.common.isEmpty(job.agent)){
-    //   this.callNumber.callNumber((job.agent[0].u_phone).toString(), true)
-    //   .then(res => console.log('Launched dialer!', res))
-    // } else {
-    //   return;
-    // }
     
   }
 
@@ -58,7 +45,7 @@ export class StatusDetailPage {
       return;
     }
   }
-
+  
   showAcceptButton(): boolean{
     return this.job.current_status == 'Pending Completion';
   }
@@ -71,9 +58,9 @@ export class StatusDetailPage {
     return this.job.current_status == 'Reject';
   }
 
-  rejectDelivery(){
+  rejectCancelDelivery(type: string){
     const prompt = this.alertCtrl.create({
-      title: 'Are you sure you want to reject this delivery?',
+      title: 'Are you sure you want to ' + type + ' this delivery?',
       message: "Please state your reason..",
       inputs: [
         {
@@ -90,22 +77,39 @@ export class StatusDetailPage {
         {
           text: 'Submit',
           handler: data => {
-            //console.log('Reason..'+data.reason);
             let loader: any = this.common.showLoader();
-            this.jobs.customerRejectDelivery(this.job.JobID, data.reason).then(res=>{  
-              loader.dismiss();            
-              console.log('response');
-              console.log(res);
-              this.common.showAlert('Delivery rejected', 'The issue has been notified by the agent');
-              this.navCtrl.pop();
-            }, err => {
-              loader.dismiss();
-              if(err.message){
-                this.common.showAlert('Error', err.message);
-              } else {
-                this.common.showAlert('Error', JSON.stringify(err));
-              }
-            })
+            if(type == 'reject') {
+
+              this.jobs.customerRejectDelivery(this.job.JobID, data.reason).then(res=>{  
+                loader.dismiss();            
+                console.log(res);
+                this.common.showAlert('Delivery rejected', 'The issue has been notified by the agent');
+                this.navCtrl.pop();
+              }, err => {
+                loader.dismiss();
+                if(err.message){
+                  this.common.showAlert('Error', err.message);
+                } else {
+                  this.common.showAlert('Error', JSON.stringify(err));
+                }
+              })
+
+            } else if (type == 'cancel'){
+              this.jobs.customerCancelOrder(this.job.JobID, data.reason).then(res=>{  
+                loader.dismiss();            
+                console.log(res);
+                this.common.showAlert('Order cancelled', 'Your cancellation has been processed and the product will be delivered by HQ');
+                this.navCtrl.pop();
+              }, err => {
+                loader.dismiss();
+                if(err.message){
+                  this.common.showAlert('Error', err.message);
+                } else {
+                  this.common.showAlert('Error', JSON.stringify(err));
+                }
+              })
+            }
+            
           }
         }
       ]

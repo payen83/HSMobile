@@ -32,9 +32,8 @@
         </ion-avatar>
         <h2>{{job.c_name}}</h2>
         <h4>Order #{{job.JobID}}</h4>
-        <p>
-          <ion-icon name="pin" icon-left></ion-icon> {{job.c_address}}</p>
-        <ion-note item-end>${{job.total_price}}</ion-note>
+        <p><ion-icon name="pin" icon-left></ion-icon> {{job.c_address}}</p>
+        <ion-note item-end>RM{{job.total_price}}</ion-note>
       </button>
       <!-- <button ion-item>
         <ion-avatar item-start>
@@ -55,7 +54,7 @@
         <h2>{{job.c_name}}</h2>
         <h4>Order #{{job.JobID}}</h4>
         <p><ion-icon name="pin" icon-left></ion-icon> {{job.c_address}}</p>
-        <ion-note item-end>${{job.total_price}}</ion-note>
+        <ion-note item-end>RM{{job.total_price}}</ion-note>
       </button>
     </ion-list>
   </div>

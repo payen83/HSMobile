@@ -16,7 +16,7 @@
 <ion-content>
   <div class="wrapper">
     <header class="wrapper-text">
-      <img [src]="showProfileImage()" class="img" />
+      <img tappable (click)="getImage()" [src]="showProfileImage()" class="img" />
       <h3>{{currentUser.name}}</h3>
       <p>{{currentUser.email}}</p>
     </header>

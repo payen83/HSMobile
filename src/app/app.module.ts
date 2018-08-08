@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CallNumber } from '@ionic-native/call-number';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Camera } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/agent/home/home';
@@ -30,6 +31,9 @@ import { TncPageModule } from '../pages/general/tnc/tnc.module';
 import { StatusDetailPageModule } from '../pages/customer/status-detail/status-detail.module';
 import { RegisterPageModule } from '../pages/general/register/register.module';
 import { ProductDetailsPageModule } from '../pages/customer/product-details/product-details.module';
+import { MerchantProductsPageModule } from '../pages/merchant/merchant-products/merchant-products.module';
+import { AddPageModule } from '../pages/merchant/add/add.module';
+import { MerchantDashboardPageModule } from '../pages/merchant/merchant-dashboard/merchant-dashboard.module';
 
 
 @NgModule({
@@ -56,6 +60,9 @@ import { ProductDetailsPageModule } from '../pages/customer/product-details/prod
     StatusDetailPageModule,
     RegisterPageModule,
     ProductDetailsPageModule,
+    MerchantProductsPageModule,
+    AddPageModule,
+    MerchantDashboardPageModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
@@ -76,7 +83,8 @@ import { ProductDetailsPageModule } from '../pages/customer/product-details/prod
     Geolocation,
     Wallet,
     CallNumber,
-    InAppBrowser
+    InAppBrowser,
+    Camera
   ]
 })
 export class AppModule {}

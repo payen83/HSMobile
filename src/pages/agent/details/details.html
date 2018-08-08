@@ -43,18 +43,25 @@
         <img [src]="getProductImage(order.ImageURL)||'assets/imgs/user.png'">
       </ion-thumbnail>
       <h2>{{order.Name}} x {{order.ProductQuantity}}</h2>
-      <h4>${{order.price}}</h4>
+      <h4>RM{{order.price}}</h4>
     </ion-item>
     <ion-item no-lines>
       <ion-note item-end>
-        <strong>Total: ${{job.total_price}}</strong>
+        <strong>Total: RM{{job.total_price}}</strong>
       </ion-note>
     </ion-item>
-  </ion-list>
+  </ion-list> 
+  <ion-item-divider color="light">
+    <strong>Special Note</strong>
+  </ion-item-divider>
+   <ion-item item-content>
+      {{job.note || 'Not available'}}
+   </ion-item>
   <ion-item-divider color="light">
     <strong>Location</strong>
   </ion-item-divider>
   <div id="map" #map></div>
+ 
   <ion-fab right bottom>
       <button ion-fab color="danger" (click)="scrollTop()"><ion-icon name="arrow-dropup"></ion-icon></button>
   </ion-fab>

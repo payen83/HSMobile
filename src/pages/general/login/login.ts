@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController, Events } from 'ionic-angular';
-import { HomePage } from '../../agent/home/home';
+// import { HomePage } from '../../agent/home/home';
 import { User } from '../../../providers/user/user';
 import { CommonProvider } from '../../../providers/common/common';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -17,59 +10,41 @@ import { CommonProvider } from '../../../providers/common/common';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  user: any = {email: '', password: ''};
+  user: any = { email: '', password: '' };
   userData: any;
   constructor(public events: Events, public userProvider: User, public modalCtrl: ModalController, public common: CommonProvider, public alertCtrl: AlertController, public userP: User, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    // console.log('ionViewDidLoad LoginPage');
-    //let loader = this.common.showLoader();
-    //this.userProvider.hasLoggedIn().then(res => {
-     // loader.dismiss();
-     // this.common.setUserData(res);
-     // this.login();
-    //}, err => {
-      //loader.dismiss();
-     // return;
-    //})
+    
   }
 
-  login(){
+  login() {
     this.common.getData('USER').then(user => {
-    let userData: any = user;
-    if(userData.role == 'Agent'){
-      this.userP.setUserType('a');
-      this.navCtrl.setRoot(HomePage, {user: userData}, {animate: true});
+      let userData: any = user;
       this.events.publish('user:login', userData);
-    } else{
-      this.userP.setUserType('c');
-      this.events.publish('user:login', userData);
-      this.navCtrl.setRoot('ProductsPage', {}, {animate: true});
-    }
     })
   }
 
-  doLogin(){
-   let loader = this.common.showLoader();
-   this.userProvider.login(this.user).then(res=>{
+  doLogin() {
+    let loader = this.common.showLoader();
+    this.userProvider.login(this.user).then(res => {
       console.log(res);
       loader.dismiss();
-      if (res.status){
-        //this.common.setUserData(res.users[0]);
+      if (res.status) {
         this.common.saveData('USER', res.users[0]).then(res => {
           this.login();
         });
       } else {
-        this.common.showAlert('','Invalid username or password')
+        this.common.showAlert('', 'Invalid username or password')
       }
-   }, err => {
-     loader.dismiss();
-     this.common.showAlert('Login failed', JSON.stringify(err))
-   })
+    }, err => {
+      loader.dismiss();
+      this.common.showAlert('Login failed', JSON.stringify(err))
+    })
   }
 
-  forgotPassword(){
+  forgotPassword() {
     let prompt = this.alertCtrl.create({
       title: 'Forgot Password',
       message: "Please enter your email address",
@@ -96,10 +71,10 @@ export class LoginPage {
     });
 
     prompt.present();
-  
+
   }
 
-  openRegister(){
+  openRegister() {
     let modalCss = {
       showBackdrop: true,
       enableBackdropDismiss: false,
@@ -108,14 +83,14 @@ export class LoginPage {
     let modal = this.modalCtrl.create('RegisterPage', null, modalCss);
     modal.present();
     modal.onDidDismiss(data => {
-      if(data.registerItem){
+      if (data.registerItem) {
         //this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
-        this.common.showAlert('Your registration is successful','Please login to continue');
-      } 
+        this.common.showAlert('Your registration is successful', 'Please login to continue');
+      }
     });
   }
 
-  register(){
+  register() {
     let prompt = this.alertCtrl.create({
       title: 'Registration',
       message: "Please enter your details as below",
@@ -150,26 +125,26 @@ export class LoginPage {
         {
           text: 'Register',
           handler: data => {
-            if(data.password == data.confirm_password){
+            if (data.password == data.confirm_password) {
               this.doRegister(data);
             } else {
               this.common.showAlert('Your password is not match', '');
             }
-            
+
           }
         }
       ]
     });
 
     prompt.present();
-  
+
   }
 
-  resetPassword(email){
-    this.common.showAlert('Please check your email to reset password','');
+  resetPassword(email) {
+    this.common.showAlert('Please check your email to reset password', '');
   }
 
-  doRegister(data){
+  doRegister(data) {
 
   }
 

@@ -1,0 +1,70 @@
+<!--
+  Generated template for the AddPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>New Product</ion-title>
+    <ion-buttons end>
+      <button ion-button clear (click)="save()">Save</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <img class="product-img" [src]="productImage||'./assets/imgs/logo2.png'"/>
+  <button (click)="getImage()" ion-button color="primary" block clear icon-left><ion-icon name="camera"></ion-icon>Take Picture</button>
+<ion-list>
+  <ion-item-divider color="light">
+    <strong>Product Details</strong>
+  </ion-item-divider>
+
+  <ion-item>
+    <ion-label fixed>Name</ion-label>
+    <div class="item-content" item-content>
+      <ion-input type="text"></ion-input>
+    </div>
+  </ion-item>
+  <ion-item>
+      <ion-label fixed>SKU</ion-label>
+      <div class="item-content" item-content>
+        <ion-input type="text"></ion-input>
+      </div>
+    </ion-item>
+  <ion-item>
+    <ion-label fixed>Price</ion-label>
+    <div class="item-content" item-content>
+      <ion-input type="text"></ion-input>
+    </div>
+  </ion-item>
+  <ion-item text-wrap>
+    <ion-label fixed>Description</ion-label>
+    <div item-content class="item-content">
+      <ion-textarea rows="4" type="text"></ion-textarea>
+    </div>
+  </ion-item>
+
+  <ion-item-divider color="light">
+    <strong>Bulk Purchase (Optional)</strong>
+  </ion-item-divider>
+
+  <ion-item>
+    <ion-label fixed>Min. Quantity</ion-label>
+    <div class="item-content" item-content>
+      <ion-input type="number"></ion-input>
+    </div>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed>Discount</ion-label>
+    <div class="item-content" item-content>
+      <ion-input type="number"></ion-input>
+    </div>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

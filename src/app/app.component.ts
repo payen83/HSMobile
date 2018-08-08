@@ -3,7 +3,6 @@ import { Nav, Platform, MenuController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/agent/home/home';
-//import { LoginPage } from '../pages/general/login/login';
 import { User } from '../providers/user/user';
 import { CommonProvider } from '../providers/providers';
 
@@ -17,6 +16,7 @@ export class MyApp {
   hasLoggedIn: boolean = false;
   pages: Array<{title: string, icon?: string, component: any}>;
   pagesCustomer: Array<{title: string, icon?: string, component: any}>;
+  pagesMerchant: Array<{title: string, icon?: string, component: any}>;
 
   //isAgent: boolean;
   constructor(public events: Events, public common: CommonProvider, public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
@@ -27,27 +27,23 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'home' },
       { title: 'Orders', component: 'OrdersPage', icon: "clipboard" },
       { title: 'Transactions', component: 'TransactionsPage', icon: "cash" },
-      { title: 'Products', component: 'ProductsPage', icon: "apps" },
+      { title: 'Products', component: 'ProductsPage', icon: "cube" },
     ];
 
     this.pagesCustomer = [
-      { title: 'Products', component: 'ProductsPage', icon: "apps" },
+      { title: 'Products', component: 'ProductsPage', icon: "cube" },
       { title: 'Status', component: 'StatusPage', icon: "analytics" }
+    ];
+
+    this.pagesMerchant = [
+      { title: 'Dashboard', component: 'MerchantDashboardPage', icon: "speedometer" },
+      { title: 'Products', component: 'MerchantProductsPage', icon: "cube" }
     ];
 
     this.listenToLoginEvents();
 
     this.user.hasLoggedIn().then((loggedIn) => {
       this.events.publish('user:login', loggedIn);
-      if(loggedIn){
-        if(loggedIn.role == 'Customer'){
-          this.user.setUserType('c');
-          this.rootPage = 'ProductsPage';
-        } else {
-          this.user.setUserType('a');
-          this.rootPage = HomePage;
-        }
-      }
     }, err => {
       this.events.publish('user:logout');
       this.rootPage = 'ProductsPage';
@@ -56,7 +52,7 @@ export class MyApp {
 
   imageProfile(){
     if(this.showUser().url_image){
-      return this.common.getProfileImage_URL() + this.showUser().url_image;
+      return this.common.showUserImage();
     }
     return 'assets/imgs/user.png';
   }
@@ -74,18 +70,18 @@ export class MyApp {
     return this.user.userType() == 'c';
   }
 
-  isGuest(): boolean {
-    return this.user.userType() == 'g';
+  isMerchant(): boolean {
+    return this.user.userType() == 'm';
   }
 
   logout(){
-    this.common.destroyData().then(res=>{
+    this.common.destroyData().then(res => {
       this.menuCtrl.close();
       this.user.setUserType('g');
     this.enableMenu(false);
       this.user.logout();
       this.nav.setRoot('LoginPage', {}, {animate: true});
-    })
+    });
   }
 
   showUser(){
@@ -94,8 +90,6 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
@@ -107,20 +101,24 @@ export class MyApp {
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
 
   listenToLoginEvents() {
 
     this.events.subscribe('user:login', (user) => {
-      //localStorage.setItem('hasLoggedIn', JSON.stringify(true));
-      //this.setProfile();
-      this.common.setUserData(user)
+      this.common.setUserData(user);
+      if(user.role == 'Customer'){
+        this.user.setUserType('c');
+        this.nav.setRoot('ProductsPage');
+      } else if (user.role == 'Agent'){
+        this.user.setUserType('a');
+        this.nav.setRoot(HomePage);
+      } else if (user.role == 'Merchant'){
+        this.user.setUserType('m');
+        this.nav.setRoot('MerchantDashboardPage');
+      }
       this.enableMenu(true);
-
-      //this.isLoggedIn = true;
     });
 
     this.events.subscribe('user:signup', () => {

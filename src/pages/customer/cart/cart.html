@@ -20,7 +20,7 @@
         <img [src]="getPath(item.ImageURL)">
       </ion-thumbnail>
       <h2>{{item.Name}}</h2>
-      <h4>USD{{item.Price}}</h4>
+      <h4>RM{{item.Price}}</h4>
       <div item-content>
         <button small ion-button icon-only (click)="subtractQuantity(i)">
           <ion-icon name="remove"></ion-icon>
@@ -49,7 +49,7 @@
     </ion-item> -->
     <ion-item no-lines *ngIf="!emptyCart()">
       <ion-note item-end>
-        <strong>Total: USD{{getTotal()}}</strong>
+        <strong>Total: RM{{getTotal()}}</strong>
       </ion-note>
     </ion-item>
   </ion-list>

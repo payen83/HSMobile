@@ -7,6 +7,10 @@ page-login {
     background: transparent;
     -webkit-box-shadow: none;
   }
+
+  .list-md .item-input:last-child {
+    border-bottom: 0px !important;
+  }
   .background {
     //background-image: url('../assets/imgs/bg.png');
     //background-color: color($colors, dark);

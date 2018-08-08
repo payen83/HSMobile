@@ -52,7 +52,6 @@ export class ProductsPage {
   }
 
   showDetails(product){
-    console.log('test')
     let modal = this.modalCtrl.create('ProductDetailsPage', {item: product});
     modal.present();
   }

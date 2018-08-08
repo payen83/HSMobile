@@ -15,8 +15,14 @@
           {{p.title}}
         </button>
       </div>
-      <div *ngIf="!isAgent()">
+      <div *ngIf="isCustomer()">
         <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pagesCustomer" (click)="openPage(p)">
+          <ion-icon name="{{p.icon}}" class="label"></ion-icon>
+          {{p.title}}
+        </button>
+      </div>
+      <div *ngIf="isMerchant()">
+        <button class="button-menu btnside" large menuClose icon-left ion-item *ngFor="let p of pagesMerchant" (click)="openPage(p)">
           <ion-icon name="{{p.icon}}" class="label"></ion-icon>
           {{p.title}}
         </button>

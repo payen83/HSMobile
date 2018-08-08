@@ -12,12 +12,12 @@
   <ion-list>
     <!-- <ion-item-divider no-lines>
     </ion-item-divider> -->
-    <ion-item no-padding *ngFor="let product of items" tappable (click)="showDetails(product)">
+    <ion-item text-wrap no-padding *ngFor="let product of items" tappable (click)="showDetails(product)">
       <ion-thumbnail item-start>
         <img [src]="getPath(product.ImageURL)">
       </ion-thumbnail>
       <h2>{{ product.Name }}</h2>
-      <h4>USD {{ product.Price }}</h4>
+      <h4>RM{{ product.Price }}</h4>
       <em class="em" ion-text *ngIf="isAgent()">({{ product.QuantityPerPackage }} unit per package)</em>
       <div item-content>
         <button ion-button (click)="addToCart(product);$event.stopPropagation();">Add to cart</button>
