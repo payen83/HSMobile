@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ItemSliding, ModalController } from 'ionic-angular';
+import { CommonProvider, Products } from '../../../providers/providers';
 
 /**
  * Generated class for the MerchantProductsPage page.
@@ -15,29 +16,34 @@ import { IonicPage, NavController, NavParams, AlertController, ItemSliding, Moda
 })
 export class MerchantProductsPage {
   myImage: any;
-  products = []
-  constructor(public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-    this.products = [
-      {Name: 'Essential Plus', price: 150, status: 'pending', Description: 'Because EssensiaPlus is fully natural, because it has a symphony of nutrients from over 50 fruits, vegetables, whole grains, nuts, seeds, and herbs; and because of its revolutionary fermentation based on a formula from time-honored traditions; EssensiaPlus is the finest, most effective, healthiest natural food available anywhere. EssensiaPlus means a healthier and longer life for you.' },
-    ]
+  products = [];
+  constructor(public productP: Products, public common: CommonProvider, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    this.products = [];
   }
 
   ionViewDidLoad() {
-    // console.log('ionViewDidLoad MerchantProductsPage');
+    this.viewProducts();
   }
 
   add(){
     this.navCtrl.push('AddPage');
   }
 
-  confirmDelete(item, slidingItem: ItemSliding){
+  doRefresh(refresher){
+    this.ionViewDidLoad();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+  }
+
+  confirmDelete(item, slidingItem: ItemSliding, i){
     const alert = this.alertCtrl.create({
       message: 'Are you sure you want to delete this item?',
       buttons: [
         {
           text: 'Delete item',
           handler: () => {
-            this.delete(item);
+            this.delete(item, i);
           }
         },{
           text: 'Cancel',
@@ -50,19 +56,47 @@ export class MerchantProductsPage {
     alert.present();
   }
 
-  delete(item){
-
+  delete(item, index){
+    let loader = this.common.showLoader();
+    this.productP.deleteProductMerchant(item).then(res => {
+      loader.dismiss();
+      let result: any = res;
+      if (result.status){
+        this.products.splice(index, 1);
+        this.common.showAlert('', 'Your product has been deleted');
+      }
+    }, err => {
+      loader.dismiss();
+      this.common.showAlert('', err.message);
+    })  
   }
 
   view(item){
-
     let modal = this.modalCtrl.create('ProductDetailsPage', {item: item});
     modal.present();
   }
 
   edit(item, slidingItem: ItemSliding){
+   // console.log('go to edit', item)
     slidingItem.close();
-    this.navCtrl.push('AddPage', {item: item});
+    this.navCtrl.push('AddPage', {item: item, edit: true});
   }
+
+  viewProducts(){
+    this.productP.getProductMerchant().then(res => {
+      let result: any = res;
+      this.products = result.products;
+      console.log(this.products);
+    })
+  }
+
+  
+  getPath(url: string){
+    if (url == null){
+      return 'http://healthshoppe.elyzian.xyz/public/upload/images/no-image.png';
+    }
+    return 'http://healthshoppe.elyzian.xyz/public/upload/images/'+url;
+  }
+  
 
 }

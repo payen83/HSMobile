@@ -2,6 +2,7 @@ page-profile {
     .img {
         border-radius: 50%;
         max-width: 120px;
+        max-height: 120px;
         border:1px solid white;
         //-webkit-border-radius: 500px;
         //-moz-border-radius: 500px;
@@ -13,5 +14,9 @@ page-profile {
 
     .item-content{
         color: #505050;
+    }
+
+    .center {
+        align-content: center!important;
     }
 }

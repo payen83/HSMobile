@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>New Product</ion-title>
+    <ion-title>{{title}}</ion-title>
     <ion-buttons end>
       <button ion-button clear (click)="save()">Save</button>
     </ion-buttons>
@@ -26,27 +26,27 @@
 
   <ion-item>
     <ion-label fixed>Name</ion-label>
-    <div class="item-content" item-content>
-      <ion-input type="text"></ion-input>
-    </div>
+    <!-- <div class="item-content" item-content> -->
+      <ion-input type="text" [(ngModel)]="product.Name"></ion-input>
+    <!-- </div> -->
   </ion-item>
   <ion-item>
       <ion-label fixed>SKU</ion-label>
-      <div class="item-content" item-content>
-        <ion-input type="text"></ion-input>
-      </div>
+      <!-- <div class="item-content" item-content> -->
+        <ion-input type="text" [(ngModel)]="product.sku_number"></ion-input>
+      <!-- </div> -->
     </ion-item>
   <ion-item>
     <ion-label fixed>Price</ion-label>
-    <div class="item-content" item-content>
-      <ion-input type="text"></ion-input>
-    </div>
+    <!-- <div class="item-content" item-content> -->
+      <ion-input type="text" [(ngModel)]="product.Price"></ion-input>
+    <!-- </div> -->
   </ion-item>
   <ion-item text-wrap>
     <ion-label fixed>Description</ion-label>
-    <div item-content class="item-content">
-      <ion-textarea rows="4" type="text"></ion-textarea>
-    </div>
+    <!-- <div item-content class="item-content"> -->
+      <ion-textarea rows="4" type="text" [(ngModel)]="product.Description"></ion-textarea>
+    <!-- </div> -->
   </ion-item>
 
   <ion-item-divider color="light">
@@ -55,15 +55,15 @@
 
   <ion-item>
     <ion-label fixed>Min. Quantity</ion-label>
-    <div class="item-content" item-content>
-      <ion-input type="number"></ion-input>
-    </div>
+    <!-- <div class="item-content" item-content> -->
+      <ion-input type="number" [(ngModel)]="product.QuantityPerPackage"></ion-input>
+    <!-- </div> -->
   </ion-item>
   <ion-item>
-    <ion-label fixed>Discount</ion-label>
-    <div class="item-content" item-content>
-      <ion-input type="number"></ion-input>
-    </div>
+    <ion-label fixed>Discount (%)</ion-label>
+    <!-- <div class="item-content" item-content> -->
+      <ion-input type="number" [(ngModel)]="discount"></ion-input>
+    <!-- </div> -->
     </ion-item>
   </ion-list>
 

@@ -30,9 +30,13 @@ export class StatusPage {
   }
 
   statusDetail(job: any){
-    if(!this.common.isEmpty(job.agent)){
+    //if(!this.common.isEmpty(job.agent)){
       this.navCtrl.push('StatusDetailPage', {item: job});
-    }
+    //}
+  }
+
+  agentAvailable(job){
+    return !this.common.isEmpty(job.agent)
   }
 
   getProfileImage(url: any){

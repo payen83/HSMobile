@@ -29,7 +29,7 @@
         </ion-avatar>
         <h1>RM{{walletInfo.amount}}</h1>
         <p><strong>Available for withdrawal: RM{{availWithdraw(walletInfo.amount)}}</strong></p>
-        <p><strong>Pending approval: ${{walletInfo.pending_approval}}</strong></p>
+        <p><strong>Pending approval: RM{{walletInfo.pending_approval || '0'}}</strong></p>
       </ion-item>
     </ion-list>
   </ion-card>
@@ -41,7 +41,7 @@
     <ion-item *ngFor="let trans of transactions">
       <h3>{{trans.message}}</h3>
       <p>{{trans.created_at}}</p>
-      <div class="item-content" item-content><h2>{{showDebit(trans.status) ? '(' : ''}}RM{{convertAmount(trans.amount)}}{{showDebit(trans.status) ? ')' : ''}}</h2></div>
+      <div class="item-content" item-content><h2>{{showDebit(trans.status) ? '(' : ''}}RM{{trans.amount | number: '.2'}}{{showDebit(trans.status) ? ')' : ''}}</h2></div>
     </ion-item>
   </ion-list>
 </ion-content>

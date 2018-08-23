@@ -69,5 +69,11 @@ export class Wallet {
     });
   }
 
+  payViaPaypal(amount){
+    return new Promise((resolve, reject)=>{
+      resolve()
+    })
+  }
+
 }
 

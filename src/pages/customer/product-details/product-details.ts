@@ -25,6 +25,9 @@ export class ProductDetailsPage {
   }
 
   getPath(){
+    if(!this.product.ImageURL){
+      return 'http://healthshoppe.elyzian.xyz/public/upload/images/no-image.png';
+    }
     return 'http://healthshoppe.elyzian.xyz/public/upload/images/'+this.product.ImageURL;
   }
 

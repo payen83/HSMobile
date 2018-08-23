@@ -131,11 +131,10 @@ export class Jobs {
       this.common.getData('USER').then(response => {
         let user: any = response;
 
-        let body = {
-          user_id: user.id
-        }
+        let body = new FormData();
+        body.append('user_id', user.id);
 
-        this.api.post('job/agent-update-job/' + JobID.toString(), JSON.stringify(body)).subscribe(res => {
+        this.api.post('job/agent-update-job/' + JobID, body).subscribe(res => {
           resolve(res);
         }, err => {
           console.log('err: ' + JSON.stringify(err))
@@ -172,20 +171,6 @@ export class Jobs {
   }
 
   purchaseOrder(orders: any, user: any) {
-
-    // let body: any = 'total_price=' + orders.total_price;
-    // body += '&role=' + orders.role;
-    // body += '&payment_method=' + orders.payment_method;
-    // body += '&amount=' + orders.amount;
-    // body += '&transaction_id=' + orders.transaction_id;
-    // body += '&currency=' + orders.currency;
-    // body += '&payment_date=' + orders.payment_date;
-    // body += '&data=' + '[{ "ProductID": 1, "ProductQuantity": 1, "Discount": 0}, {"ProductID": 3, "ProductQuantity": 2, "Discount": 0}]';
-    // body += '&location_address=' + encodeURI(orders.location_address);
-    // body += '&Lng=' + orders.lng;
-    // body += '&Lat=' + orders.lat;
-    // body += '&special_notes=' + orders.special_notes;
-
     let body = new FormData();
 
     body.append('role', orders.role);
@@ -216,6 +201,32 @@ export class Jobs {
         console.log('err: ' + JSON.stringify(err));
         reject(err);
       });
+    });
+  }
+
+  merchantLatestOrder(){
+    return new Promise((resolve, reject) => {
+      this.common.getData('USER').then(response => {
+        let user: any = response;
+        this.api.get('dashboard/merchant-latest-order/' + user.id).subscribe(res => {
+          resolve(res);
+        }, err => {
+          reject(err);
+        })
+      })
+    });
+  }
+
+  merchantPendingJob(){
+    return new Promise((resolve, reject) => {
+      this.common.getData('USER').then(response => {
+        let user: any = response;
+        this.api.get('job/merchant-pending-job/' + user.id).subscribe(res => {
+          resolve(res);
+        }, err => {
+          reject(err);
+        })
+      })
     });
   }
 

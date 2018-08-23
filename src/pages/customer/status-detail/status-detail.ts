@@ -12,7 +12,14 @@ export class StatusDetailPage {
   timeline: Array<any>;
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public jobs: Jobs, protected common: CommonProvider) {
     this.job = this.navParams.get('item');
+    if(this.common.isEmpty(this.job.agent)) {
+      this.job.agent = [{name: null, url_image: null}];
+    }
     this.timeline = [];
+  }
+
+  agentAvailable(){
+    return (this.job.agent[0].name);
   }
 
   ionViewDidLoad() {
@@ -157,10 +164,10 @@ export class StatusDetailPage {
   }
 
   getProductImage(url: any){
-    if (url.url_image == null) {
-      return null;
+    if (url) {
+      return this.common.getAPI_URL() + url;
     } else {
-      return this.common.getAPI_URL() + url.url_image;
+      return null;
     }
   }
 

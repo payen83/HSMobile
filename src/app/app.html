@@ -3,7 +3,8 @@
   <ion-content class="bg">
     <div class="wrapper">
       <header tappable class="header2" (click)="profilePage()">
-        <img [src]="imageProfile()" class="img-sidebar" />
+        <!-- <img [src]="imageProfile()" class="img-sidebar" /> -->
+        <div [ngStyle]="{'background-image': 'url(' + imageProfile() + ')', 'background-size':'cover', 'border-radius': '50%', 'width': '100px', 'height': '100px', 'border':'1px solid white'}"></div>
         <h6>{{showUser().name}}</h6>
         <p class="p">{{showUser().email}}</p>
       </header>

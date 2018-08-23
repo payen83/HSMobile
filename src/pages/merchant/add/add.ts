@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { CommonProvider } from '../../../providers/providers';
+import { CommonProvider, Products } from '../../../providers/providers';
 
 @IonicPage()
 @Component({
@@ -9,18 +9,59 @@ import { CommonProvider } from '../../../providers/providers';
 })
 export class AddPage {
   productImage: any;
-  constructor(public common: CommonProvider, public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  product: { ImageURL?: string, sku_number?: string, Name: string, Price: number, Description: string, QuantityPerPackage: number, Discount: number }
+  isEdit: boolean = false;
+  title: string = 'New Product';
+  discount: number;
+
+  constructor(public productsProvider: Products, public common: CommonProvider, public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+    this.product = { sku_number: null, Name: null, Price: null, Description: null, QuantityPerPackage: null, Discount: null }
+    let item = this.navParams.get('item');
+    console.log('item nav', item);
+    this.isEdit = this.navParams.get('edit');
+    if (item) {
+      this.product = item;
+      this.title = 'Edit Product';
+      if(item.ImageURL != null){
+        this.productImage = 'http://healthshoppe.elyzian.xyz/public/upload/images/'+this.product.ImageURL;
+      }
+      //console.log('product',this.product)
+      this.discount = this.product.Discount * 100;
+    }
+    
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad AddPage');
   }
 
-  save(){
-
+  save() {
+    let loader = this.common.showLoader();
+    this.product.Discount = this.discount;
+      this.productsProvider.addProductMerchant(this.product, this.isEdit).then(res => {
+        loader.dismiss();
+        let result: any = res;
+        if (result.status) {
+          this.common.showAlert('', this.showCompleted(this.isEdit));
+          this.navCtrl.pop();
+        } else {
+          this.common.showAlert('', result.message);
+        }
+      }, err => {
+        loader.dismiss();
+        this.common.showAlert('Error', JSON.stringify(err))
+      })
   }
 
-  getImage(){
+  showCompleted(isEdited): string{
+    if(isEdited){
+      return 'Your product has been updated';
+    } else {
+      return 'Your product has been created and pending for approval.';
+    }
+  }
+
+  getImage() {
     this.common.selectImage().then(response => {
       //console.log(response);
       this.common.takePicture(response).then(image => {
@@ -28,32 +69,5 @@ export class AddPage {
       })
     });
   }
-
-  // takePicture(source){
-  //   let pictureSource: any;
-
-  //   if(source == 'camera'){
-  //     pictureSource = this.camera.PictureSourceType.CAMERA;
-  //   } else {
-  //     pictureSource = this.camera.PictureSourceType.PHOTOLIBRARY;
-  //   }
-
-  //   const options: CameraOptions = {
-  //     quality: 100,
-  //     destinationType: this.camera.DestinationType.FILE_URI,
-  //     encodingType: this.camera.EncodingType.PNG,
-  //     mediaType: this.camera.MediaType.PICTURE,
-  //     sourceType: pictureSource,
-  //     correctOrientation: true
-  //   }
-    
-  //   this.camera.getPicture(options).then((imageData) => {
-  //     //let base64Image = 'data:image/jpeg;base64,' + imageData;
-  //     this.productImage = normalizeURL(imageData);
-  //   }, (err) => {
-  //    // Handle error
-  //   });
-
-  // }
 
 }

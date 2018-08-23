@@ -1,9 +1,4 @@
-<!--
-  Generated template for the OrdersPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -14,7 +9,7 @@
   <ion-toolbar no-border-bottom>
     <ion-segment color="light" [(ngModel)]="status">
       <ion-segment-button value="active">
-        Active
+        New
       </ion-segment-button>
       <ion-segment-button value="completed">
         Completed
@@ -27,25 +22,28 @@
   <div [ngSwitch]="status">
     <ion-list *ngSwitchCase="'active'">
       <button ion-item *ngFor="let job of activeJobs" (click)="pageDetails(job)">
-        <ion-avatar item-start>
-          <img [src]="getImage(job.url_image)||'assets/imgs/user.png'">
-        </ion-avatar>
+        <!-- <ion-avatar item-start>
+          <img [src]="getImage(job.ImageURL)||'assets/imgs/user.png'">
+        </ion-avatar> -->
         <h2>{{job.c_name}}</h2>
         <h4>Order #{{job.JobID}}</h4>
         <p><ion-icon name="pin" icon-left></ion-icon> {{job.c_address}}</p>
         <ion-note item-end>RM{{job.total_price}}</ion-note>
       </button>
+
     </ion-list>
     <ion-list *ngSwitchCase="'completed'">
       <button ion-item *ngFor="let job of completedJobs" (click)="pageDetails(job)">
-        <ion-avatar item-start>
-          <img [src]="getImage(job.url_image)||'assets/imgs/user.png'">
-        </ion-avatar>
+        <!-- <ion-avatar item-start>
+          <img src="assets/imgs/user.png">
+        </ion-avatar> -->
         <h2>{{job.c_name}}</h2>
         <h4>Order #{{job.JobID}}</h4>
-        <p><ion-icon name="pin" icon-left></ion-icon> {{job.c_address}}</p>
+        <p>
+          <ion-icon name="pin" icon-left></ion-icon> {{job.c_address}}</p>
         <ion-note item-end>RM{{job.total_price}}</ion-note>
       </button>
     </ion-list>
   </div>
+
 </ion-content>

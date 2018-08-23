@@ -18,7 +18,6 @@ export class MyApp {
   pagesCustomer: Array<{title: string, icon?: string, component: any}>;
   pagesMerchant: Array<{title: string, icon?: string, component: any}>;
 
-  //isAgent: boolean;
   constructor(public events: Events, public common: CommonProvider, public user: User, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController) {
     this.initializeApp();
 
@@ -32,12 +31,15 @@ export class MyApp {
 
     this.pagesCustomer = [
       { title: 'Products', component: 'ProductsPage', icon: "cube" },
-      { title: 'Status', component: 'StatusPage', icon: "analytics" }
+      { title: 'Status', component: 'StatusPage', icon: "analytics" },
+      { title: 'Pickup Stores', component: 'StorePage', icon: "pin" },
     ];
 
     this.pagesMerchant = [
       { title: 'Dashboard', component: 'MerchantDashboardPage', icon: "speedometer" },
-      { title: 'Products', component: 'MerchantProductsPage', icon: "cube" }
+      { title: 'Products', component: 'MerchantProductsPage', icon: "cube" },
+      { title: 'Orders', component: 'MerchantOrdersPage', icon: "clipboard" },
+      { title: 'Transactions', component: 'TransactionsPage', icon: "cash" }
     ];
 
     this.listenToLoginEvents();

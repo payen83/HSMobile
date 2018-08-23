@@ -32,7 +32,15 @@ export class LoginPage {
       console.log(res);
       loader.dismiss();
       if (res.status) {
-        this.common.saveData('USER', res.users[0]).then(res => {
+        
+        let user: any = res.users[0];
+        let store_location: any = res.store_location;
+        if (store_location) {
+          user.store_location = store_location;
+        } else {
+          user.store_location = null;
+        }
+        this.common.saveData('USER', user).then(res => {
           this.login();
         });
       } else {
@@ -40,7 +48,7 @@ export class LoginPage {
       }
     }, err => {
       loader.dismiss();
-      this.common.showAlert('Login failed', JSON.stringify(err))
+      this.common.showAlert('Login failed', JSON.stringify(err.error.error))
     })
   }
 

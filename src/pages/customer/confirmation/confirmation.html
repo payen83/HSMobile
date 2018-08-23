@@ -7,45 +7,27 @@
 
 <ion-content>
   <ion-list>
-      <ion-item no-padding *ngFor="let item of itemInCart">
-          <ion-thumbnail item-start>
-            <img [src]="getPath(item.ImageURL)">
-          </ion-thumbnail>
-          <h3>{{item.Name}} x {{item.qty}}</h3>
-          <div item-content item-end>
-            RM {{item.Price}}
-          </div>
-        </ion-item>
-    <!-- <ion-item no-padding>
+    <ion-item no-padding *ngFor="let item of itemInCart">
       <ion-thumbnail item-start>
-        <img src="assets/imgs/logo.png">
+        <img [src]="getPath(item.ImageURL)">
       </ion-thumbnail>
-      <h3>EssensiaPlus x 1</h3>
+      <h3>{{item.Name}} x {{item.qty}}</h3>
       <div item-content item-end>
-        RM300
+        RM {{item.Price}}
       </div>
     </ion-item>
-    <ion-item no-padding>
-      <ion-thumbnail item-start>
-        <img src="assets/imgs/logo.png">
-      </ion-thumbnail>
-      <h3>Night Cream x 1</h3>
-      <div item-content item-end>
-        RM300
-      </div>
-    </ion-item> -->
     <ion-item no-lines>
-        <ion-note item-end>
-          <strong>Total: USD{{totalPrice}}</strong>
-        </ion-note>
-      </ion-item>
+      <ion-note item-end>
+        <strong>Total: USD{{totalPrice}}</strong>
+      </ion-note>
+    </ion-item>
   </ion-list>
   <ion-list no-lines>
     <ion-item-divider color="light">
       <h2>Delivery Information</h2>
     </ion-item-divider>
     <ion-item text-wrap tappable (click)="setLocation()">
-      <p>{{address}}</p>
+     <ion-textarea rows="5" type="text" [(ngModel)]="address"></ion-textarea>
       <ion-note item-end>
         <button color="dark" ion-button small icon-only clear>
           <ion-icon name="create"></ion-icon>
@@ -61,24 +43,24 @@
     <ion-item-divider color="light">
       <h2>Payment Method</h2>
     </ion-item-divider>
-    <div radio-group [(ngModel)]="autoManufacturers">
+    <div radio-group [(ngModel)]="paymentMethod">
       <ion-item>
         <ion-label>
           <img src="./assets/imgs/paypal.png" width="90" />
         </ion-label>
-        <ion-radio color="primary" checked="true"></ion-radio>
+        <ion-radio color="primary" value="PayPal"></ion-radio>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="isAgent()">
         <ion-label color="dark">
-          <strong>Credit balance (780)</strong>
+          <strong>Credit balance ({{balance}})</strong>
         </ion-label>
-        <ion-radio color="primary"></ion-radio>
+        <ion-radio color="primary" value="Wallet"></ion-radio>
       </ion-item>
     </div>
   </ion-list>
-  <ion-footer>
-      <ion-toolbar color="secondary">
-        <button small color="light" ion-button clear block (click)="makePayment()">Make Payment</button>
-      </ion-toolbar>
-    </ion-footer>
 </ion-content>
+<ion-footer>
+  <ion-toolbar color="secondary">
+    <button small color="light" ion-button clear block (click)="makePayment()">Make Payment</button>
+  </ion-toolbar>
+</ion-footer>

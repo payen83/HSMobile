@@ -32,7 +32,7 @@ export class DetailsPage {
     let latitude = this.job.latitude || 101.6978543;
     let longitude = this.job.longitude || 3.1980954;
 
-    console.log(latitude +', '+longitude)
+    console.log(latitude +', '+longitude) 
 
     let latlng = new google.maps.LatLng(parseFloat(longitude), parseFloat(latitude));
 
@@ -96,7 +96,7 @@ export class DetailsPage {
             console.log('No clicked');
           }
         },
-        {
+        { 
           text: 'Yes',
           handler: () => {
             this.jobs.markAsComplete(this.job.JobID).then(res => {

@@ -188,6 +188,8 @@ footer {
 
 .bg {
   background-color: color($colors, light);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 h6 {

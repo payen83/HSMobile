@@ -9,10 +9,12 @@ import { User } from '../../../providers/providers';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  user: { lat?: number, lng?: number, url_image?: null, role?: string, id?: number, name?: string, icnumber?: string, u_address?: string, u_bankname?: string, u_accnumber?: string, email: string, u_phone?: string };
+  user: { store_address?: string, store_postcode?: string, store_state?: string, store_city?: string, availability?: any, store_location?: any, lat?: number, lng?: number, url_image?: null, role?: string, id?: number, name?: string, icnumber?: string, u_address?: string, u_bankname?: string, u_accnumber?: string, email: string, u_phone?: string };
   savedBankAcc: string;
   currentUser: any;
-
+  store: any;
+  userImage: any;
+  userGetImage: boolean = false;
   constructor(public userProvider: User, public common: CommonProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
     this.user = {
       name: null,
@@ -25,34 +27,51 @@ export class ProfilePage {
       url_image: null,
       role: 'Customer',
       lat: null,
-      lng: null
+      lng: null,
+      store_location: {
+        store_address: null,
+        store_city: null,
+        store_postcode: null,
+        store_state: null,
+        store_agentphone: null
+      },
+      availability: null,
+
+    }
+    this.store = {
+
     }
     this.currentUser = { name: null, email: null };
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+    // console.log('ionViewDidLoad ProfilePage');
     this.getProfile();
   }
 
-  getImage(){
+  showStore() {
+    return (this.user.availability);
+  }
+
+  getImage() {
     this.common.selectImage().then(response => {
       //console.log(response);
       this.common.takePicture(response).then(image => {
         //this. = image;
-        this.showProfileImage(image);
+        //this.showProfileImage(image);
+        this.userImage = image;
+        this.userGetImage = true;
       })
+    }, err => {
+      return;
     });
   }
 
   showProfileImage(image?: any) {
-    if(image){
-      return image;
+    if (image) {
+      return this.common.getProfileImage_URL() + image;
     }
-    if (this.user.url_image) {
-      return this.common.getProfileImage_URL() + this.user.url_image;
-    }
-    return '../../../assets/imgs/user.png';
+    return 'assets/imgs/user.png';
   }
 
   getProfile() {
@@ -63,6 +82,7 @@ export class ProfilePage {
         this.user = result;
         this.setProfile(this.user);
         this.savedBankAcc = this.user.u_accnumber;
+        this.userImage = this.showProfileImage(this.user.url_image);
       }
 
       if (!this.user.u_address) {
@@ -71,6 +91,18 @@ export class ProfilePage {
           this.user.lat = coords.latitude;
           this.user.lng = coords.longitude;
         });
+      }
+
+      if (!this.user.store_location) {
+        this.user.store_location = {
+          store_address: null,
+          store_city: null,
+          store_postcode: null,
+          store_state: null,
+          store_agentphone: null
+        }
+      } else {
+        this.user.availability = true;
       }
 
     }, err => {
@@ -176,30 +208,67 @@ export class ProfilePage {
     this.currentUser.email = data.email
   }
 
-
   submitProfile() {
+    if (this.user.availability) {
+      this.user.store_address = this.user.store_location.store_address;
+      this.user.store_city = this.user.store_location.store_city;
+      this.user.store_postcode = this.user.store_location.store_postcode;
+      this.user.store_state = this.user.store_location.store_state;
+
+      //store_address?: string, store_postcode?: string, store_state?: string, store_city?: string,
+    } else {
+      this.user.availability = 'false'
+    }
+
     if (!this.user.u_address || !this.user.u_phone) {
       this.common.showAlert('', 'Please enter your address and phone number');
     } else {
       if (this.user.u_accnumber !== this.savedBankAcc) {
-        this.checkPassword()
+        this.checkPassword();
       }
       else {
         let loader = this.common.showLoader();
+        //console.log('update', this.user);
         this.userProvider.saveProfile(this.user).then(response => {
-          loader.dismiss();
-          this.setProfile(this.user);
-          let result: any = response;
-          if (result.status) {
-            this.common.saveData('USER', this.user);
-            this.common.showAlert('Profile', 'Your profile has been updated.');
-          }
-        }, err => {
-          loader.dismiss();
-          this.common.showAlert('Error', JSON.stringify(err));
-        })
-      }
+
+        this.setProfile(this.user);
+
+        let result: any = response;
+        if (result.status) {
+          this.common.saveData('USER', this.user);
+          this.common.showAlert('Profile', 'Your profile has been updated.');
+        }
+        this.uploadImage();
+      }, err => {
+        loader.dismiss();
+        //this.common.showAlert('Error', JSON.stringify(err));
+        this.uploadImage();
+        this.common.showAlert('Profile', 'Your profile has been updated!');
+      })
+
     }
   }
+}
+
+uploadImage(){
+  if (this.userGetImage) {
+    this.common.uploadImage('profile', this.userImage).then(data => {
+      //loader.dismiss();
+      let res: any = data;
+      if(res.response.status){
+
+      }
+      //this.common.showAlert('Success Image', JSON.stringify(data))
+    }, err => {
+      //loader.dismiss();
+      if(err.message){
+        this.common.showAlert('Error Image', err.message);
+      } else {
+        this.common.showAlert('Error Image', JSON.stringify(err));
+      }
+      
+    })
+  }
+}
 
 }

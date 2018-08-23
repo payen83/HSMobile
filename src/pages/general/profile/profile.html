@@ -16,7 +16,10 @@
 <ion-content>
   <div class="wrapper">
     <header class="wrapper-text">
-      <img tappable (click)="getImage()" [src]="showProfileImage()" class="img" />
+      <div align="center">
+        <div tappable (click)="getImage()" [ngStyle]="{'background-image': 'url(' + userImage + ')', 'background-size':'cover', 'border-radius': '50%', 'width': '120px', 'height': '120px', 'border':'1px solid white'}"></div>
+      </div>
+      <!-- <img tappable (click)="getImage()" [src]="userImage" class="img" /> -->
       <h3>{{currentUser.name}}</h3>
       <p>{{currentUser.email}}</p>
     </header>
@@ -54,25 +57,75 @@
         <ion-textarea rows="4" type="text" [(ngModel)]="user.u_address"></ion-textarea>
       </div>
     </ion-item>
-    
+
     <div *ngIf="isAgent()">
       <ion-item-divider color="light">
         <strong>Bank Details</strong>
       </ion-item-divider>
+
       <ion-item>
         <ion-label fixed>Bank Name</ion-label>
         <div item-content class="item-content">
           <ion-input type="text" [(ngModel)]="user.u_bankname"></ion-input>
         </div>
       </ion-item>
+
       <ion-item fixed>
         <ion-label>Account No.</ion-label>
         <div item-content class="item-content">
           <ion-input type="text" [(ngModel)]="user.u_accnumber"></ion-input>
         </div>
       </ion-item>
+
+      <ion-item-divider color="light">
+        <strong>Store Details</strong>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label fixed>Enable Store</ion-label>
+        <ion-toggle [(ngModel)]="user.availability"></ion-toggle>
+      </ion-item>
+      <div *ngIf="showStore()">
+        <ion-item text-wrap>
+          <ion-label fixed>Store Address</ion-label>
+          <div item-content class="item-content">
+            <ion-textarea rows="5" type="text" [(ngModel)]="user.store_location.store_address"></ion-textarea>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>Postcode</ion-label>
+          <div item-content class="item-content">
+            <ion-input type="text" [(ngModel)]="user.store_location.store_postcode"></ion-input>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>City</ion-label>
+          <div item-content class="item-content">
+            <ion-input type="text" [(ngModel)]="user.store_location.store_city"></ion-input>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label>State</ion-label>
+          <ion-select [(ngModel)]="user.store_location.store_state" placeholder="Please select">
+            <ion-option value="Kuala Lumpur">Kuala Lumpur</ion-option>
+            <ion-option value="Selangor">Selangor</ion-option>
+            <ion-option value="Putrajaya">Putrajaya</ion-option>
+            <ion-option value="Pahang">Pahang</ion-option>
+            <ion-option value="Terengganu">Terengganu</ion-option>
+            <ion-option value="Kelantan">Kelantan</ion-option>
+            <ion-option value="Kedah">Kedah</ion-option>
+            <ion-option value="Pulau Pinang">Pulau Pinang</ion-option>
+            <ion-option value="Perlis">Perlis</ion-option>
+            <ion-option value="Negeri Sembilan">Negeri Sembilan</ion-option>
+            <ion-option value="Melaka">Melaka</ion-option>
+            <ion-option value="Johor">Johor</ion-option>
+            <ion-option value="Perak">Perak</ion-option>
+            <ion-option value="Sabah">Sabah</ion-option>
+            <ion-option value="Sarawak">Sarawak</ion-option>
+            <ion-option value="Labuan">Labuan</ion-option>
+          </ion-select>
+        </ion-item>
+      </div>
     </div>
-    
 
     <ion-item-divider color="light">
       <strong>Account Details</strong>

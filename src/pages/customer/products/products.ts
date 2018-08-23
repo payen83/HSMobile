@@ -71,9 +71,12 @@ export class ProductsPage {
   }
 
   getPath(url: string){
+    if (url == null){
+      return 'http://healthshoppe.elyzian.xyz/public/upload/images/no-image.png';
+    }
     return 'http://healthshoppe.elyzian.xyz/public/upload/images/'+url;
   }
-
+  
   cartPage() {
     console.log(this.user);
     this.navCtrl.setRoot('CartPage', {}, { animate: true });

@@ -18,7 +18,7 @@
                 <h4 ion-text>Pending Agent's Response</h4>
             </div>
       </ion-item-divider>
-      <ion-item>
+      <ion-item *ngIf="agentAvailable()">
         <ion-avatar item-start>
           <img [src]="getProfileImage(job.agent[0].url_image)||'assets/imgs/user.png'">
         </ion-avatar>
@@ -31,12 +31,15 @@
             <ion-icon name="chatbubbles"></ion-icon>Chat</button>
         </div>   
       </ion-item>
+      <ion-item *ngIf="!agentAvailable()">
+        No agent accepts the job request yet.
+      </ion-item>
       <ion-item-divider color="light">
         <strong>Products</strong>
       </ion-item-divider>
       <ion-item no-padding *ngFor="let product of job.orders">
         <ion-thumbnail item-start>
-          <img [src]="getProductImage(product)||'assets/imgs/logo.png'">
+          <img [src]="getProductImage(product.ImageURL)||'assets/imgs/logo.png'">
         </ion-thumbnail>
         <h2>{{product.Name}} x {{product.ProductQuantity}}</h2>
         <h4>RM{{product.price}}</h4>

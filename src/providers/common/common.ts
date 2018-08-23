@@ -6,6 +6,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { CallNumber } from '@ionic-native/call-number';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Api } from '../api/api';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 
 /*
@@ -20,8 +22,9 @@ export class CommonProvider {
   profileImagePath: string = 'http://healthshoppe.elyzian.xyz/public/upload/userpic/';
   profileImage: string;
   userData: any;
-  constructor(public camera: Camera, public actionSheetCtrl: ActionSheetController, public iab: InAppBrowser, public callNumber: CallNumber, public http: HttpClient, public alertCtrl: AlertController, private storage: Storage, private loadingCtrl: LoadingController, protected geolocation: Geolocation) {
-    //console.log('Hello CommonProvider Provider');
+  baseURL: string = 'http://healthshoppe.elyzian.xyz/api/';
+
+  constructor(public transfer: FileTransfer, public api: Api, public camera: Camera, public actionSheetCtrl: ActionSheetController, public iab: InAppBrowser, public callNumber: CallNumber, public http: HttpClient, public alertCtrl: AlertController, private storage: Storage, private loadingCtrl: LoadingController, protected geolocation: Geolocation) {
     this.userData = { name: 'Default User', email: 'user@gmail.com' };
   }
 
@@ -56,6 +59,51 @@ export class CommonProvider {
     })
   }
 
+  uploadImage(type, image, id?) {
+    let url: string;
+
+    return new Promise((resolve, reject) => {
+      this.getData('USER').then(response => {
+        let user: any = response;
+        let fileName: string;
+
+        if (type == 'profile') {
+          url = 'users/user-image/' + user.id;
+          fileName = String(user.id);
+        } else if (type == 'product') {
+          url = 'products/insert-image-merchant/' + id;
+          fileName = (new Date()).getTime().toString();
+        }
+
+        let options: FileUploadOptions = {
+          fileKey: 'url_image',
+          fileName: fileName + '.jpg',
+          chunkedMode: false,
+          mimeType: "image/jpeg",
+          headers: {}
+        };
+
+        const fileTransfer: FileTransferObject = this.transfer.create();
+
+        fileTransfer.upload(image, encodeURI(this.baseURL+url), options)
+          .then((response) => {
+            let data: any = response;
+            //if(data.response.status){
+              resolve(data);
+           // } else {
+              //reject({message: 'unknown error'});
+            //}
+          }).catch(err => {
+            reject(err);
+          })
+
+      }, err => {
+        console.log('err: ' + JSON.stringify(err));
+        reject(err)
+      });
+    });
+  }
+
   setUserData(user: any) {
     this.userData = user;
   }
@@ -86,11 +134,11 @@ export class CommonProvider {
     return this.userData;
   }
 
-  setImageUser(){
+  setImageUser() {
     this.userData.url_image = '';
   }
 
-  showUserImage(){
+  showUserImage() {
     return this.getProfileImage_URL() + this.userData.url_image;
   }
 
@@ -172,6 +220,7 @@ export class CommonProvider {
             role: 'cancel',
             handler: () => {
               // console.log('Cancel clicked');
+              reject();
             }
           }
         ]
@@ -181,32 +230,33 @@ export class CommonProvider {
 
   }
 
-  takePicture(source){
+  takePicture(source) {
     let pictureSource: any;
     return new Promise<any>((resolve, reject) => {
-      if(source == 'camera'){
+      if (source == 'camera') {
         pictureSource = this.camera.PictureSourceType.CAMERA;
+        
       } else {
         pictureSource = this.camera.PictureSourceType.PHOTOLIBRARY;
       }
-  
+
       const options: CameraOptions = {
-        quality: 50,
+        quality: 100,
         destinationType: this.camera.DestinationType.FILE_URI,
-        encodingType: this.camera.EncodingType.PNG,
+        encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
         sourceType: pictureSource,
-        targetWidth: 1024,
-        targetHeight: 768,
+        targetWidth: 300,
+        targetHeight: 300,
         correctOrientation: true
       }
-      
+
       this.camera.getPicture(options).then((imageData) => {
         //let base64Image = 'data:image/jpeg;base64,' + imageData;
         resolve(normalizeURL(imageData));
       }, (err) => {
-       // Handle error
-       reject(err);
+        // Handle error
+        reject(err);
       });
     })
   }

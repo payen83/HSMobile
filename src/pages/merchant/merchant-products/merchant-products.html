@@ -14,14 +14,17 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
-    <ion-item-sliding tappable #slidingItem *ngFor="let product of products" (click)="view(product)">
+    <ion-item-sliding tappable #slidingItem *ngFor="let product of products; let i = index;" (click)="view(product)">
       <ion-item no-padding tappable>
         <ion-thumbnail item-start>
-          <img [src]="'./assets/imgs/logo.png'">
+          <img [src]="getPath(product.ImageURL)||'./assets/imgs/logo.png'">
         </ion-thumbnail>
         <h2>{{product.Name}}</h2>
-        <h4>RM {{product.price}}</h4>
+        <h4>RM {{product.Price}}</h4>
         <div ion-note item-end>
           <p>
             <em>{{product.status}}</em>
@@ -29,11 +32,11 @@
         </div>
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button color="danger" (click)="confirmDelete(item, slidingItem);$event.stopPropagation();">
+        <button ion-button color="danger" (click)="confirmDelete(product, slidingItem, i);$event.stopPropagation();">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>
-        <button ion-button color="primary" (click)="edit(item, slidingItem);$event.stopPropagation();">
+        <button ion-button color="primary" (click)="edit(product, slidingItem);$event.stopPropagation();">
           <ion-icon name="create"></ion-icon>
           Edit
         </button>

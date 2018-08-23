@@ -16,28 +16,43 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="bg">
   <div class="wrapper wrapper-text" padding>
     <div class="box turquoise">
-      <h2>{{dashboardData.orders_today || 0}}</h2>
+      <h2>{{dashboardData.order_today || 0}}</h2>
       <p>Orders Today</p>
     </div>
     <div class="box turquoise">
-      <h2>{{dashboardData.completed_orders || 0}}</h2>
+      <h2>{{dashboardData.order_month || 0}}</h2>
       <p>Completed orders this month</p>
     </div>
 
     <div class="sales box turquoise">
       <div class="sales">
         <h3>
-          <sup>RM</sup>{{dashboardData.total_sales || 0}}</h3>
+          <sup>RM</sup>{{dashboardData.totalsales || 0}}</h3>
         <p>Sales this month</p>
       </div>
     </div>
 
     <div class="box turquoise">
-      <h2>{{dashboardData.products || 0}}</h2>
+      <h2>{{dashboardData.product_available || 0}}</h2>
       <p>Units stock available</p>
     </div>
   </div>
+
+  <ion-list>
+    <ion-item-group>
+      <ion-item-divider>
+        <strong>Latest Orders</strong>
+      </ion-item-divider>
+      <ion-item *ngFor="let order of latestOrders">
+        <h2>{{order.c_name}}</h2>
+        <p>{{order.OrderID}}</p>
+        <ion-note item-content>RM{{order.total_price}}</ion-note>
+      </ion-item>
+    </ion-item-group>
+  
+  </ion-list>
+
 </ion-content>

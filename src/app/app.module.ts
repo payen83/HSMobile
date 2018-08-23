@@ -9,12 +9,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { CallNumber } from '@ionic-native/call-number';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Camera } from '@ionic-native/camera';
-
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/agent/home/home';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { Api, Products, User, Jobs, CommonProvider, Wallet } from '../providers/providers';
 
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/agent/home/home';
 import { RequestPageModule } from '../pages/agent/request/request.module';
 import { OrdersPageModule } from '../pages/agent/orders/orders.module';
 import { DetailsPageModule } from '../pages/agent/details/details.module';
@@ -34,7 +34,8 @@ import { ProductDetailsPageModule } from '../pages/customer/product-details/prod
 import { MerchantProductsPageModule } from '../pages/merchant/merchant-products/merchant-products.module';
 import { AddPageModule } from '../pages/merchant/add/add.module';
 import { MerchantDashboardPageModule } from '../pages/merchant/merchant-dashboard/merchant-dashboard.module';
-
+import { MerchantOrdersPageModule } from '../pages/merchant/merchant-orders/merchant-orders.module';
+import { StorePageModule } from '../pages/customer/store/store.module';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,8 @@ import { MerchantDashboardPageModule } from '../pages/merchant/merchant-dashboar
     MerchantProductsPageModule,
     AddPageModule,
     MerchantDashboardPageModule,
+    MerchantOrdersPageModule,
+    StorePageModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
@@ -84,7 +87,8 @@ import { MerchantDashboardPageModule } from '../pages/merchant/merchant-dashboar
     Wallet,
     CallNumber,
     InAppBrowser,
-    Camera
+    Camera,
+    FileTransfer
   ]
 })
 export class AppModule {}

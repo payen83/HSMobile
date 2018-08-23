@@ -40,7 +40,7 @@
     </ion-item-divider>
     <ion-item no-padding *ngFor="let order of job.orders">
       <ion-thumbnail item-start>
-        <img [src]="getProductImage(order.ImageURL)||'assets/imgs/user.png'">
+        <img [src]="getProductImage(order.ImageURL)||'http://healthshoppe.elyzian.xyz/public/upload/images/no-image.png'">
       </ion-thumbnail>
       <h2>{{order.Name}} x {{order.ProductQuantity}}</h2>
       <h4>RM{{order.price}}</h4>

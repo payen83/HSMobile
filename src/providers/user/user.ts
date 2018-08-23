@@ -172,5 +172,18 @@ export class User {
     
   }
 
+  getMerchantDashboard(user: any){
+    return new Promise((resolve, reject) => {
+        this.api.get('dashboard/merchant-view/' + user.id).subscribe(res => {
+          let response: any = res;
+          if(response.status){
+            resolve(res);
+          } else {
+            reject(res)
+          }
+        })
+    });
+  }
+
   
 }
