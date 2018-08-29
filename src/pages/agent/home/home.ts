@@ -113,23 +113,23 @@ export class HomePage {
             this.jobs.acceptJob(requestItem.JobID).then(res => {
               //requestItem.orders
               let products = [];
-              
-              for(let item of requestItem.orders){
+
+              for (let item of requestItem.orders) {
                 let product = {
-                  ProductID: item.ProductID, 
+                  ProductID: item.ProductID,
                   ProductQuantity: item.ProductQuantity
                 };
                 products.push(product);
               }
- 
+
               //agentStockDeduct
-              //this.productP.agentStockDeduct(products).then(data=>{
+              this.productP.agentStockDeduct(products).then(data => {
                 this.common.showAlert('', 'Congratulations! Go send the item ASAP!');
                 this.navCtrl.setRoot('OrdersPage', {}, { animate: true });
-              // }, err => {
-              //   this.common.showAlert('', JSON.stringify(err));
-              // })
-        
+              }, err => {
+                this.common.showAlert('', JSON.stringify(err));
+              })
+
             }, err => {
               if (err.message) {
                 this.common.showAlert('', err.message)

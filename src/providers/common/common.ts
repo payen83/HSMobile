@@ -134,8 +134,8 @@ export class CommonProvider {
     return this.userData;
   }
 
-  setImageUser() {
-    this.userData.url_image = '';
+  setImageUser(image) {
+    this.userData.url_image = image;
   }
 
   showUserImage() {

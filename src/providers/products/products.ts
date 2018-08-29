@@ -40,8 +40,8 @@ export class Products {
       this.common.getData('USER').then(response => {
         let user: any = response;
         let body = new FormData();
-        body.append('data', JSON.stringify(products));
-        this.api.post('product/stock-deduction/' + user.id, body).subscribe(res => {
+        body.append('input', JSON.stringify(products));
+        this.api.post('products/stock-deduction/' + user.id, body).subscribe(res => {
           let result: any = res;
           console.log('result: ' + JSON.stringify(result));
           if (result.status) {

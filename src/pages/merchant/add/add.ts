@@ -9,10 +9,11 @@ import { CommonProvider, Products } from '../../../providers/providers';
 })
 export class AddPage {
   productImage: any;
-  product: { ImageURL?: string, sku_number?: string, Name: string, Price: number, Description: string, QuantityPerPackage: number, Discount: number }
+  product: { ImageURL?: string, sku_number?: string, Name: string, Price: number, Description: string, QuantityPerPackage: number, Discount: number, id?: any }
   isEdit: boolean = false;
   title: string = 'New Product';
   discount: number;
+  isTakenPicture: boolean = false;
 
   constructor(public productsProvider: Products, public common: CommonProvider, public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
     this.product = { sku_number: null, Name: null, Price: null, Description: null, QuantityPerPackage: null, Discount: null }
@@ -41,6 +42,15 @@ export class AddPage {
       this.productsProvider.addProductMerchant(this.product, this.isEdit).then(res => {
         loader.dismiss();
         let result: any = res;
+        let prod_id: any;
+        if(this.isTakenPicture){
+          if(this.isEdit){
+            prod_id = this.product.id;
+          } else {
+            prod_id = result.id;
+          }
+          this.uploadProductImage(prod_id);
+        }
         if (result.status) {
           this.common.showAlert('', this.showCompleted(this.isEdit));
           this.navCtrl.pop();
@@ -61,11 +71,20 @@ export class AddPage {
     }
   }
 
+  uploadProductImage(id){
+    this.common.uploadImage('product',this.productImage, id).then( res => {
+      return;
+    })
+  }
+
   getImage() {
     this.common.selectImage().then(response => {
       //console.log(response);
       this.common.takePicture(response).then(image => {
         this.productImage = image;
+        this.isTakenPicture = true;
+      }, err => {
+        this.isTakenPicture = false;
       })
     });
   }

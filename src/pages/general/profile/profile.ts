@@ -57,8 +57,6 @@ export class ProfilePage {
     this.common.selectImage().then(response => {
       //console.log(response);
       this.common.takePicture(response).then(image => {
-        //this. = image;
-        //this.showProfileImage(image);
         this.userImage = image;
         this.userGetImage = true;
       })
@@ -67,7 +65,7 @@ export class ProfilePage {
     });
   }
 
-  showProfileImage(image?: any) {
+  showProfileImage(image) {
     if (image) {
       return this.common.getProfileImage_URL() + image;
     }
@@ -256,7 +254,8 @@ uploadImage(){
       //loader.dismiss();
       let res: any = data;
       if(res.response.status){
-
+        let image_filename = res.response.url_image;
+        this.common.setImageUser(image_filename);
       }
       //this.common.showAlert('Success Image', JSON.stringify(data))
     }, err => {
