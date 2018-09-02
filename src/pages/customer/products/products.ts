@@ -133,7 +133,6 @@ export class ProductsPage {
     return this.role == 'Agent';
   }
 
-
   addNewItem(item) {
     if(this.role == 'Agent'){
       item.qty = parseInt(item.QuantityPerPackage);
@@ -163,5 +162,15 @@ export class ProductsPage {
     this.storage.set('CART', JSON.stringify(this.itemInCart));
     this.cartPage();
   }
+
+  // show(){
+  //   let modalCss = {
+  //     showBackdrop: true,
+  //     enableBackdropDismiss: false,
+  //     cssClass: "my-modal"
+  //   }
+  //   let modal = this.modalCtrl.create('RatingPage', { item: null }, modalCss);
+  //   modal.present();
+  // }
 
 }

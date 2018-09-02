@@ -18,21 +18,50 @@
     </ion-item>
     <ion-item no-lines>
       <ion-note item-end>
-        <strong>Total: USD{{totalPrice}}</strong>
+        <strong>Total: RM{{totalPrice}}</strong>
       </ion-note>
     </ion-item>
   </ion-list>
-  <ion-list no-lines>
+  <ion-list>
     <ion-item-divider color="light">
       <h2>Delivery Information</h2>
     </ion-item-divider>
-    <ion-item text-wrap tappable (click)="setLocation()">
-     <ion-textarea rows="5" type="text" [(ngModel)]="address"></ion-textarea>
+    <ion-item text-wrap>
+      <ion-textarea rows="5" type="text" [(ngModel)]="address"></ion-textarea>
       <ion-note item-end>
-        <button color="dark" ion-button small icon-only clear>
+        <button color="dark" ion-button small icon-only clear (click)="setLocation()">
           <ion-icon name="create"></ion-icon>
         </button>
       </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>State</ion-label>
+      <ion-select [(ngModel)]="state" placeholder="Please select">
+        <ion-option value="Kuala Lumpur">Kuala Lumpur</ion-option>
+        <ion-option value="Selangor">Selangor</ion-option>
+        <ion-option value="Putrajaya">Putrajaya</ion-option>
+        <ion-option value="Pahang">Pahang</ion-option>
+        <ion-option value="Terengganu">Terengganu</ion-option>
+        <ion-option value="Kelantan">Kelantan</ion-option>
+        <ion-option value="Kedah">Kedah</ion-option>
+        <ion-option value="Pulau Pinang">Pulau Pinang</ion-option>
+        <ion-option value="Perlis">Perlis</ion-option>
+        <ion-option value="Negeri Sembilan">Negeri Sembilan</ion-option>
+        <ion-option value="Melaka">Melaka</ion-option>
+        <ion-option value="Johor">Johor</ion-option>
+        <ion-option value="Perak">Perak</ion-option>
+        <ion-option value="Sabah">Sabah</ion-option>
+        <ion-option value="Sarawak">Sarawak</ion-option>
+        <ion-option value="Labuan">Labuan</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Postcode</ion-label>
+      <ion-input type="text" [(ngModel)]="postcode"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>City</ion-label>
+      <ion-input type="text" [(ngModel)]="city"></ion-input>
     </ion-item>
     <ion-item-divider color="light">
       <h2>Special Note</h2>
@@ -40,6 +69,8 @@
     <ion-item text-wrap>
       <ion-textarea rows="3" type="text" placeholder="e.g exact location, building or house number etc." [(ngModel)]="note"></ion-textarea>
     </ion-item>
+  </ion-list>
+  <ion-list no-lines>
     <ion-item-divider color="light">
       <h2>Payment Method</h2>
     </ion-item-divider>

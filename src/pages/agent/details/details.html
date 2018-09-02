@@ -13,7 +13,7 @@
 <ion-content>
   <ion-list>
     <ion-item-divider color="light">
-      <strong>Customer</strong>
+      <strong>Customer {{showRatingText()}}</strong>
         <button *ngIf="isActive()" ion-button icon-left round color="danger" item-end (click)="cancel()">
           <ion-icon name="close-circle"></ion-icon> Cancel</button>
         <button *ngIf="isActive()" ion-button icon-left round color="secondary" item-end (click)="markComplete()">
@@ -26,13 +26,16 @@
       <ion-avatar item-start>
         <img [src]="getImage(job.url_image)||'assets/imgs/user.png'">
       </ion-avatar>
-
       <h2>{{job.c_name}}</h2>
-      <div>
+      <div *ngIf="!isCompleted()">
         <button ion-button icon-left round outline color="danger" item-start (click)="call()">
           <ion-icon name="phone-portrait"></ion-icon>Call</button>
         <button ion-button icon-left round outline color="danger" item-start (click)="wa()">
           <ion-icon name="chatbubbles"></ion-icon>Chat</button>
+      </div>
+      <div *ngIf="isCompleted()">
+          <div item-content><p><ion-icon name="star" color="yellow" *ngIf="showStar()"></ion-icon>  {{showRating()}}</p></div>
+          <div item-content><p><em>{{showFeedback()}}</em></p></div>
       </div>
     </ion-item>
     <ion-item-divider color="light">

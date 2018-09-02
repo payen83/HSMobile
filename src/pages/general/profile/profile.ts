@@ -236,11 +236,12 @@ export class ProfilePage {
           this.common.saveData('USER', this.user);
           this.common.showAlert('Profile', 'Your profile has been updated.');
         }
-        this.uploadImage();
+        this.uploadImage(loader);
+        
       }, err => {
         loader.dismiss();
         //this.common.showAlert('Error', JSON.stringify(err));
-        this.uploadImage();
+        this.uploadImage(loader);
         this.common.showAlert('Profile', 'Your profile has been updated!');
       })
 
@@ -248,18 +249,19 @@ export class ProfilePage {
   }
 }
 
-uploadImage(){
+uploadImage(loader){
   if (this.userGetImage) {
     this.common.uploadImage('profile', this.userImage).then(data => {
-      //loader.dismiss();
+      loader.dismiss();
       let res: any = data;
-      if(res.response.status){
-        let image_filename = res.response.url_image;
+      let data_response: any = JSON.parse(res.response);
+      // if(res.response.status){
+        this.common.showAlert('Success Image: ',  data_response.url_image);
+        let image_filename = data_response.url_image;
         this.common.setImageUser(image_filename);
-      }
-      //this.common.showAlert('Success Image', JSON.stringify(data))
+      //}
     }, err => {
-      //loader.dismiss();
+      loader.dismiss();
       if(err.message){
         this.common.showAlert('Error Image', err.message);
       } else {
@@ -267,6 +269,8 @@ uploadImage(){
       }
       
     })
+  } else {
+    loader.dismiss();
   }
 }
 

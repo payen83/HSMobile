@@ -170,8 +170,8 @@ export class HomePage {
   getProductInventory() {
     this.user.agentInventory(this.userData.id).then(i_response => {
       let res: any = i_response;
-      console.log('inventory');
-      console.log(res);
+      //console.log('inventory');
+      //console.log(res);
       if (!this.common.isEmpty(res)) {
         this.stocks = res;
         this.availableStock = this.countStock(this.stocks);

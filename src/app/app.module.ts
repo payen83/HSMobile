@@ -10,6 +10,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { OneSignal } from '@ionic-native/onesignal';
 
 import { Api, Products, User, Jobs, CommonProvider, Wallet } from '../providers/providers';
 
@@ -36,6 +37,7 @@ import { AddPageModule } from '../pages/merchant/add/add.module';
 import { MerchantDashboardPageModule } from '../pages/merchant/merchant-dashboard/merchant-dashboard.module';
 import { MerchantOrdersPageModule } from '../pages/merchant/merchant-orders/merchant-orders.module';
 import { StorePageModule } from '../pages/customer/store/store.module';
+import { RatingPageModule } from '../pages/customer/rating/rating.module';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { StorePageModule } from '../pages/customer/store/store.module';
     MerchantDashboardPageModule,
     MerchantOrdersPageModule,
     StorePageModule,
+    RatingPageModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
@@ -88,7 +91,8 @@ import { StorePageModule } from '../pages/customer/store/store.module';
     CallNumber,
     InAppBrowser,
     Camera,
-    FileTransfer
+    FileTransfer,
+    OneSignal
   ]
 })
 export class AppModule {}

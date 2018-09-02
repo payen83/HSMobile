@@ -73,7 +73,9 @@ export class AddPage {
 
   uploadProductImage(id){
     this.common.uploadImage('product',this.productImage, id).then( res => {
-      return;
+      //this.common.showAlert('success ', JSON.stringify(res))
+    }, err => {
+      //this.common.showAlert('error ', JSON.stringify(err))
     })
   }
 

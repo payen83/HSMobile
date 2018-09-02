@@ -29,7 +29,7 @@ export class User {
   _user: any;
   _type: string;
 
-  constructor(public api: Api, public common: CommonProvider) { 
+  constructor(public api: Api, public common: CommonProvider) {
     this._type = 'g';
   }
 
@@ -40,10 +40,10 @@ export class User {
   login(accountInfo: any): Promise<any> {
     //let seq = this.api.post('login', accountInfo).share();
     let seq = this.api.post('auth/login', accountInfo);
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
       seq.subscribe((res: any) => {
         // If the API returned a successful response, mark the user as logged in
-       // console.log(res);
+        // console.log(res);
         if (res.status == true) {
           this._loggedIn(res);
           resolve(res);
@@ -58,11 +58,11 @@ export class User {
     //return seq;
   }
 
-  hasLoggedIn(): Promise<any>{
-    return new Promise((resolve, reject)=>{
+  hasLoggedIn(): Promise<any> {
+    return new Promise((resolve, reject) => {
       this.common.getData('USER').then(resp => {
         let res: any = resp;
-        if(res){
+        if (res) {
           setTimeout(() => {
             resolve(res);
           }, 500);
@@ -75,11 +75,11 @@ export class User {
     })
   }
 
-  userType(){
+  userType() {
     return this._type;
   }
 
-  setUserType(type){
+  setUserType(type) {
     this._type = type;
   }
 
@@ -90,7 +90,7 @@ export class User {
   signup(accountInfo: any): Promise<any> {
     // let seq = this.api.post('signup', accountInfo).share();
     let seq = this.api.post('auth/register', accountInfo);
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
       seq.subscribe((res: any) => {
         // If the API returned a successful response, mark the user as logged in
         if (res.status == true) {
@@ -122,9 +122,9 @@ export class User {
     this._user = resp.user;
   }
 
-  agentInventory(id){
-    let seq = this.api.get('products/product-inventory/'+id);
-    return new Promise((resolve, reject)=>{
+  agentInventory(id) {
+    let seq = this.api.get('products/product-inventory/' + id);
+    return new Promise((resolve, reject) => {
       seq.subscribe((res: any) => {
         resolve(res);
       }, err => {
@@ -134,29 +134,29 @@ export class User {
     })
   }
 
-  getDashboard(user: any){
+  getDashboard(user: any) {
     return new Promise((resolve, reject) => {
       // this.common.getData('USER').then(response => {
-        //let user: any = response;
-        this.api.get('dashboard/view/' + user.id).subscribe(res => {
-          let response: any = res;
-          if(response.status){
-            resolve(res);
-          } else {
-            reject(res)
-          }
-        })
+      //let user: any = response;
+      this.api.get('dashboard/view/' + user.id).subscribe(res => {
+        let response: any = res;
+        if (response.status) {
+          resolve(res);
+        } else {
+          reject(res)
+        }
+      })
       // }, err => {
       //   console.log('err: ' + JSON.stringify(err))
       // });
     });
   }
 
-  saveProfile(user: any){
+  saveProfile(user: any) {
     //console.log('user info');
     //console.log(user);
-    let seq = this.api.post('users/update-profile/'+user.id, user);
-    return new Promise((resolve, reject)=>{
+    let seq = this.api.post('users/update-profile/' + user.id, user);
+    return new Promise((resolve, reject) => {
       seq.subscribe((res: any) => {
         // If the API returned a successful response, mark the user as logged in
         if (res.status == true) {
@@ -169,21 +169,44 @@ export class User {
         reject(err);
       });
     })
-    
+
   }
 
-  getMerchantDashboard(user: any){
+  getMerchantDashboard(user: any) {
     return new Promise((resolve, reject) => {
-        this.api.get('dashboard/merchant-view/' + user.id).subscribe(res => {
-          let response: any = res;
-          if(response.status){
-            resolve(res);
-          } else {
-            reject(res)
-          }
-        })
+      this.api.get('dashboard/merchant-view/' + user.id).subscribe(res => {
+        let response: any = res;
+        if (response.status) {
+          resolve(res);
+        } else {
+          reject(res)
+        }
+      })
     });
   }
 
-  
+  savePlayerId(user) {
+    return new Promise((resolve, reject) => {
+      this.common.getData('PLAYER_ID').then(response => {
+        let playerId: any = response;
+        let body = new FormData();
+        body.append('playerId', playerId);
+        let seq = this.api.post('users/user-save-playerId/' + user.id, body);
+        seq.subscribe((res: any) => {
+          if (res.status == true) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+        }, err => {
+          console.error('ERROR', err);
+          reject(err);
+        });
+      }, err => {
+        console.log(err);
+        reject(err)
+      })
+    })
+  }
+
 }

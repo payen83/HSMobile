@@ -184,6 +184,9 @@ export class Jobs {
     body.append('lng', orders.lng);
     body.append('lat', orders.lat);
     body.append('special_notes', orders.special_notes);
+    body.append('city', orders.city);
+    body.append('state', orders.state);
+    body.append('postcode', orders.postcode);
 
     return new Promise((resolve, reject) => {
       this.api.post('purchase/orders/' + user.id, body).subscribe(res => {
@@ -226,6 +229,25 @@ export class Jobs {
         }, err => {
           reject(err);
         })
+      })
+    });
+  }
+
+  sendRating(jobID, rating, feedback){
+    return new Promise((resolve, reject) => {
+      let body = new FormData();
+      body.append('rating', rating);
+      body.append('feedback', feedback);
+      this.api.post('rating/job-feedback/' + jobID, body).subscribe(res => {
+        let result: any = res;
+        if (result.status) {
+          resolve(res);
+        } else {
+          reject(res);
+        }
+      }, err => {
+        console.log('err: ' + JSON.stringify(err))
+        reject(err);
       })
     });
   }

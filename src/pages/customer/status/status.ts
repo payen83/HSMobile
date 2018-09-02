@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Jobs, CommonProvider } from '../../../providers/providers';
 
 @IonicPage()
@@ -11,7 +11,7 @@ export class StatusPage {
   status: any;
   activeJobs: Array<any>;
   completedJobs: Array<any>
-  constructor(public navCtrl: NavController, public navParams: NavParams, private job: Jobs, protected common: CommonProvider ) {
+  constructor(public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, private job: Jobs, protected common: CommonProvider ) {
     this.initialize()
   }
 
@@ -93,7 +93,49 @@ export class StatusPage {
     }
     this.activeJobs.reverse();
     this.completedJobs.reverse()
-    console.log(this.activeJobs);
+    // console.log(this.activeJobs);
+    console.log(this.completedJobs);
   }
+
+  showStar(job){
+    if(!this.common.isEmpty(job.agent)){
+      return (job.agent[0].u_rating != "0.0")
+    } else {
+      return false
+    }
+  }
+
+  showRating(job){
+    if (this.showStar(job)){
+      return job.agent[0].u_rating
+    } else {
+      return null;
+    }
+  }
+
+  leaveFeedback(job){
+    let modalCss = {
+      showBackdrop: true,
+      enableBackdropDismiss: false,
+      cssClass: "my-modal"
+    }
+    let modal = this.modalCtrl.create('RatingPage', null, modalCss);
+
+    modal.onDidDismiss(data => {
+      if(data) {
+        let loader = this.common.showLoader();
+        this.job.sendRating(job.JobID, data.rating, data.feedback).then((data) => {
+          loader.dismiss();
+          console.log(data);
+          this.common.showAlert('','Thank you for your feedback.');
+        }, err => {
+          loader.dismiss();
+          this.common.showAlert('Feedback error', JSON.stringify(err.message));
+        })
+      }
+    });
+    modal.present();
+  }
+
 
 }

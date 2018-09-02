@@ -1,0 +1,19 @@
+page-rating {
+    .btn{
+        margin-top: -2.0em;
+    }
+
+    .toolbar-title-ios, .toolbar-title-md{
+        font-size: 1.5em !important;
+    }
+
+    ion-icon {
+        font-size: 1.8em;
+    }
+
+    .item-ios, .item-md {
+        background-color: color($colors, light);
+        color: #808080;
+        font-size: 1.2em;
+  }
+}

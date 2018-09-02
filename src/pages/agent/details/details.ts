@@ -113,8 +113,40 @@ export class DetailsPage {
     confirm.present();
   }
 
+  showStar(){
+    return this.job.job_rating != "0.0";
+  }
+
+  showRating(){
+    if (this.job.job_rating == "0.0"){
+      return null;
+    } else {
+      return this.job.job_rating;
+    }
+  }
+
+  showFeedback(){
+    if (this.job.job_rating == "0.0"){
+      return null;
+    } else {
+      return this.job.job_feedback;
+    }
+  }
+
+  showRatingText(){
+    if (this.job.job_rating == "0.0"){
+      return null;
+    } else {
+      return 'Feedback';
+    }
+  }
+
   isActive(){
-    return this.job.current_status === 'Active'
+    return this.job.current_status === 'Active';
+  }
+
+  isCompleted(){
+    return this.job.current_status === 'Completed';
   }
 
   isPending(){

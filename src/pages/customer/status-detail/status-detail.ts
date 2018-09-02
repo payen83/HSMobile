@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Jobs, CommonProvider } from '../../../providers/providers';
 
 @IonicPage()
@@ -10,7 +10,7 @@ import { Jobs, CommonProvider } from '../../../providers/providers';
 export class StatusDetailPage {
   job: any;
   timeline: Array<any>;
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public jobs: Jobs, protected common: CommonProvider) {
+  constructor(public modalCtrl: ModalController, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public jobs: Jobs, protected common: CommonProvider) {
     this.job = this.navParams.get('item');
     if(this.common.isEmpty(this.job.agent)) {
       this.job.agent = [{name: null, url_image: null}];
@@ -138,10 +138,14 @@ export class StatusDetailPage {
         {
           text: 'Yes',
           handler: () => {
+            let loader = this.common.showLoader();
             this.jobs.customerAcceptDelivery(this.job.JobID).then(res=>{              
-              this.common.showAlert('', 'You have accepted the delivery');
-              this.navCtrl.pop();
+              //this.common.showAlert('', 'You have accepted the delivery');
+              loader.dismiss();
+              this.leaveFeedback(this.job);
+              //this.navCtrl.pop();
             }, err => {
+              loader.dismiss();
               if(err.message){
                 this.common.showAlert('Error', err.message);
               } else {
@@ -169,6 +173,31 @@ export class StatusDetailPage {
     } else {
       return null;
     }
+  }
+
+  leaveFeedback(job){
+    let modalCss = {
+      showBackdrop: true,
+      enableBackdropDismiss: false,
+      cssClass: "my-modal"
+    }
+    let modal = this.modalCtrl.create('RatingPage', null, modalCss);
+
+    modal.onDidDismiss(data => {
+      if(data) {
+        let loader = this.common.showLoader();
+        this.jobs.sendRating(job.JobID, data.rating, data.feedback).then((data) => {
+          loader.dismiss();
+          console.log(data);
+          this.navCtrl.pop();
+          this.common.showAlert('','Thank you for your feedback.');
+        }, err => {
+          loader.dismiss();
+          this.common.showAlert('Feedback error', JSON.stringify(err.message));
+        })
+      }
+    });
+    modal.present();
   }
 
 }

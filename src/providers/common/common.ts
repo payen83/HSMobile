@@ -66,17 +66,19 @@ export class CommonProvider {
       this.getData('USER').then(response => {
         let user: any = response;
         let fileName: string;
-
+        let fileKeyName: string;
         if (type == 'profile') {
           url = 'users/user-image/' + user.id;
+          fileKeyName = 'url_image';
           fileName = String(user.id);
         } else if (type == 'product') {
           url = 'products/insert-image-merchant/' + id;
+          fileKeyName = 'ImageURL';
           fileName = (new Date()).getTime().toString();
         }
 
         let options: FileUploadOptions = {
-          fileKey: 'url_image',
+          fileKey: fileKeyName,
           fileName: fileName + '.jpg',
           chunkedMode: false,
           mimeType: "image/jpeg",
@@ -156,6 +158,7 @@ export class CommonProvider {
   }
 
   getData(property: string) {
+    //console.log(property);
     return new Promise((resolve, reject) => {
       this.storage.get(property).then(items => {
         if (items) {

@@ -1,0 +1,47 @@
+<!--
+  Generated template for the RequestPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Rate this Job Order</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item text-wrap>
+      <ion-label>Rating</ion-label>
+      <div item-content start> 
+        <ion-icon tappable (click)="clickRating(1)" name="star" [color]="showColor(1) ? 'yellow':'pearl'"></ion-icon>
+        <ion-icon tappable (click)="clickRating(2)" name="star" [color]="showColor(2) ? 'yellow':'pearl'"></ion-icon>
+        <ion-icon tappable (click)="clickRating(3)" name="star" [color]="showColor(3) ? 'yellow':'pearl'"></ion-icon>
+        <ion-icon tappable (click)="clickRating(4)" name="star" [color]="showColor(4) ? 'yellow':'pearl'"></ion-icon>
+        <ion-icon tappable (click)="clickRating(5)" name="star" [color]="showColor(5) ? 'yellow':'pearl'"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-textarea rows="3" [(ngModel)]="feedback" placeholder="Write your comments here"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <div padding class="btn">
+    <ion-row>
+      <ion-col>
+        <button block color="secondary" ion-button (click)="submitRating()">Submit</button>
+      </ion-col>
+      <ion-col>
+        <button block color="danger" ion-button (click)="close()">Later</button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

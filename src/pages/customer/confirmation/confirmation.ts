@@ -18,6 +18,9 @@ export class ConfirmationPage {
   protected note: string;
   protected balance: number = 0;
   protected paymentMethod: string;
+  protected city: string;
+  protected postcode: string;
+  protected state: string;
 
   constructor(protected wallet: Wallet, protected job: Jobs, protected common: CommonProvider, public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
     this.address = '39-1 Jalan Equine 9A, Equine Park, 43300 Seri Kembangan, Selangor Darul Ehsan';
@@ -26,6 +29,9 @@ export class ConfirmationPage {
     this.orders = {};
     this.user = { role: 'Customer' };
     this.paymentMethod = 'Paypal';
+    this.city = null;
+    this.state = null;
+    this.postcode = null;
     console.log(this.itemInCart);
   }
 
@@ -106,7 +112,10 @@ export class ConfirmationPage {
       location_address: this.address,
       lng: (this.user.lat || 3.1639173),
       lat: (this.user.lng || 101.6553845),
-      special_notes: this.note || ''
+      special_notes: this.note || '',
+      city: this.city || 'Kuala Lumpur',
+      state: this.state || 'Kuala Lumpur',
+      postcode: this.postcode
     }; 
 
     // this.orders = {
