@@ -95,7 +95,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      //this.initializeOneSignal();
+      this.initializeOneSignal();
     });
   }
 
@@ -105,7 +105,7 @@ export class MyApp {
       // alert(JSON.stringify(data));
       this.common.saveData('PLAYER_ID', data.userId);
     }, err => {
-      console.log(err);
+      console.log(err); 
     })
     this.oneSignal.endInit();
   }

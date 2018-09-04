@@ -32,7 +32,6 @@ export class LoginPage {
       console.log(res);
       loader.dismiss();
       if (res.status) {
-        
         let user: any = res.users[0];
         let store_location: any = res.store_location;
         if (store_location) {
@@ -93,69 +92,18 @@ export class LoginPage {
     modal.onDidDismiss(data => {
       if (data.registerItem) {
         //this.navCtrl.setRoot('OrdersPage', {}, {animate: true});
-        this.common.showAlert('Your registration is successful', 'Please login to continue');
+        this.common.showAlert('Registration Successful', 'Please login to continue');
       }
     });
   }
 
-  register() {
-    let prompt = this.alertCtrl.create({
-      title: 'Registration',
-      message: "Please enter your details as below",
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Full name',
-          type: 'text'
-        },
-        {
-          name: 'email',
-          placeholder: 'Email',
-          type: 'text'
-        },
-        {
-          name: 'password',
-          placeholder: 'Password',
-          type: 'password'
-        },
-        {
-          name: 'confirm_password',
-          placeholder: 'Confirm password',
-          type: 'password'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-          }
-        },
-        {
-          text: 'Register',
-          handler: data => {
-            if (data.password == data.confirm_password) {
-              this.doRegister(data);
-            } else {
-              this.common.showAlert('Your password is not match', '');
-            }
-
-          }
-        }
-      ]
-    });
-
-    prompt.present();
-
-  }
-
   resetPassword(email) {
-    this.common.showAlert('Please check your email to reset password', '');
+    let loader = this.common.showLoader();
+    this.userProvider.forgotPassword(email).then(()=> {
+      loader.dismiss();
+      this.common.showAlert('Please check your email to reset your password', '');
+    }, err => {
+      this.common.showAlert('Error', err.message);
+    })
   }
-
-  doRegister(data) {
-
-  }
-
-
-
 }

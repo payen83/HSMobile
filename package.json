@@ -80,8 +80,8 @@
       "onesignal-cordova-plugin": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

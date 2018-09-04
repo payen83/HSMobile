@@ -24,12 +24,15 @@
         </ion-avatar>
   
         <h2>{{job.agent[0].name}}</h2>
-        <div>
+        <div *ngIf="!isJobComplete()">
           <button ion-button icon-left round outline color="danger" item-start (click)="call()">
             <ion-icon name="phone-portrait"></ion-icon>Call</button>
           <button ion-button icon-left round outline color="danger" item-start (click)="wa()">
             <ion-icon name="chatbubbles"></ion-icon>Chat</button>
-        </div>   
+        </div>  
+        <div *ngIf="isJobComplete()">
+          <p>You have accepted the delivery</p>
+        </div>  
       </ion-item>
       <ion-item *ngIf="!agentAvailable()">
         No agent accepts the job request yet.

@@ -209,4 +209,24 @@ export class User {
     })
   }
 
+  forgotPassword(email){
+    return new Promise((resolve, reject) => {
+        
+        let body = new FormData();
+        body.append('email', email);
+        let seq = this.api.post('auth/forgot/password', body);
+        seq.subscribe((res: any) => {
+          if (res.status == true) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+        }, err => {
+          console.error('ERROR', err);
+          reject(err);
+        });
+      
+    })
+  }
+
 }

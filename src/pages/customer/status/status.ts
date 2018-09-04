@@ -16,12 +16,17 @@ export class StatusPage {
   }
 
   ionViewDidEnter() {
-    console.log('ionViewDidLoad StatusPage');
-    this.status = 'active';
+    // console.log('ionViewDidLoad StatusPage');
+    // let loader = this.common.showLoader()
     this.job.getOrders().then(result => {
+      //loader.dismiss();
       let joblist: any = result;
       this.filterList(joblist);
     })
+  }
+
+  ionViewDidLoad(){
+    this.status = 'active';
   }
 
   initialize(){
@@ -53,6 +58,10 @@ export class StatusPage {
     } else {
       return null
     }
+  }
+
+  isStatusPending(job){
+    return job.current_status == 'Pending';
   }
 
   call(job: any){
@@ -98,11 +107,21 @@ export class StatusPage {
   }
 
   showStar(job){
-    if(!this.common.isEmpty(job.agent)){
-      return (job.agent[0].u_rating != "0.0")
-    } else {
+    if(this.common.isEmpty(job.agent)){
       return false
+    } else {
+      return (job.agent[0].u_rating != "0.0")
     }
+  }
+
+  
+
+  isRatingSubmitted(job){
+    return job.job_rating != "0.0"
+  }
+
+  ratingNumber(job, rating){
+    return parseInt(job.job_rating) >= rating;
   }
 
   showRating(job){

@@ -200,4 +200,8 @@ export class StatusDetailPage {
     modal.present();
   }
 
+  isJobComplete(){
+    return this.job.current_status == "Completed";
+  }
+
 }

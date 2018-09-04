@@ -10,10 +10,10 @@ import { User } from '../../../providers/user/user';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  protected user: {email: string, password: string, type: string};
+  protected user: {email: string, password: string, role: string, name: string};
   public confirmPassword: string
   constructor(private userProvider: User, private common: CommonProvider, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
-    this.user = {email: '', password: '', type: ''};
+    this.user = {email: null, password: null, role: null, name: null};
     this.confirmPassword = '';
   }
 

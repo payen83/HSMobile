@@ -27,7 +27,7 @@
             <img [src]="getProfileImage(getAgentImage(job))||'assets/imgs/user.png'">
             <!-- <img [src]="'assets/imgs/user.png'"> -->
           </ion-avatar>
-          <h2>{{getAgentName(job)}} <span *ngIf="showStar(job)">&nbsp;&nbsp;&nbsp;<ion-icon color="yellow" name="star"></ion-icon> {{showRating(job)}}</span></h2>
+          <h2 *ngIf="!isStatusPending(job)">{{getAgentName(job)}} <span class="star">&nbsp;&nbsp;<ion-icon *ngIf="showStar(job)" color="yellow" name="star"></ion-icon> {{showRating(job)}}</span></h2>
           <h4>Order #{{job.JobID}}</h4>
           <ion-note item-end>
             <h5>{{job.current_status}}</h5>
@@ -58,10 +58,16 @@
           </ion-avatar>
           <h2>{{job.agent[0].name}}</h2>
           <h4>Order #{{job.JobID}}</h4>
-          <!-- <p><ion-icon name="star"></ion-icon> 4.7</p> -->
-          <ion-note item-end>
+          <ion-note item-end *ngIf="!isRatingSubmitted(job)">
             <button ion-button small clear (click)="leaveFeedback(job);$event.stopPropagation();">Leave feedback</button>
           </ion-note>
+          <ion-note item-end *ngIf="isRatingSubmitted(job)">
+              <ion-icon name="star" color="yellow" *ngIf="ratingNumber(job, 1)"></ion-icon>
+              <ion-icon name="star" color="yellow" *ngIf="ratingNumber(job, 2)"></ion-icon>
+              <ion-icon name="star" color="yellow" *ngIf="ratingNumber(job, 3)"></ion-icon>
+              <ion-icon name="star" color="yellow" *ngIf="ratingNumber(job, 4)"></ion-icon>
+              <ion-icon name="star" color="yellow" *ngIf="ratingNumber(job, 5)"></ion-icon>
+            </ion-note>
         </button>
       </ion-card>
     </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { CommonProvider, Jobs } from '../../../providers/providers';
+import { CommonProvider } from '../../../providers/providers';
 
 /**
  * Generated class for the RatingPage page.
