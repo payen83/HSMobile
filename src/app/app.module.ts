@@ -38,6 +38,7 @@ import { MerchantDashboardPageModule } from '../pages/merchant/merchant-dashboar
 import { MerchantOrdersPageModule } from '../pages/merchant/merchant-orders/merchant-orders.module';
 import { StorePageModule } from '../pages/customer/store/store.module';
 import { RatingPageModule } from '../pages/customer/rating/rating.module';
+import { DeliverPageModule } from '../pages/merchant/deliver/deliver.module';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { RatingPageModule } from '../pages/customer/rating/rating.module';
     MerchantOrdersPageModule,
     StorePageModule,
     RatingPageModule,
+    DeliverPageModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, AlertController, ModalController } from 'ionic-angular';
 import { CommonProvider, Jobs } from '../../../providers/providers';
 
 declare var google: any;
@@ -18,7 +18,7 @@ export class DetailsPage {
   showScroll: boolean = false;
   job: any;
 
-  constructor(public alertCtrl: AlertController, public jobs: Jobs, public navCtrl: NavController, public navParams: NavParams, public common: CommonProvider) {
+  constructor(public modalCtrl: ModalController, public alertCtrl: AlertController, public jobs: Jobs, public navCtrl: NavController, public navParams: NavParams, public common: CommonProvider) {
     this.job = this.navParams.get('item');
     console.log(this.job)
   }
@@ -85,6 +85,21 @@ export class DetailsPage {
     }
   }
 
+  markDelivered(){ //for merchant
+    let modalCss = {
+      showBackdrop: true,
+      enableBackdropDismiss: false,
+      cssClass: "my-modal"
+    }
+    let modal = this.modalCtrl.create('DeliverPage', {jobID: this.job.JobID}, modalCss);
+    modal.onDidDismiss((close) => {
+      if(close){
+        this.navCtrl.pop();
+      }
+    });
+    modal.present();
+  }
+
   markComplete(){
     const confirm = this.alertCtrl.create({
       title: 'Complete Delivery',
@@ -114,7 +129,7 @@ export class DetailsPage {
   }
 
   showStar(){
-    return this.job.job_rating != "0.0";
+    return (this.job.job_rating != "0.0" && !this.isMerchant());
   }
 
   showRating(){
@@ -126,7 +141,7 @@ export class DetailsPage {
   }
 
   showFeedback(){
-    if (this.job.job_rating == "0.0"){
+    if (this.job.job_rating == "0.0" && this.isMerchant()){
       return null;
     } else {
       return this.job.job_feedback;
@@ -134,11 +149,16 @@ export class DetailsPage {
   }
 
   showRatingText(){
-    if (this.job.job_rating == "0.0"){
+    if (this.job.job_rating == "0.0" || this.isMerchant()){
       return null;
     } else {
       return 'Feedback';
     }
+  }
+
+  isMerchant(){
+    let user = this.common.getUserData();
+    return user.role == 'Merchant';
   }
 
   isActive(){

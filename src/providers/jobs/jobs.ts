@@ -224,12 +224,37 @@ export class Jobs {
     return new Promise((resolve, reject) => {
       this.common.getData('USER').then(response => {
         let user: any = response;
-        this.api.get('job/merchant-pending-job/' + user.id).subscribe(res => {
+        this.api.get('job/merchant-list-job/' + user.id).subscribe(res => {
           resolve(res);
         }, err => {
           reject(err);
         })
       })
+    });
+  }
+  
+  merchantMarkDelivered(method, tracking, jobID) {
+    ///job/merchant-mark-as-completed/2152
+    return new Promise((resolve, reject) => {
+      this.common.getData('USER').then(response => {
+        let user: any = response;
+        let body = new FormData();
+        body.append('delivery_method', method);
+        body.append('tracking_number', tracking);
+        body.append('user_id', user.id);
+        this.api.post('job/merchant-mark-as-completed/' + jobID, body).subscribe(res => {
+          let result: any = res;
+          if (result.status) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+        }, err => {
+          console.log('err: ' + JSON.stringify(err))
+          reject(err);
+        })
+      })
+
     });
   }
 

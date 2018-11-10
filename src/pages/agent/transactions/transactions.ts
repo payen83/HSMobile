@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Wallet, CommonProvider } from '../../../providers/providers';
 
-/**
- * Generated class for the TransactionsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-transactions',
@@ -28,6 +21,8 @@ export class TransactionsPage {
     if (!this.walletInfo.pending_approval || parseInt(this.walletInfo.pending_approval) > 0) {
       if (amount > 5000) {
         return 5000;
+      } else if (parseFloat(this.walletInfo.pending_approval) > 0)  {
+        return 0;
       } else {
         return amount;
       }
@@ -59,7 +54,7 @@ export class TransactionsPage {
   }
 
   enableWithdrawButton() {
-    if (this.availWithdraw(this.walletInfo.amount) > 0) {
+    if (this.availWithdraw(this.walletInfo.amount) > 0 && !(Number(this.walletInfo.pending_approval) > 0)) {
       return true;
     } else {
       return false
