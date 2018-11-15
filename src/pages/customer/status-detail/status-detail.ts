@@ -57,6 +57,30 @@ export class StatusDetailPage {
     return this.job.current_status == 'Pending Completion';
   }
 
+  showOrderStatus(status){
+    switch(status) { 
+      case 'Pending': { 
+         return 'Awaiting agent confirmation'; 
+      } 
+      case 'Active': { 
+         return 'Agent on delivery'; 
+         break; 
+      } 
+      case 'Pending Completion': { 
+        return 'Item delivered'; 
+     } 
+     case 'Completed': { 
+      return 'Customer accepted delivery';
+     }
+     case 'Cancelled': { 
+      return 'Delivery cancelled'; 
+    }
+      default: { 
+         return status;
+      } 
+   } 
+  }
+
   showCancelButton(){
     return this.job.current_status == 'Active';
   }

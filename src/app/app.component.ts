@@ -103,6 +103,7 @@ export class MyApp {
     this.oneSignal.startInit('1d01174b-ba24-429a-87a0-2f1169f1bc84', '713119621249');
     this.oneSignal.getIds().then(data => {
       // alert(JSON.stringify(data));
+      
       this.common.saveData('PLAYER_ID', data.userId);
     }, err => {
       console.log(err); 

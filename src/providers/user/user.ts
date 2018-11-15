@@ -172,6 +172,7 @@ export class User {
 
   }
 
+
   getMerchantDashboard(user: any) {
     return new Promise((resolve, reject) => {
       this.api.get('dashboard/merchant-view/' + user.id).subscribe(res => {

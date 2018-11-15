@@ -105,7 +105,7 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.4.3" />
     <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.5" />
+    <plugin name="onesignal-cordova-plugin" spec="^2.4.3" />
 </widget>
