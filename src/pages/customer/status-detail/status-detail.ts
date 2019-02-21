@@ -64,7 +64,6 @@ export class StatusDetailPage {
       } 
       case 'Active': { 
          return 'Agent on delivery'; 
-         break; 
       } 
       case 'Pending Completion': { 
         return 'Item delivered'; 
